@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Embedding量化示例 - My Docs</title>
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../..">My Docs</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../..">Welcome to MkDocs</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../">PaddleSlim</a>
+</li>
+                                    
+<li >
+    <a href="../../table_latency/">硬件延时评估表</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Api</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../api/analysis_api/">模型分析API文档</a>
+</li>
+            
+<li >
+    <a href="../../api/api_guide/">PaddleSlim API文档导航</a>
+</li>
+            
+<li >
+    <a href="../../api/nas_api/">paddleslim.nas API文档</a>
+</li>
+            
+<li >
+    <a href="../../api/prune_api/">卷积通道剪裁API文档</a>
+</li>
+            
+<li >
+    <a href="../../api/quantization_api/">paddleslim.quant API文档</a>
+</li>
+            
+<li >
+    <a href="../../api/search_space/">paddleslim.nas 提供的搜索空间：</a>
+</li>
+            
+<li >
+    <a href="../../api/single_distiller_api/">paddleslim.dist API文档</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Tutorials</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../demo_guide/">Demo guide</a>
+</li>
+            
+<li >
+    <a href="../nas_demo/">网络结构搜索示例</a>
+</li>
+            
+<li >
+    <a href="../quant_aware_demo/">在线量化示例</a>
+</li>
+            
+<li class="active">
+    <a href="./">Embedding量化示例</a>
+</li>
+            
+<li >
+    <a href="../quant_post_demo/">离线量化示例</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../quant_aware_demo/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../quant_post_demo/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#embedding">Embedding量化示例</a></li>
+            <li><a href="#skip-gramword2vector">基于skip-gram的word2vector模型</a></li>
+            <li><a href="#skip-gramword2vector_1">量化基于skip-gram的word2vector模型</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="embedding">Embedding量化示例</h1>
+<p>本示例介绍如何使用Embedding量化的接口 <a href="">paddleslim.quant.quant_embedding</a> 。<code>quant_embedding</code>接口将网络中的Embedding参数从<code>float32</code>类型量化到 <code>8-bit</code>整数类型，在几乎不损失模型精度的情况下减少模型的存储空间和显存占用。</p>
+<p>接口介绍请参考 <a href='../../../paddleslim/quant/quantization_api_doc.md'>量化API文档</a>。</p>
+<p>该接口对program的修改：</p>
+<p>量化前:</p>
+<p align="center">
+<img src="./image/before.png" height=200 width=100 hspace='10'/> <br />
+<strong>图1：量化前的模型结构</strong>
+</p>
+
+<p>量化后：</p>
+<p align="center">
+<img src="./image/after.png" height=300 width=300 hspace='10'/> <br />
+<strong>图2: 量化后的模型结构</strong>
+</p>
+
+<p>以下将以 <code>基于skip-gram的word2vector模型</code> 为例来说明如何使用<code>quant_embedding</code>接口。首先介绍 <code>基于skip-gram的word2vector模型</code> 的正常训练和测试流程。</p>
+<h2 id="skip-gramword2vector">基于skip-gram的word2vector模型</h2>
+<p>以下是本例的简要目录结构及说明：</p>
+<pre><code class="text">.
+├── cluster_train.py    # 分布式训练函数
+├── cluster_train.sh    # 本地模拟多机脚本
+├── train.py            # 训练函数
+├── infer.py            # 预测脚本
+├── net.py              # 网络结构
+├── preprocess.py       # 预处理脚本，包括构建词典和预处理文本
+├── reader.py           # 训练阶段的文本读写
+├── train.py            # 训练函数
+└── utils.py            # 通用函数
+
+</code></pre>
+
+<h3 id="_1">介绍</h3>
+<p>本例实现了skip-gram模式的word2vector模型。</p>
+<p>同时推荐用户参考<a href="https://aistudio.baidu.com/aistudio/projectDetail/124377"> IPython Notebook demo</a></p>
+<h3 id="_2">数据下载</h3>
+<p>全量数据集使用的是来自1 Billion Word Language Model Benchmark的(http://www.statmt.org/lm-benchmark) 的数据集.</p>
+<pre><code class="bash">mkdir data
+wget http://www.statmt.org/lm-benchmark/1-billion-word-language-modeling-benchmark-r13output.tar.gz
+tar xzvf 1-billion-word-language-modeling-benchmark-r13output.tar.gz
+mv 1-billion-word-language-modeling-benchmark-r13output/training-monolingual.tokenized.shuffled/ data/
+</code></pre>
+
+<p>备用数据地址下载命令如下</p>
+<pre><code class="bash">mkdir data
+wget https://paddlerec.bj.bcebos.com/word2vec/1-billion-word-language-modeling-benchmark-r13output.tar
+tar xvf 1-billion-word-language-modeling-benchmark-r13output.tar
+mv 1-billion-word-language-modeling-benchmark-r13output/training-monolingual.tokenized.shuffled/ data/
+</code></pre>
+
+<p>为了方便快速验证，我们也提供了经典的text8样例数据集，包含1700w个词。 下载命令如下</p>
+<pre><code class="bash">mkdir data
+wget https://paddlerec.bj.bcebos.com/word2vec/text.tar
+tar xvf text.tar
+mv text data/
+</code></pre>
+
+<h3 id="_3">数据预处理</h3>
+<p>以样例数据集为例进行预处理。全量数据集注意解压后以training-monolingual.tokenized.shuffled 目录为预处理目录，和样例数据集的text目录并列。</p>
+<p>词典格式: 词&lt;空格&gt;词频。注意低频词用'UNK'表示</p>
+<p>可以按格式自建词典，如果自建词典跳过第一步。</p>
+<pre><code>the 1061396
+of 593677
+and 416629
+one 411764
+in 372201
+a 325873
+&lt;UNK&gt; 324608
+to 316376
+zero 264975
+nine 250430
+</code></pre>
+
+<p>第一步根据英文语料生成词典，中文语料可以通过修改text_strip方法自定义处理方法。</p>
+<pre><code class="bash">python preprocess.py --build_dict --build_dict_corpus_dir data/text/ --dict_path data/test_build_dict
+</code></pre>
+
+<p>第二步根据词典将文本转成id, 同时进行downsample，按照概率过滤常见词, 同时生成word和id映射的文件，文件名为词典+"<em>word_to_id</em>"。</p>
+<pre><code class="bash">python preprocess.py --filter_corpus --dict_path data/test_build_dict --input_corpus_dir data/text --output_corpus_dir data/convert_text8 --min_count 5 --downsample 0.001
+</code></pre>
+
+<h3 id="_4">训练</h3>
+<p>具体的参数配置可运行</p>
+<pre><code class="bash">python train.py -h
+</code></pre>
+
+<p>单机多线程训练</p>
+<pre><code class="bash">OPENBLAS_NUM_THREADS=1 CPU_NUM=5 python train.py --train_data_dir data/convert_text8 --dict_path data/test_build_dict --num_passes 10 --batch_size 100 --model_output_dir v1_cpu5_b100_lr1dir --base_lr 1.0 --print_batch 1000 --with_speed --is_sparse
+</code></pre>
+
+<p>本地单机模拟多机训练</p>
+<pre><code class="bash">sh cluster_train.sh
+</code></pre>
+
+<p>本示例中按照单机多线程训练的命令进行训练，训练完毕后，可看到在当前文件夹下保存模型的路径为:     <code>v1_cpu5_b100_lr1dir</code>, 运行 <code>ls v1_cpu5_b100_lr1dir</code>可看到该文件夹下保存了训练的10个epoch的模型文件。</p>
+<pre><code>pass-0  pass-1  pass-2  pass-3  pass-4  pass-5  pass-6  pass-7  pass-8  pass-9
+</code></pre>
+
+<h3 id="_5">预测</h3>
+<p>测试集下载命令如下</p>
+<pre><code class="bash">#全量数据集测试集
+wget https://paddlerec.bj.bcebos.com/word2vec/test_dir.tar
+#样本数据集测试集
+wget https://paddlerec.bj.bcebos.com/word2vec/test_mid_dir.tar
+</code></pre>
+
+<p>预测命令，注意词典名称需要加后缀"<em>word_to_id</em>", 此文件是预处理阶段生成的。</p>
+<pre><code class="bash">python infer.py --infer_epoch --test_dir data/test_mid_dir --dict_path data/test_build_dict_word_to_id_ --batch_size 20000 --model_dir v1_cpu5_b100_lr1dir/  --start_index 0 --last_index 9
+</code></pre>
+
+<p>运行该预测命令, 可看到如下输出</p>
+<pre><code>('start index: ', 0, ' last_index:', 9)
+('vocab_size:', 63642)
+step:1 249
+epoch:0          acc:0.014
+step:1 590
+epoch:1          acc:0.033
+step:1 982
+epoch:2          acc:0.055
+step:1 1338
+epoch:3          acc:0.075
+step:1 1653
+epoch:4          acc:0.093
+step:1 1914
+epoch:5          acc:0.107
+step:1 2204
+epoch:6          acc:0.124
+step:1 2416
+epoch:7          acc:0.136
+step:1 2606
+epoch:8          acc:0.146
+step:1 2722
+epoch:9          acc:0.153
+</code></pre>
+
+<h2 id="skip-gramword2vector_1">量化<code>基于skip-gram的word2vector模型</code></h2>
+<p>量化配置为:</p>
+<pre><code>config = {
+        'params_name': 'emb',
+        'quantize_type': 'abs_max'
+        }
+</code></pre>
+
+<p>运行命令为：</p>
+<pre><code class="bash">python infer.py --infer_epoch --test_dir data/test_mid_dir --dict_path data/test_build_dict_word_to_id_ --batch_size 20000 --model_dir v1_cpu5_b100_lr1dir/  --start_index 0 --last_index 9 --emb_quant True
+</code></pre>
+
+<p>运行输出为:</p>
+<pre><code>('start index: ', 0, ' last_index:', 9)
+('vocab_size:', 63642)
+quant_embedding config {'quantize_type': 'abs_max', 'params_name': 'emb', 'quantize_bits': 8, 'dtype': 'int8'}
+step:1 253
+epoch:0          acc:0.014
+quant_embedding config {'quantize_type': 'abs_max', 'params_name': 'emb', 'quantize_bits': 8, 'dtype': 'int8'}
+step:1 586
+epoch:1          acc:0.033
+quant_embedding config {'quantize_type': 'abs_max', 'params_name': 'emb', 'quantize_bits': 8, 'dtype': 'int8'}
+step:1 970
+epoch:2          acc:0.054
+quant_embedding config {'quantize_type': 'abs_max', 'params_name': 'emb', 'quantize_bits': 8, 'dtype': 'int8'}
+step:1 1364
+epoch:3          acc:0.077
+quant_embedding config {'quantize_type': 'abs_max', 'params_name': 'emb', 'quantize_bits': 8, 'dtype': 'int8'}
+step:1 1642
+epoch:4          acc:0.092
+quant_embedding config {'quantize_type': 'abs_max', 'params_name': 'emb', 'quantize_bits': 8, 'dtype': 'int8'}
+step:1 1936
+epoch:5          acc:0.109
+quant_embedding config {'quantize_type': 'abs_max', 'params_name': 'emb', 'quantize_bits': 8, 'dtype': 'int8'}
+step:1 2216
+epoch:6          acc:0.124
+quant_embedding config {'quantize_type': 'abs_max', 'params_name': 'emb', 'quantize_bits': 8, 'dtype': 'int8'}
+step:1 2419
+epoch:7          acc:0.136
+quant_embedding config {'quantize_type': 'abs_max', 'params_name': 'emb', 'quantize_bits': 8, 'dtype': 'int8'}
+step:1 2603
+epoch:8          acc:0.146
+quant_embedding config {'quantize_type': 'abs_max', 'params_name': 'emb', 'quantize_bits': 8, 'dtype': 'int8'}
+step:1 2719
+epoch:9          acc:0.153
+</code></pre>
+
+<p>量化后的模型保存在<code>./output_quant</code>中，可看到量化后的参数<code>'emb.int8'</code>的大小为3.9M, 在<code>./v1_cpu5_b100_lr1dir</code>中可看到量化前的参数<code>'emb'</code>的大小为16M。</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>在线量化示例 - My Docs</title>
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../..">My Docs</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../..">Welcome to MkDocs</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../">PaddleSlim</a>
+</li>
+                                    
+<li >
+    <a href="../../table_latency/">硬件延时评估表</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Api</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../api/analysis_api/">模型分析API文档</a>
+</li>
+            
+<li >
+    <a href="../../api/api_guide/">PaddleSlim API文档导航</a>
+</li>
+            
+<li >
+    <a href="../../api/nas_api/">paddleslim.nas API文档</a>
+</li>
+            
+<li >
+    <a href="../../api/prune_api/">卷积通道剪裁API文档</a>
+</li>
+            
+<li >
+    <a href="../../api/quantization_api/">paddleslim.quant API文档</a>
+</li>
+            
+<li >
+    <a href="../../api/search_space/">paddleslim.nas 提供的搜索空间：</a>
+</li>
+            
+<li >
+    <a href="../../api/single_distiller_api/">paddleslim.dist API文档</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Tutorials</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../demo_guide/">Demo guide</a>
+</li>
+            
+<li >
+    <a href="../nas_demo/">网络结构搜索示例</a>
+</li>
+            
+<li class="active">
+    <a href="./">在线量化示例</a>
+</li>
+            
+<li >
+    <a href="../quant_embedding_demo/">Embedding量化示例</a>
+</li>
+            
+<li >
+    <a href="../quant_post_demo/">离线量化示例</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../nas_demo/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../quant_embedding_demo/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#_1">在线量化示例</a></li>
+            <li><a href="#_2">接口介绍</a></li>
+            <li><a href="#_3">分类模型的离线量化流程</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="_1">在线量化示例</h1>
+<p>本示例介绍如何使用在线量化接口，来对训练好的分类模型进行量化, 可以减少模型的存储空间和显存占用。</p>
+<h2 id="_2">接口介绍</h2>
+<p>请参考 <a href='../../../paddleslim/quant/quantization_api_doc.md'>量化API文档</a>。</p>
+<h2 id="_3">分类模型的离线量化流程</h2>
+<h3 id="1">1. 配置量化参数</h3>
+<pre><code>quant_config = {
+    'weight_quantize_type': 'abs_max',
+    'activation_quantize_type': 'moving_average_abs_max',
+    'weight_bits': 8,
+    'activation_bits': 8,
+    'not_quant_pattern': ['skip_quant'],
+    'quantize_op_types': ['conv2d', 'depthwise_conv2d', 'mul'],
+    'dtype': 'int8',
+    'window_size': 10000,
+    'moving_rate': 0.9,
+    'quant_weight_only': False
+}
+</code></pre>
+
+<h3 id="2-programop">2. 对训练和测试program插入可训练量化op</h3>
+<pre><code>val_program = quant_aware(val_program, place, quant_config, scope=None, for_test=True)
+
+compiled_train_prog = quant_aware(train_prog, place, quant_config, scope=None, for_test=False)
+</code></pre>
+
+<h3 id="3build">3.关掉指定build策略</h3>
+<pre><code>build_strategy = fluid.BuildStrategy()
+build_strategy.fuse_all_reduce_ops = False
+build_strategy.sync_batch_norm = False
+exec_strategy = fluid.ExecutionStrategy()
+compiled_train_prog = compiled_train_prog.with_data_parallel(
+        loss_name=avg_cost.name,
+        build_strategy=build_strategy,
+        exec_strategy=exec_strategy)
+</code></pre>
+
+<h3 id="4-freeze-program">4. freeze program</h3>
+<pre><code>float_program, int8_program = convert(val_program, 
+                                      place,
+                                      quant_config,
+                                      scope=None,
+                                      save_int8=True)
+</code></pre>
+
+<h3 id="5">5.保存预测模型</h3>
+<pre><code>fluid.io.save_inference_model(
+    dirname=float_path,
+    feeded_var_names=[image.name],
+    target_vars=[out], executor=exe,
+    main_program=float_program,
+    model_filename=float_path + '/model',
+    params_filename=float_path + '/params')
+
+fluid.io.save_inference_model(
+    dirname=int8_path,
+    feeded_var_names=[image.name],
+    target_vars=[out], executor=exe,
+    main_program=int8_program,
+    model_filename=int8_path + '/model',
+    params_filename=int8_path + '/params')
+</code></pre></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

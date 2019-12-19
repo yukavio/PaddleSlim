@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>硬件延时评估表 - My Docs</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">My Docs</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Welcome to MkDocs</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../">PaddleSlim</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">硬件延时评估表</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Api</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../api/analysis_api/">模型分析API文档</a>
+</li>
+            
+<li >
+    <a href="../api/api_guide/">PaddleSlim API文档导航</a>
+</li>
+            
+<li >
+    <a href="../api/nas_api/">paddleslim.nas API文档</a>
+</li>
+            
+<li >
+    <a href="../api/prune_api/">卷积通道剪裁API文档</a>
+</li>
+            
+<li >
+    <a href="../api/quantization_api/">paddleslim.quant API文档</a>
+</li>
+            
+<li >
+    <a href="../api/search_space/">paddleslim.nas 提供的搜索空间：</a>
+</li>
+            
+<li >
+    <a href="../api/single_distiller_api/">paddleslim.dist API文档</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Tutorials</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../tutorials/demo_guide/">Demo guide</a>
+</li>
+            
+<li >
+    <a href="../tutorials/nas_demo/">网络结构搜索示例</a>
+</li>
+            
+<li >
+    <a href="../tutorials/quant_aware_demo/">在线量化示例</a>
+</li>
+            
+<li >
+    <a href="../tutorials/quant_embedding_demo/">Embedding量化示例</a>
+</li>
+            
+<li >
+    <a href="../tutorials/quant_post_demo/">离线量化示例</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../api/analysis_api/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#_1">硬件延时评估表</a></li>
+            <li><a href="#_2">概述</a></li>
+            <li><a href="#_3">整体格式</a></li>
+            <li><a href="#_4">版本信息</a></li>
+            <li><a href="#_5">操作信息</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="_1">硬件延时评估表</h1>
+<p>硬件延时评估表用于快速评估一个模型在特定硬件环境和推理引擎上的推理速度。
+该文档主要用于定义PaddleSlim支持的硬件延时评估表的格式。</p>
+<h2 id="_2">概述</h2>
+<p>硬件延时评估表中存放着所有可能的操作对应的延时信息，该表中的一个操作包括操作类型和操作参数，比如：操作类型可以是<code>conv2d</code>，对应的操作参数有输入特征图的大小、卷积核个数、卷积核大小等。
+给定操作的延时依赖于硬件环境和推理引擎。</p>
+<h2 id="_3">整体格式</h2>
+<p>硬件延时评估表以文件或多行字符串的形式保存。</p>
+<p>硬件延时评估表第一行保存版本信息，后续每行为一个操作和对应的延时信息。</p>
+<h2 id="_4">版本信息</h2>
+<p>版本信息以英文字符逗号分割，内容依次为硬件环境名称、推理引擎名称和时间戳。</p>
+<ul>
+<li>
+<p><strong>硬件环境名称：</strong> 用于标识硬件环境，可以包含计算架构类型、版本号等信息。</p>
+</li>
+<li>
+<p><strong>推理引擎名称：</strong> 用于标识推理引擎，可以包含推理引擎名称、版本号、优化选项等信息。</p>
+</li>
+<li>
+<p><strong>时间戳：</strong> 该评估表的创建时间。</p>
+</li>
+</ul>
+<h2 id="_5">操作信息</h2>
+<p>操作信息字段之间以逗号分割。操作信息与延迟信息之间以制表符分割。</p>
+<h3 id="conv2d">conv2d</h3>
+<p><strong>格式</strong></p>
+<pre><code>op_type,flag_bias,flag_relu,n_in,c_in,h_in,w_in,c_out,groups,kernel,padding,stride,dilation\tlatency
+</code></pre>
+
+<p><strong>字段解释</strong></p>
+<ul>
+<li><strong>op_type(str)</strong> - 当前op类型。</li>
+<li><strong>flag_bias (int)</strong> - 是否有 bias（0：无，1：有）。</li>
+<li><strong>flag_relu (int)</strong> - 是否有 relu（0：无，1：有）。</li>
+<li><strong>n_in (int)</strong> - 输入 Tensor 的批尺寸 (batch size)。</li>
+<li><strong>c_in (int)</strong> - 输入 Tensor 的通道 (channel) 数。</li>
+<li><strong>h_in (int)</strong> - 输入 Tensor 的特征高度。</li>
+<li><strong>w_in (int)</strong> - 输入 Tensor 的特征宽度。</li>
+<li><strong>c_out (int)</strong> - 输出 Tensor 的通道 (channel) 数。</li>
+<li><strong>groups (int)</strong> - 卷积二维层（Conv2D Layer）的组数。</li>
+<li><strong>kernel (int)</strong> - 卷积核大小。</li>
+<li><strong>padding (int)</strong> - 填充 (padding) 大小。</li>
+<li><strong>stride (int)</strong> - 步长 (stride) 大小。</li>
+<li><strong>dilation (int)</strong> - 膨胀 (dilation) 大小。</li>
+<li><strong>latency (float)</strong> - 当前op的延时时间</li>
+</ul>
+<h3 id="activation">activation</h3>
+<p><strong>格式</strong></p>
+<pre><code>op_type,n_in,c_in,h_in,w_in\tlatency
+</code></pre>
+
+<p><strong>字段解释</strong></p>
+<ul>
+<li><strong>op_type(str)</strong> - 当前op类型。</li>
+<li><strong>n_in (int)</strong> - 输入 Tensor 的批尺寸 (batch size)。</li>
+<li><strong>c_in (int)</strong> - 输入 Tensor 的通道 (channel) 数。</li>
+<li><strong>h_in (int)</strong> - 输入 Tensor 的特征高度。</li>
+<li><strong>w_in (int)</strong> - 输入 Tensor 的特征宽度。</li>
+<li><strong>latency (float)</strong> - 当前op的延时时间</li>
+</ul>
+<h3 id="batch_norm">batch_norm</h3>
+<p><strong>格式</strong></p>
+<pre><code>op_type,active_type,n_in,c_in,h_in,w_in\tlatency
+</code></pre>
+
+<p><strong>字段解释</strong></p>
+<ul>
+<li><strong>op_type(str)</strong> - 当前op类型。</li>
+<li><strong>active_type (string)</strong> - 激活函数类型，包含：relu, prelu, sigmoid, relu6, tanh。</li>
+<li><strong>n_in (int)</strong> - 输入 Tensor 的批尺寸 (batch size)。</li>
+<li><strong>c_in (int)</strong> - 输入 Tensor 的通道 (channel) 数。</li>
+<li><strong>h_in (int)</strong> - 输入 Tensor 的特征高度。</li>
+<li><strong>w_in (int)</strong> - 输入 Tensor 的特征宽度。</li>
+<li><strong>latency (float)</strong> - 当前op的延时时间</li>
+</ul>
+<h3 id="eltwise">eltwise</h3>
+<p><strong>格式</strong></p>
+<pre><code>op_type,n_in,c_in,h_in,w_in\tlatency
+</code></pre>
+
+<p><strong>字段解释</strong></p>
+<ul>
+<li><strong>op_type(str)</strong> - 当前op类型。</li>
+<li><strong>n_in (int)</strong> - 输入 Tensor 的批尺寸 (batch size)。</li>
+<li><strong>c_in (int)</strong> - 输入 Tensor 的通道 (channel) 数。</li>
+<li><strong>h_in (int)</strong> - 输入 Tensor 的特征高度。</li>
+<li><strong>w_in (int)</strong> - 输入 Tensor 的特征宽度。</li>
+<li><strong>latency (float)</strong> - 当前op的延时时间</li>
+</ul>
+<h3 id="pooling">pooling</h3>
+<p><strong>格式</strong></p>
+<pre><code>op_type,flag_global_pooling,n_in,c_in,h_in,w_in,kernel,padding,stride,ceil_mode,pool_type\tlatency
+</code></pre>
+
+<p><strong>字段解释</strong></p>
+<ul>
+<li><strong>op_type(str)</strong> - 当前op类型。</li>
+<li><strong>flag_global_pooling (int)</strong> - 是否为全局池化（0：不是，1：是）。</li>
+<li><strong>n_in (int)</strong> - 输入 Tensor 的批尺寸 (batch size)。</li>
+<li><strong>c_in (int)</strong> - 输入 Tensor 的通道 (channel) 数。</li>
+<li><strong>h_in (int)</strong> - 输入 Tensor 的特征高度。</li>
+<li><strong>w_in (int)</strong> - 输入 Tensor 的特征宽度。</li>
+<li><strong>kernel (int)</strong> - 卷积核大小。</li>
+<li><strong>padding (int)</strong> - 填充 (padding) 大小。</li>
+<li><strong>stride (int)</strong> - 步长 (stride) 大小。</li>
+<li><strong>ceil_mode (int)</strong> - 是否用 ceil 函数计算输出高度和宽度。0 表示使用 floor 函数，1 表示使用 ceil 函数。</li>
+<li><strong>pool_type (int)</strong> - 池化类型，其中 1 表示 pooling_max，2 表示 pooling_average_include_padding，3 表示 pooling_average_exclude_padding。</li>
+<li><strong>latency (float)</strong> - 当前op的延时时间</li>
+</ul>
+<h3 id="softmax">softmax</h3>
+<p><strong>格式</strong></p>
+<pre><code>op_type,axis,n_in,c_in,h_in,w_in\tlatency
+</code></pre>
+
+<p><strong>字段解释</strong></p>
+<ul>
+<li><strong>op_type(str)</strong> - 当前op类型。</li>
+<li><strong>axis (int)</strong> - 执行 softmax 计算的维度索引，应该在 [−1，rank − 1] 范围内，其中 rank 是输入变量的秩。</li>
+<li><strong>n_in (int)</strong> - 输入 Tensor 的批尺寸 (batch size)。</li>
+<li><strong>c_in (int)</strong> - 输入 Tensor 的通道 (channel) 数。</li>
+<li><strong>h_in (int)</strong> - 输入 Tensor 的特征高度。</li>
+<li><strong>w_in (int)</strong> - 输入 Tensor 的特征宽度。</li>
+<li><strong>latency (float)</strong> - 当前op的延时时间</li>
+</ul></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

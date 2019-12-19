@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>paddleslim.dist API文档 - My Docs</title>
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../..">My Docs</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../..">Welcome to MkDocs</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../">PaddleSlim</a>
+</li>
+                                    
+<li >
+    <a href="../../table_latency/">硬件延时评估表</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Api</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../analysis_api/">模型分析API文档</a>
+</li>
+            
+<li >
+    <a href="../api_guide/">PaddleSlim API文档导航</a>
+</li>
+            
+<li >
+    <a href="../nas_api/">paddleslim.nas API文档</a>
+</li>
+            
+<li >
+    <a href="../prune_api/">卷积通道剪裁API文档</a>
+</li>
+            
+<li >
+    <a href="../quantization_api/">paddleslim.quant API文档</a>
+</li>
+            
+<li >
+    <a href="../search_space/">paddleslim.nas 提供的搜索空间：</a>
+</li>
+            
+<li class="active">
+    <a href="./">paddleslim.dist API文档</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Tutorials</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../tutorials/demo_guide/">Demo guide</a>
+</li>
+            
+<li >
+    <a href="../../tutorials/nas_demo/">网络结构搜索示例</a>
+</li>
+            
+<li >
+    <a href="../../tutorials/quant_aware_demo/">在线量化示例</a>
+</li>
+            
+<li >
+    <a href="../../tutorials/quant_embedding_demo/">Embedding量化示例</a>
+</li>
+            
+<li >
+    <a href="../../tutorials/quant_post_demo/">离线量化示例</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../search_space/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../../tutorials/demo_guide/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#paddleslimdist-api">paddleslim.dist API文档</a></li>
+            <li><a href="#mergeteacher_program-student_program-data_name_map-place-scopefluidglobal_scope-name_prefixteacher_">merge(teacher_program, student_program, data_name_map, place, scope=fluid.global_scope(), name_prefix='teacher_')</a></li>
+            <li><a href="#fsp_lossteacher_var1_name-teacher_var2_name-student_var1_name-student_var2_name-programfluiddefault_main_program">fsp_loss(teacher_var1_name, teacher_var2_name, student_var1_name, student_var2_name, program=fluid.default_main_program())</a></li>
+            <li><a href="#l2_lossteacher_var_name-student_var_name-programfluiddefault_main_program">l2_loss(teacher_var_name, student_var_name, program=fluid.default_main_program())</a></li>
+            <li><a href="#soft_label_lossteacher_var_name-student_var_name-programfluiddefault_main_program-teacher_temperature1-student_temperature1">soft_label_loss(teacher_var_name, student_var_name, program=fluid.default_main_program(), teacher_temperature=1., student_temperature=1.)</a></li>
+            <li><a href="#lossloss_func-programfluiddefault_main_program-kwargs">loss(loss_func, program=fluid.default_main_program(), **kwargs)</a></li>
+            <li><a href="#_1">注意事项</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="paddleslimdist-api">paddleslim.dist API文档</h1>
+<h2 id="mergeteacher_program-student_program-data_name_map-place-scopefluidglobal_scope-name_prefixteacher_">merge(teacher_program, student_program, data_name_map, place, scope=fluid.global_scope(), name_prefix='teacher_')</h2>
+<p>该方法将两个fluid program（teacher_program, student_program）融合为一个program，并将融合得到的program返回。在融合的program中，可以为其中合适的teacher特征图和student特征图添加蒸馏损失函数，从而达到用teacher模型的暗知识（Dark Knowledge）指导student模型学习的目的。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li><strong>teacher_program</strong>(Program)-定义了teacher模型的paddle program</li>
+<li><strong>student_program</strong>(Program)-定义了student模型的paddle program</li>
+<li><strong>data_name_map</strong>(dict)-teacher输入接口名与student输入接口名的映射，key为teacher的输入名，value为student的输入名。merge函数将会把这两个模型的输入按对应关系合并在一起，保证teacher与student输入数据相同</li>
+<li><strong>place</strong>(fluid.CPUPlace()|fluid.CUDAPlace(N))-该参数表示程序运行在何种设备上，这里的N为GPU对应的ID</li>
+<li><strong>scope</strong>(Scope)-该参数表示teacher variables和student variables所使用的作用域，如果不指定将使用默认的全局作用域。默认值：fluid.global_scope()</li>
+<li><strong>name_prefix</strong>(str)-为了避免teacher variables和student variables存在同名变量而引起命名冲突，merge函数将统一为teacher variables添加一个名称前缀name_prefix，merge后的program中所有teacher variables都将带有这一名称前缀。默认值：'teacher_'</li>
+</ul>
+<p><strong>返回：</strong>由student_program和teacher_program merge得到的program</p>
+<p><strong>使用示例：</strong></p>
+<pre><code class="python">import paddle.fluid as fluid
+import paddleslim.dist as dist
+student_program = fluid.Program()
+with fluid.program_guard(student_program):
+    x = fluid.layers.data(name='x', shape=[1, 28, 28])
+    conv = fluid.layers.conv2d(x, 32, 1)
+    out = fluid.layers.conv2d(conv, 64, 3, padding=1)
+teacher_program = fluid.Program()
+with fluid.program_guard(teacher_program):
+    y = fluid.layers.data(name='y', shape=[1, 28, 28])
+    conv = fluid.layers.conv2d(y, 32, 1)
+    conv = fluid.layers.conv2d(conv, 32, 3, padding=1)
+    out = fluid.layers.conv2d(conv, 64, 3, padding=1)
+data_name_map = {'y':'x'}
+USE_GPU = False
+place = fluid.CUDAPlace(0) if USE_GPU else fluid.CPUPlace()
+main_program = dist.merge(teacher_program, student_program, data_name_map, place)
+</code></pre>
+
+<h2 id="fsp_lossteacher_var1_name-teacher_var2_name-student_var1_name-student_var2_name-programfluiddefault_main_program">fsp_loss(teacher_var1_name, teacher_var2_name, student_var1_name, student_var2_name, program=fluid.default_main_program())</h2>
+<p>fsp_loss为program内的teacher var和student var添加fsp loss，出自论文<a href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Yim_A_Gift_From_CVPR_2017_paper.pdf">A Gift from Knowledge Distillation: Fast Optimization, Network Minimization and Transfer Learning</a></p>
+<p><strong>参数：</strong></p>
+<ul>
+<li><strong>teacher_var1_name</strong>(str): teacher_var1的名称. 对应的variable是一个形为<code>[batch_size, x_channel, height, width]</code>的4-D特征图Tensor，数据类型为float32或float64</li>
+<li><strong>teacher_var2_name</strong>(str): teacher_var2的名称. 对应的variable是一个形为<code>[batch_size, y_channel, height, width]</code>的4-D特征图Tensor，数据类型为float32或float64。只有y_channel可以与teacher_var1的x_channel不同，其他维度必须与teacher_var1相同</li>
+<li><strong>student_var1_name</strong>(str): student_var1的名称. 对应的variable需与teacher_var1尺寸保持一致，是一个形为<code>[batch_size, x_channel, height, width]</code>的4-D特征图Tensor，数据类型为float32或float64</li>
+<li><strong>student_var2_name</strong>(str): student_var2的名称. 对应的variable需与teacher_var2尺寸保持一致，是一个形为<code>[batch_size, y_channel, height, width]</code>的4-D特征图Tensor，数据类型为float32或float64。只有y_channel可以与student_var1的x_channel不同，其他维度必须与student_var1相同</li>
+<li><strong>program</strong>(Program): 用于蒸馏训练的fluid program。默认值：fluid.default_main_program()</li>
+</ul>
+<p><strong>返回：</strong>由teacher_var1, teacher_var2, student_var1, student_var2组合得到的fsp_loss</p>
+<p><strong>使用示例：</strong></p>
+<pre><code class="python">import paddle.fluid as fluid
+import paddleslim.dist as dist
+student_program = fluid.Program()
+with fluid.program_guard(student_program):
+    x = fluid.layers.data(name='x', shape=[1, 28, 28])
+    conv = fluid.layers.conv2d(x, 32, 1, name='s1')
+    out = fluid.layers.conv2d(conv, 64, 3, padding=1, name='s2')
+teacher_program = fluid.Program()
+with fluid.program_guard(teacher_program):
+    y = fluid.layers.data(name='y', shape=[1, 28, 28])
+    conv = fluid.layers.conv2d(y, 32, 1, name='t1')
+    conv = fluid.layers.conv2d(conv, 32, 3, padding=1)
+    out = fluid.layers.conv2d(conv, 64, 3, padding=1, name='t2')
+data_name_map = {'y':'x'}
+USE_GPU = False
+place = fluid.CUDAPlace(0) if USE_GPU else fluid.CPUPlace()
+main_program = merge(teacher_program, student_program, data_name_map, place)
+with fluid.program_guard(main_program):
+    distillation_loss = dist.fsp_loss('teacher_t1.tmp_1', 'teacher_t2.tmp_1', 's1.tmp_1', 's2.tmp_1', main_program)
+</code></pre>
+
+<h2 id="l2_lossteacher_var_name-student_var_name-programfluiddefault_main_program">l2_loss(teacher_var_name, student_var_name, program=fluid.default_main_program())</h2>
+<p>l2_loss为program内的teacher var和student var添加l2 loss</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li><strong>teacher_var_name</strong>(str): teacher_var的名称. </li>
+<li><strong>student_var_name</strong>(str): student_var的名称.</li>
+<li><strong>program</strong>(Program): 用于蒸馏训练的fluid program。默认值：fluid.default_main_program()</li>
+</ul>
+<p><strong>返回：</strong>由teacher_var, student_var组合得到的l2_loss</p>
+<p><strong>使用示例：</strong></p>
+<pre><code class="python">import paddle.fluid as fluid
+import paddleslim.dist as dist
+student_program = fluid.Program()
+with fluid.program_guard(student_program):
+    x = fluid.layers.data(name='x', shape=[1, 28, 28])
+    conv = fluid.layers.conv2d(x, 32, 1, name='s1')
+    out = fluid.layers.conv2d(conv, 64, 3, padding=1, name='s2')
+teacher_program = fluid.Program()
+with fluid.program_guard(teacher_program):
+    y = fluid.layers.data(name='y', shape=[1, 28, 28])
+    conv = fluid.layers.conv2d(y, 32, 1, name='t1')
+    conv = fluid.layers.conv2d(conv, 32, 3, padding=1)
+    out = fluid.layers.conv2d(conv, 64, 3, padding=1, name='t2')
+data_name_map = {'y':'x'}
+USE_GPU = False
+place = fluid.CUDAPlace(0) if USE_GPU else fluid.CPUPlace()
+main_program = merge(teacher_program, student_program, data_name_map, place)
+with fluid.program_guard(main_program):
+    distillation_loss = dist.l2_loss('teacher_t2.tmp_1', 's2.tmp_1', main_program)
+</code></pre>
+
+<h2 id="soft_label_lossteacher_var_name-student_var_name-programfluiddefault_main_program-teacher_temperature1-student_temperature1">soft_label_loss(teacher_var_name, student_var_name, program=fluid.default_main_program(), teacher_temperature=1., student_temperature=1.)</h2>
+<p>soft_label_loss为program内的teacher var和student var添加soft label loss，出自论文<a href="https://arxiv.org/pdf/1503.02531.pdf">Distilling the Knowledge in a Neural Network</a></p>
+<p><strong>参数：</strong></p>
+<ul>
+<li><strong>teacher_var_name</strong>(str): teacher_var的名称. </li>
+<li><strong>student_var_name</strong>(str): student_var的名称. </li>
+<li><strong>program</strong>(Program): 用于蒸馏训练的fluid program。默认值：fluid.default_main_program()</li>
+<li><strong>teacher_temperature</strong>(float): 对teacher_var进行soft操作的温度值，温度值越大得到的特征图越平滑 </li>
+<li><strong>student_temperature</strong>(float): 对student_var进行soft操作的温度值，温度值越大得到的特征图越平滑 </li>
+</ul>
+<p><strong>返回：</strong>由teacher_var, student_var组合得到的soft_label_loss</p>
+<p><strong>使用示例：</strong></p>
+<pre><code class="python">import paddle.fluid as fluid
+import paddleslim.dist as dist
+student_program = fluid.Program()
+with fluid.program_guard(student_program):
+    x = fluid.layers.data(name='x', shape=[1, 28, 28])
+    conv = fluid.layers.conv2d(x, 32, 1, name='s1')
+    out = fluid.layers.conv2d(conv, 64, 3, padding=1, name='s2')
+teacher_program = fluid.Program()
+with fluid.program_guard(teacher_program):
+    y = fluid.layers.data(name='y', shape=[1, 28, 28])
+    conv = fluid.layers.conv2d(y, 32, 1, name='t1')
+    conv = fluid.layers.conv2d(conv, 32, 3, padding=1)
+    out = fluid.layers.conv2d(conv, 64, 3, padding=1, name='t2')
+data_name_map = {'y':'x'}
+USE_GPU = False
+place = fluid.CUDAPlace(0) if USE_GPU else fluid.CPUPlace()
+main_program = merge(teacher_program, student_program, data_name_map, place)
+with fluid.program_guard(main_program):
+    distillation_loss = dist.soft_label_loss('teacher_t2.tmp_1', 's2.tmp_1', main_program, 1., 1.)
+</code></pre>
+
+<h2 id="lossloss_func-programfluiddefault_main_program-kwargs">loss(loss_func, program=fluid.default_main_program(), **kwargs)</h2>
+<p>loss函数支持对任意多对teacher_var和student_var使用自定义损失函数</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li><strong>loss_func</strong>(python function): 自定义的损失函数，输入为teacher var和student var，输出为自定义的loss </li>
+<li><strong>program</strong>(Program): 用于蒸馏训练的fluid program。默认值：fluid.default_main_program()</li>
+<li><strong>**kwargs</strong>: loss_func输入名与对应variable名称</li>
+</ul>
+<p><strong>返回</strong>：自定义的损失函数loss</p>
+<p><strong>使用示例：</strong></p>
+<pre><code class="python">import paddle.fluid as fluid
+import paddleslim.dist as dist
+student_program = fluid.Program()
+with fluid.program_guard(student_program):
+    x = fluid.layers.data(name='x', shape=[1, 28, 28])
+    conv = fluid.layers.conv2d(x, 32, 1, name='s1')
+    out = fluid.layers.conv2d(conv, 64, 3, padding=1, name='s2')
+teacher_program = fluid.Program()
+with fluid.program_guard(teacher_program):
+    y = fluid.layers.data(name='y', shape=[1, 28, 28])
+    conv = fluid.layers.conv2d(y, 32, 1, name='t1')
+    conv = fluid.layers.conv2d(conv, 32, 3, padding=1)
+    out = fluid.layers.conv2d(conv, 64, 3, padding=1, name='t2')
+data_name_map = {'y':'x'}
+USE_GPU = False
+place = fluid.CUDAPlace(0) if USE_GPU else fluid.CPUPlace()
+main_program = merge(teacher_program, student_program, data_name_map, place)
+def adaptation_loss(t_var, s_var):
+    teacher_channel = t_var.shape[1]
+    s_hint = fluid.layers.conv2d(s_var, teacher_channel, 1)
+    hint_loss = fluid.layers.reduce_mean(fluid.layers.square(s_hint - t_var))
+    return hint_loss
+with fluid.program_guard(main_program):
+    distillation_loss = dist.loss(main_program, adaptation_loss, t_var='teacher_t2.tmp_1', s_var='s2.tmp_1')
+</code></pre>
+
+<h2 id="_1">注意事项</h2>
+<p>在添加蒸馏loss时会引入新的variable，需要注意新引入的variable不要与student variables命名冲突。这里建议两种用法：</p>
+<ol>
+<li>建议与student_program使用同一个命名空间，以避免一些未指定名称的variables(例如tmp_0, tmp_1...)多次定义为同一名称出现命名冲突</li>
+<li>建议在添加蒸馏loss时指定一个命名空间前缀，具体用法请参考Paddle官方文档<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/name_scope_cn.html#name-scope">fluid.name_scope</a></li>
+</ol></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
