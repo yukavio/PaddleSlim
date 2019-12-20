@@ -179,13 +179,14 @@
 - <strong>is_server(bool):</strong> 当前实例是否要启动一个server。默认：True。</p>
 <p><strong>返回：</strong> 
 一个SANAS类的实例</p>
-<p><strong>示例代码：</strong></p>
-<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
+<p><strong>示例代码：</strong>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
 <span class="n">config</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;MobileNetV2Space&#39;</span><span class="p">)]</span>
 <span class="n">sanas</span> <span class="o">=</span> <span class="n">SANAS</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 </pre></div>
-
-
+</td></tr></table></p>
 <hr />
 <blockquote>
 <p>tokens2arch(tokens)
@@ -195,16 +196,20 @@
 - <strong>tokens(list):</strong> 一组token。</p>
 <p><strong>返回</strong>
 返回一个模型结构实例。</p>
-<p><strong>示例代码：</strong></p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<p><strong>示例代码：</strong>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
 <span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">token2arch</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">arch</span> <span class="ow">in</span> <span class="n">archs</span><span class="p">:</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">arch</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
     <span class="nb">input</span> <span class="o">=</span> <span class="n">output</span>
 </pre></div>
-
-
+</td></tr></table></p>
 <hr />
 <blockquote>
 <p>next_archs():
@@ -212,16 +217,20 @@
 </blockquote>
 <p><strong>返回</strong>
 返回模型结构实例的列表，形式为list。</p>
-<p><strong>示例代码：</strong></p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<p><strong>示例代码：</strong>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
 <span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">arch</span> <span class="ow">in</span> <span class="n">archs</span><span class="p">:</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">arch</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
     <span class="nb">input</span> <span class="o">=</span> <span class="n">output</span>
 </pre></div>
-
-
+</td></tr></table></p>
 <hr />
 <blockquote>
 <p>reward(score):
@@ -231,8 +240,104 @@
 <strong>score<float>:</strong> 当前模型的得分，分数越大越好。</p>
 <p><strong>返回</strong>
 模型结构更新成功或者失败，成功则返回<code>True</code>，失败则返回<code>False</code>。</p>
-<p><strong>代码示例</strong></p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<p><strong>代码示例</strong>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">paddle</span>
 <span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
@@ -330,6 +435,7 @@
     <span class="c1">### 回传score</span>
     <span class="n">sa_nas</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">finally_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 </pre></div>
+</td></tr></table></p>
               
             </div>
           </div>
