@@ -468,10 +468,10 @@
 
 <div class="admonition note">
 <p class="admonition-title">注意事项</p>
-<p>在添加蒸馏loss时会引入新的variable，需要注意新引入的variable不要与student variables命名冲突。这里建议两种用法：</p>
+<p>在添加蒸馏loss时会引入新的variable，需要注意新引入的variable不要与student variables命名冲突。这里建议两种用法（两种方法任选其一即可）：</p>
 <ol>
 <li>建议与student_program使用同一个命名空间，以避免一些未指定名称的variables(例如tmp_0, tmp_1...)多次定义为同一名称出现命名冲突</li>
-<li>建议在添加蒸馏loss时指定一个命名空间前缀，具体用法请参考Paddle官方文档<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/name_scope_cn.html#name-scope">fluid.name_scope</a></li>
+<li>建议在添加蒸馏loss时指定一个命名空间前缀，具体用法请参考Paddle官方文档<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/name_scope_cn.html#name-scope"><em>fluid.name_scope</em></a></li>
 </ol>
 </div>
               
