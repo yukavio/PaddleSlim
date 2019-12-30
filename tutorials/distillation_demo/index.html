@@ -91,7 +91,7 @@
         
             <li><a class="toctree-l4" href="#3">3.选择特征图</a></li>
         
-            <li><a class="toctree-l4" href="#4-merge">4. 合并特征图（merge）</a></li>
+            <li><a class="toctree-l4" href="#4-programmerge">4. 合并Program（merge）</a></li>
         
             <li><a class="toctree-l4" href="#5loss">5.添加蒸馏loss</a></li>
         
@@ -294,7 +294,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3 id="4-merge">4. 合并特征图（merge）<a class="headerlink" href="#4-merge" title="Permanent link">#</a></h3>
+<h3 id="4-programmerge">4. 合并Program（merge）<a class="headerlink" href="#4-programmerge" title="Permanent link">#</a></h3>
 <p>PaddlePaddle使用Program来描述计算图，为了同时计算student和teacher两个Program，这里需要将其两者合并（merge）为一个Program。</p>
 <p>merge过程操作较多，具体细节请参考<a href="https://paddlepaddle.github.io/PaddleSlim/api/single_distiller_api/#merge">merge API文档</a>。</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
