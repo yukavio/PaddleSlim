@@ -182,7 +182,7 @@
           <div role="main">
             <div class="section">
               
-                <p>本示例将介绍如何使用PaddleSlim蒸馏接口来对模型进行蒸馏训练</p>
+                <p>本示例将介绍如何使用PaddleSlim蒸馏接口来对模型进行蒸馏训练。</p>
 <h2 id="_1">接口介绍<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p>请参考<a href="https://paddlepaddle.github.io/PaddleSlim/api/single_distiller_api/">蒸馏API文档</a>。</p>
 <h2 id="paddleslim">PaddleSlim蒸馏训练流程<a class="headerlink" href="#paddleslim" title="Permanent link">#</a></h2>
@@ -214,8 +214,8 @@
 </td></tr></table>
 
 <h3 id="2-teacher_program">2. 定义teacher_program<a class="headerlink" href="#2-teacher_program" title="Permanent link">#</a></h3>
-<p>在定义好teacher_program后，可以一并加载训练好的pretrained_model</p>
-<p>在teacher_program内需要加上<code>with fluid.unique_name.guard():</code>，保证teacher的变量命名不被student_program影响，从而跟能够正确地加载预训练参数</p>
+<p>在定义好<code>teacher_program</code>后，可以一并加载训练好的pretrained_model。</p>
+<p>在<code>teacher_program</code>内需要加上<code>with fluid.unique_name.guard():</code>，保证teacher的变量命名不被<code>student_program</code>影响，从而能够正确地加载预训练参数。</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -255,7 +255,7 @@
 </td></tr></table>
 
 <h3 id="3">3.选择特征图<a class="headerlink" href="#3" title="Permanent link">#</a></h3>
-<p>定义好student_program和teacher_program后，我们需要从中两两对应地挑选出若干个特征图，留待后续为其添加知识蒸馏损失函数</p>
+<p>定义好<code>student_program</code>和<code>teacher_program</code>后，我们需要从中两两对应地挑选出若干个特征图，留待后续为其添加知识蒸馏损失函数。</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -304,7 +304,8 @@
 </td></tr></table>
 
 <h3 id="5loss">5.添加蒸馏loss<a class="headerlink" href="#5loss" title="Permanent link">#</a></h3>
-<p>在添加蒸馏loss的过程中，可能还会引入部分变量（Variable），为了避免命名重复这里可以使用<code>with fluid.name_scope("distill"):</code>为新引入的变量加一个命名作用域</p>
+<p>在添加蒸馏loss的过程中，可能还会引入部分变量（Variable），为了避免命名重复这里可以使用<code>with fluid.name_scope("distill"):</code>为新引入的变量加一个命名作用域。</p>
+<p>另外需要注意的是，merge过程为<code>teacher_program</code>的变量统一加了名称前缀，默认是<code>"teacher_"</code>, 这里在添加<code>l2_loss</code>时也要为teacher的变量加上这个前缀。</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
@@ -312,9 +313,11 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">student_program</span><span class="p">,</span> <span class="n">student_startup</span><span class="p">):</span>
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">student_program</span><span class="p">,</span> <span class="n">student_startup</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;distill&quot;</span><span class="p">):</span>
-        <span class="n">distill_loss</span> <span class="o">=</span> <span class="n">l2_loss</span><span class="p">(</span><span class="s1">&#39;teacher_bn5c_branch2b.output.1.tmp_3&#39;</span><span class="p">,</span> <span class="s1">&#39;depthwise_conv2d_11.tmp_0&#39;</span><span class="p">,</span> <span class="n">main</span><span class="p">)</span>
+        <span class="n">distill_loss</span> <span class="o">=</span> <span class="n">l2_loss</span><span class="p">(</span><span class="s1">&#39;teacher_bn5c_branch2b.output.1.tmp_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;depthwise_conv2d_11.tmp_0&#39;</span><span class="p">,</span> <span class="n">student_program</span><span class="p">)</span>
         <span class="n">distill_weight</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="n">avg_cost</span> <span class="o">+</span> <span class="n">distill_loss</span> <span class="o">*</span> <span class="n">distill_weight</span>
         <span class="n">opt</span> <span class="o">=</span> <span class="n">create_optimizer</span><span class="p">()</span>
@@ -323,7 +326,7 @@
 </pre></div>
 </td></tr></table>
 
-<p>至此，我们就得到了用于蒸馏训练的student_program，后面就可以使用一个普通program一样对其开始训练和评估</p>
+<p>至此，我们就得到了用于蒸馏训练的<code>student_program</code>，后面就可以使用一个普通program一样对其开始训练和评估。</p>
               
             </div>
           </div>
