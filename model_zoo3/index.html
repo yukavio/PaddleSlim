@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>模型库2 - PaddleSlim Docs</title>
+  <title>模型库3 - PaddleSlim Docs</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "\u6a21\u578b\u5e932";
-    var mkdocs_page_input_path = "model_zoo2.md";
+    var mkdocs_page_name = "\u6a21\u578b\u5e933";
+    var mkdocs_page_input_path = "model_zoo3.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -125,54 +125,26 @@
     <a class="" href="../model_zoo/">模型库</a>
 	    </li>
           
+            <li class="toctree-l1">
+		
+    <a class="" href="../model_zoo2/">模型库2</a>
+	    </li>
+          
             <li class="toctree-l1 current">
 		
-    <a class="current" href="./">模型库2</a>
+    <a class="current" href="./">模型库3</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#1">1. 量化</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#11">1.1 图象分类</a></li>
-        
-            <li><a class="toctree-l3" href="#12">1.2 目标检测</a></li>
-        
-            <li><a class="toctree-l3" href="#13">1.3 图像分割</a></li>
-        
-        </ul>
+    <li class="toctree-l2"><a href="#1">1. 图象分类</a></li>
     
 
-    <li class="toctree-l2"><a href="#2">2. 剪枝</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#21">2.1 图像分类</a></li>
-        
-            <li><a class="toctree-l3" href="#22">2.2 目标检测</a></li>
-        
-            <li><a class="toctree-l3" href="#23">2.3 图像分割</a></li>
-        
-        </ul>
+    <li class="toctree-l2"><a href="#2">2. 目标检测</a></li>
     
 
-    <li class="toctree-l2"><a href="#3">3. 蒸馏</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#31">3.1 图象分类</a></li>
-        
-            <li><a class="toctree-l3" href="#32">3.2 目标检测</a></li>
-        
-        </ul>
+    <li class="toctree-l2"><a href="#3">3. 图像分割</a></li>
     
 
     </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../model_zoo3/">模型库3</a>
 	    </li>
           
         </ul>
@@ -197,10 +169,10 @@
     
       
     
-    <li>模型库2</li>
+    <li>模型库3</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/PaddlePaddle/PaddleSlim/edit/master/docs/model_zoo2.md"
+        <a href="https://github.com/PaddlePaddle/PaddleSlim/edit/master/docs/model_zoo3.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -210,8 +182,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="1">1. 量化<a class="headerlink" href="#1" title="Permanent link">#</a></h2>
-<h3 id="11">1.1 图象分类<a class="headerlink" href="#11" title="Permanent link">#</a></h3>
+                <h3 id="1">1. 图象分类<a class="headerlink" href="#1" title="Permanent link">#</a></h3>
 <p>数据集：ImageNet1000类</p>
 <table>
 <thead>
@@ -220,7 +191,8 @@
 <th align="center">压缩方法</th>
 <th align="center">Top-1/Top-5</th>
 <th align="center">模型大小（MB）</th>
-<th align="center">下载</th>
+<th align="center">FLOPs</th>
+<th>下载</th>
 </tr>
 </thead>
 <tbody>
@@ -229,78 +201,169 @@
 <td align="center">-</td>
 <td align="center">70.99%/89.68%</td>
 <td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">xx</td>
+<td><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
 <td align="center">quant_psot</td>
 <td align="center">xx%/xx%</td>
 <td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">-</td>
+<td><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
 <td align="center">quant_aware</td>
 <td align="center">xx%/xx%</td>
 <td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">-</td>
+<td><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNetV1</td>
+<td align="center">uniform -xx%</td>
+<td align="center">xx%/xx%</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNetV1</td>
+<td align="center">sensitive -xx%</td>
+<td align="center">xx%/xx%</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNetV1</td>
+<td align="center">ResNet50_vd<sup><a href="#trans1">1</a></sup></td>
+<td align="center">xx%/xx%</td>
+<td align="center">xx</td>
+<td align="center">-</td>
+<td><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">-</td>
 <td align="center">72.15%/90.65%</td>
 <td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">xx</td>
+<td><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">quant_post</td>
 <td align="center">xx%/xx%</td>
 <td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">-</td>
+<td><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">quant_aware</td>
 <td align="center">xx%/xx%</td>
 <td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">-</td>
+<td><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNetV2</td>
+<td align="center">uniform -xx%</td>
+<td align="center">xx%/xx%</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNetV2</td>
+<td align="center">sensitive -xx%</td>
+<td align="center">xx%/xx%</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNetV2</td>
+<td align="center">ResNet50_vd<sup><a href="#trans1">1</a></sup></td>
+<td align="center">xx%/xx%</td>
+<td align="center">xx</td>
+<td align="center">-</td>
+<td><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">ResNet34</td>
+<td align="center">-</td>
+<td align="center">74.57%/92.14%</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">ResNet34</td>
+<td align="center">uniform -xx%</td>
+<td align="center">xx%/xx%</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">ResNet34</td>
+<td align="center">auto -xx%</td>
+<td align="center">xx%/xx%</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50</td>
 <td align="center">-</td>
 <td align="center">76.50%/93.00%</td>
 <td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">-</td>
+<td><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50</td>
 <td align="center">quant_post</td>
 <td align="center">xx%/xx%</td>
 <td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">-</td>
+<td><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50</td>
 <td align="center">quant_aware</td>
 <td align="center">xx%/xx%</td>
 <td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">-</td>
+<td><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">ResNet50</td>
+<td align="center">ResNet101<sup><a href="#trans2">2</a></sup></td>
+<td align="center">xx%/xx%</td>
+<td align="center">xx</td>
+<td align="center">-</td>
+<td><a href="">下载链接</a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="12">1.2 目标检测<a class="headerlink" href="#12" title="Permanent link">#</a></h3>
+<h3 id="2">2. 目标检测<a class="headerlink" href="#2" title="Permanent link">#</a></h3>
 <p>数据集：COCO 2017 </p>
 <table>
 <thead>
 <tr>
 <th align="center">Model</th>
 <th align="center">压缩方法</th>
+<th align="center">数据集</th>
 <th align="center">Image/GPU</th>
 <th align="center">输入608 Box AP</th>
 <th align="center">输入416 Box AP</th>
 <th align="center">输入320 Box AP</th>
 <th align="center">模型大小(MB)</th>
+<th align="center">FLOPs</th>
 <th align="center">下载</th>
 </tr>
 </thead>
@@ -308,17 +371,81 @@
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
 <td align="center">-</td>
+<td align="center">Pasacl VOC</td>
+<td align="center">8</td>
+<td align="center">76.2</td>
+<td align="center">76.7</td>
+<td align="center">75.3</td>
+<td align="center">xx</td>
+<td align="center">-</td>
+<td align="center"><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNet-V1-YOLOv3</td>
+<td align="center">uniform  -xx%</td>
+<td align="center">Pasacl VOC</td>
+<td align="center">8</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">-</td>
+<td align="center"><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNet-V1-YOLOv3</td>
+<td align="center">ResNet34-YOLOv3-VOC<sup><a href="#trans3">3</a></sup></td>
+<td align="center">Pasacl VOC</td>
+<td align="center">16</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">-</td>
+<td align="center"><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNet-V1-YOLOv3</td>
+<td align="center">-</td>
+<td align="center">COCO</td>
 <td align="center">8</td>
 <td align="center">29.3</td>
 <td align="center">29.3</td>
 <td align="center">27.1</td>
 <td align="center">xx</td>
+<td align="center">xx</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
 <td align="center">quant_post</td>
+<td align="center">COCO</td>
 <td align="center">8</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">-</td>
+<td align="center"><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNet-V1-YOLOv3</td>
+<td align="center">quant_aware</td>
+<td align="center">COCO</td>
+<td align="center">8</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">-</td>
+<td align="center"><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">MobileNet-V1-YOLOv3</td>
+<td align="center">uniform -xx%</td>
+<td align="center">COCO</td>
+<td align="center">8</td>
+<td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
@@ -327,19 +454,23 @@
 </tr>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
-<td align="center">quant_aware</td>
-<td align="center">8</td>
+<td align="center">ResNet34-YOLOv3-COCO<sup><a href="#trans4">4</a></sup></td>
+<td align="center">COCO</td>
+<td align="center">16</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
+<td align="center">-</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">R50-dcn-YOLOv3 FP32</td>
 <td align="center">-</td>
+<td align="center">COCO</td>
 <td align="center">8</td>
 <td align="center">41.4</td>
+<td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
@@ -348,17 +479,33 @@
 <tr>
 <td align="center">R50-dcn-YOLOv3</td>
 <td align="center">quant_post</td>
+<td align="center">COCO</td>
 <td align="center">8</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
+<td align="center">-</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">R50-dcn-YOLOv3</td>
 <td align="center">quant_aware</td>
+<td align="center">COCO</td>
 <td align="center">8</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">xx</td>
+<td align="center">-</td>
+<td align="center"><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">R50-dcn-YOLOv3</td>
+<td align="center">uniform -xx%</td>
+<td align="center">COCO</td>
+<td align="center">8</td>
+<td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
@@ -464,7 +611,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="13">1.3 图像分割<a class="headerlink" href="#13" title="Permanent link">#</a></h3>
+<h3 id="3">3. 图像分割<a class="headerlink" href="#3" title="Permanent link">#</a></h3>
 <p>数据集：Cityscapes</p>
 <table>
 <thead>
@@ -473,6 +620,7 @@
 <th align="center">压缩方法</th>
 <th align="center">mIoU</th>
 <th align="center">模型大小（MB）</th>
+<th align="center">FLOPs</th>
 <th align="center">下载</th>
 </tr>
 </thead>
@@ -482,6 +630,7 @@
 <td align="center">-</td>
 <td align="center">63.26</td>
 <td align="center">xx</td>
+<td align="center">-</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
 <tr>
@@ -489,6 +638,7 @@
 <td align="center">quant_post</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
+<td align="center">-</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
 <tr>
@@ -496,12 +646,14 @@
 <td align="center">quant_aware</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
+<td align="center">-</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">DeepLabv3+/MobileNetv2</td>
 <td align="center">-</td>
 <td align="center">69.81</td>
+<td align="center">xx</td>
 <td align="center">xx</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
@@ -510,6 +662,7 @@
 <td align="center">quant_post</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
+<td align="center">-</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
 <tr>
@@ -517,211 +670,7 @@
 <td align="center">quant_aware</td>
 <td align="center">xx</td>
 <td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-</tbody>
-</table>
-<h2 id="2">2. 剪枝<a class="headerlink" href="#2" title="Permanent link">#</a></h2>
-<h3 id="21">2.1 图像分类<a class="headerlink" href="#21" title="Permanent link">#</a></h3>
-<p>数据集：ImageNet1000类</p>
-<table>
-<thead>
-<tr>
-<th align="center">Model</th>
-<th align="center">压缩方法</th>
-<th align="center">Top-1/Top-5</th>
-<th align="center">模型大小（MB）</th>
-<th align="center">FLOPs</th>
-<th align="center">下载</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">MobileNetV1</td>
 <td align="center">-</td>
-<td align="center">70.99%/89.68%</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNetV1</td>
-<td align="center">uniform -xx%</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNetV1</td>
-<td align="center">sensitive -xx%</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNetV2</td>
-<td align="center">-</td>
-<td align="center">72.15%/90.65%</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNetV2</td>
-<td align="center">uniform -xx%</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNetV2</td>
-<td align="center">sensitive -xx%</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">ResNet34</td>
-<td align="center">-</td>
-<td align="center">74.57%/92.14%</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">ResNet34</td>
-<td align="center">uniform -xx%</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">ResNet34</td>
-<td align="center">auto -xx%</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-</tbody>
-</table>
-<h3 id="22">2.2 目标检测<a class="headerlink" href="#22" title="Permanent link">#</a></h3>
-<p>数据集：Pasacl VOC &amp; COCO 2017</p>
-<table>
-<thead>
-<tr>
-<th align="center">Model</th>
-<th>压缩方法</th>
-<th align="center">数据集</th>
-<th align="center">Image/GPU</th>
-<th align="center">输入608 mAP</th>
-<th align="center">输入416 mAP</th>
-<th align="center">输入320  mAP</th>
-<th align="center">模型大小（MB）</th>
-<th align="center">FLOPs</th>
-<th align="center">下载</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">MobileNet-V1-YOLOv3</td>
-<td>-</td>
-<td align="center">Pasacl VOC</td>
-<td align="center">8</td>
-<td align="center">76.2</td>
-<td align="center">76.7</td>
-<td align="center">75.3</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNet-V1-YOLOv3</td>
-<td>uniform  -xx%</td>
-<td align="center">Pasacl VOC</td>
-<td align="center">8</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNet-V1-YOLOv3</td>
-<td>-</td>
-<td align="center">COCO</td>
-<td align="center">8</td>
-<td align="center">29.3</td>
-<td align="center">29.3</td>
-<td align="center">27.1</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNet-V1-YOLOv3</td>
-<td>uniform -xx%</td>
-<td align="center">COCO</td>
-<td align="center">8</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">R50-dcn-YOLOv3</td>
-<td>-</td>
-<td align="center">COCO</td>
-<td align="center">8</td>
-<td align="center">41.4</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">R50-dcn-YOLOv3</td>
-<td>uniform -xx%</td>
-<td align="center">COCO</td>
-<td align="center">8</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-</tbody>
-</table>
-<h3 id="23">2.3 图像分割<a class="headerlink" href="#23" title="Permanent link">#</a></h3>
-<p>数据集：Cityscapes</p>
-<table>
-<thead>
-<tr>
-<th align="center">Model</th>
-<th align="center">压缩方法</th>
-<th align="center">mIoU</th>
-<th align="center">模型大小（MB）</th>
-<th align="center">FLOPs</th>
-<th align="center">下载</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">DeepLabv3+/MobileNetv2</td>
-<td align="center">-</td>
-<td align="center">69.81</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
 <tr>
@@ -734,124 +683,12 @@
 </tr>
 </tbody>
 </table>
-<h2 id="3">3. 蒸馏<a class="headerlink" href="#3" title="Permanent link">#</a></h2>
-<h3 id="31">3.1 图象分类<a class="headerlink" href="#31" title="Permanent link">#</a></h3>
-<p>数据集：ImageNet1000类</p>
-<table>
-<thead>
-<tr>
-<th align="center">Model</th>
-<th align="center">蒸馏 teacher</th>
-<th align="center">Top-1/Top-5</th>
-<th align="center">下载</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">MobileNetV1</td>
-<td align="center">-</td>
-<td align="center">70.99%/89.68%</td>
-<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV1_pretrained.tar">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNetV1</td>
-<td align="center">ResNet50_vd<sup><a href="#trans1">1</a></sup></td>
-<td align="center">72.79%/90.69%</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNetV2</td>
-<td align="center">-</td>
-<td align="center">72.15%/90.65%</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNetV2</td>
-<td align="center">ResNet50_vd<sup><a href="#trans1">1</a></sup></td>
-<td align="center">74.30%/91.52%</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">ResNet50</td>
-<td align="center">-</td>
-<td align="center">76.50%/93.00%</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">ResNet50</td>
-<td align="center">ResNet101<sup><a href="#trans2">2</a></sup></td>
-<td align="center">77.40%/93.48%</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-</tbody>
-</table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><a name="trans1">  [1]</a>：<a href="https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_vd_pretrained.tar">ResNet50_vd</a>预训练模型Top-1/Top-5准确率分别为79.12%/94.44%</p>
 <p>带_vd后缀代表开启了Mixup训练，Mixup相关介绍参考<a href="https://arxiv.org/abs/1710.09412">mixup: Beyond Empirical Risk Minimization</a></p>
-<p><a name="trans1">[2]</a>：<a href="https://paddle-imagenet-models-name.bj.bcebos.com/ResNet101_pretrained.tar">ResNet101</a>预训练模型Top-1/Top-5准确率分别为77.56%/93.64%</p>
-</div>
-<h3 id="32">3.2 目标检测<a class="headerlink" href="#32" title="Permanent link">#</a></h3>
-<p>数据集：Pasacl VOC &amp; COCO 2017</p>
-<table>
-<thead>
-<tr>
-<th align="center">Model</th>
-<th align="center">蒸馏 teacher</th>
-<th align="center">数据集</th>
-<th align="center">Image/GPU</th>
-<th align="center">输入640 mAP</th>
-<th align="center">输入416 mAP</th>
-<th align="center">输入320 mAP</th>
-<th align="center">下载链接</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">MobileNet-V1-YOLOv3</td>
-<td align="center">-</td>
-<td align="center">Pasacl VOC</td>
-<td align="center">16</td>
-<td align="center">76.2</td>
-<td align="center">76.7</td>
-<td align="center">75.3</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNet-V1-YOLOv3</td>
-<td align="center">ResNet34-YOLOv3-VOC<sup><a href="#trans3">3</a></sup></td>
-<td align="center">Pasacl VOC</td>
-<td align="center">16</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNet-V1-YOLOv3</td>
-<td align="center">-</td>
-<td align="center">COCO</td>
-<td align="center">16</td>
-<td align="center">29.3</td>
-<td align="center">29.3</td>
-<td align="center">27.1</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">MobileNet-V1-YOLOv3</td>
-<td align="center">ResNet34-YOLOv3-COCO<sup><a href="#trans4">4</a></sup></td>
-<td align="center">COCO</td>
-<td align="center">16</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><a name="trans1">[3]</a>：<a href="">ResNet34-YOLOv3-VOC</a>预训练模型的Box AP为82.6</p>
+<p><a name="trans1">[2]</a>：<a href="https://paddle-imagenet-models-name.bj.bcebos.com/ResNet101_pretrained.tar">ResNet101</a>预训练模型Top-1/Top-5准确率分别为77.56%/93.64%
+    <a name="trans1">[3]</a>：<a href="">ResNet34-YOLOv3-VOC</a>预训练模型的Box AP为82.6</p>
 <p><a name="trans1">[4]</a>：<a href="">ResNet34-YOLOv3-COCO</a>预训练模型的Box AP为36.2</p>
 </div>
               
@@ -861,10 +698,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../model_zoo3/" class="btn btn-neutral float-right" title="模型库3">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../model_zoo/" class="btn btn-neutral" title="模型库"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../model_zoo2/" class="btn btn-neutral" title="模型库2"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -892,10 +727,8 @@
           <a href="https://github.com/PaddlePaddle/PaddleSlim/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../model_zoo/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../model_zoo2/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../model_zoo3/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
