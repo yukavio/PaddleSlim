@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Demo guide - PaddleSlim Docs</title>
+  <title>卷积通道剪裁示例 - PaddleSlim Docs</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Demo guide";
-    var mkdocs_page_input_path = "tutorials/demo_guide.md";
+    var mkdocs_page_name = "\u5377\u79ef\u901a\u9053\u526a\u88c1\u793a\u4f8b";
+    var mkdocs_page_input_path = "tutorials/pruning_demo.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -147,10 +147,10 @@
     
       
     
-    <li>Demo guide</li>
+    <li>卷积通道剪裁示例</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/PaddlePaddle/PaddleSlim/edit/master/docs/tutorials/demo_guide.md"
+        <a href="https://github.com/PaddlePaddle/PaddleSlim/edit/master/docs/tutorials/pruning_demo.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -160,16 +160,39 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="_1"><a href="../demo/distillation/distillation_demo.py">蒸馏</a><a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<p>蒸馏demo默认使用ResNet50作为teacher网络，MobileNet作为student网络，此外还支持将teacher和student换成<a href="../demo/models">models目录</a>支持的任意模型。</p>
-<p>demo中对teahcer模型和student模型的一层特征图添加了l2_loss的蒸馏损失函数，使用时也可根据需要选择fsp_loss, soft_label_loss以及自定义的loss函数。</p>
-<p>训练默认使用的是cifar10数据集，piecewise_decay学习率衰减策略，momentum优化器进行120轮蒸馏训练。使用者也可以简单地用args参数切换为使用ImageNet数据集，cosine_decay学习率衰减策略等其他训练配置。</p>
-<h2 id="_2">量化<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<h3 id="demo"><a href="../quant_aware_demo/">量化训练demo文档</a><a class="headerlink" href="#demo" title="Permanent link">#</a></h3>
-<h3 id="demo_1"><a href="../quant_post_demo/">离线量化demo文档</a><a class="headerlink" href="#demo_1" title="Permanent link">#</a></h3>
-<h3 id="embeddingdemo"><a href="../quant_embedding_demo/">Embedding量化demo文档</a><a class="headerlink" href="#embeddingdemo" title="Permanent link">#</a></h3>
-<h2 id="nas">NAS<a class="headerlink" href="#nas" title="Permanent link">#</a></h2>
-<h3 id="nas_1"><a href="../nas_demo/">NAS示例</a><a class="headerlink" href="#nas_1" title="Permanent link">#</a></h3>
+                <h1 id="_1">卷积通道剪裁示例<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
+<p>本示例将演示如何按指定的剪裁率对每个卷积层的通道数进行剪裁。该示例默认会自动下载并使用mnist数据。</p>
+<p>当前示例支持以下分类模型：</p>
+<ul>
+<li>MobileNetV1</li>
+<li>MobileNetV2</li>
+<li>ResNet50</li>
+<li>PVANet</li>
+</ul>
+<h2 id="_2">接口介绍<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
+<p>该示例使用了<code>paddleslim.Pruner</code>工具类，用户接口使用介绍请参考：<a href="https://paddlepaddle.github.io/PaddleSlim/api/prune_api/">API文档</a></p>
+<h2 id="_3">确定待裁参数<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
+<p>不同模型的参数命名不同，在剪裁前需要确定待裁卷积层的参数名称。可通过以下方法列出所有参数名：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">for</span> <span class="nv">param</span> <span class="nv">in</span> <span class="nv">program</span>.<span class="nv">global_block</span><span class="ss">()</span>.<span class="nv">all_parameters</span><span class="ss">()</span>:
+    <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">param name: {}; shape: {}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">param</span>.<span class="nv">name</span>, <span class="nv">param</span>.<span class="nv">shape</span><span class="ss">))</span>
+</pre></div>
+</td></tr></table>
+
+<p>在<code>train.py</code>脚本中，提供了<code>get_pruned_params</code>方法，根据用户设置的选项<code>--model</code>确定要裁剪的参数。</p>
+<h2 id="_4">启动裁剪任务<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
+<p>通过以下命令启动裁剪任务：</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">export</span> <span class="n">CUDA_VISIBLE_DEVICES</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">python</span> <span class="n">train</span><span class="p">.</span><span class="n">py</span>
+</pre></div>
+</td></tr></table>
+
+<p>执行<code>python train.py --help</code>查看更多选项。</p>
+<h2 id="_5">注意<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
+<ol>
+<li>在接口<code>paddle.Pruner.prune</code>的参数中，<code>params</code>和<code>ratios</code>的长度需要一样。</li>
+</ol>
               
             </div>
           </div>
