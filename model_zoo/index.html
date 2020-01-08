@@ -100,6 +100,33 @@
           
             <li class="toctree-l1">
 		
+    <span class="caption-text">教程</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../tutorials/quant_post_demo/">离线量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tutorials/quant_aware_demo/">量化训练</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tutorials/quant_embedding_demo/">Embedding量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tutorials/nas_demo/">SA搜索</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tutorials/distillation_demo/">知识蒸馏</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
     <span class="caption-text">API</span>
     <ul class="subnav">
                 <li class="">
@@ -129,33 +156,6 @@
                 <li class="">
                     
     <a class="" href="../table_latency/">硬件延时评估表</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">教程</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../tutorials/quant_post_demo/">离线量化</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../tutorials/quant_aware_demo/">量化训练</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../tutorials/quant_embedding_demo/">Embedding量化</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../tutorials/nas_demo/">SA搜索</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../tutorials/distillation_demo/">知识蒸馏</a>
                 </li>
     </ul>
 	    </li>
@@ -335,7 +335,7 @@
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">uniform -50%</td>
-<td align="center">65.79%/86.11%(-6.35%/-4.47%)</td>
+<td align="center">65.79%/86.11% (-6.35%/-4.47%)</td>
 <td align="center">11</td>
 <td align="center">0.296</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV2_uniform-50.tar">下载链接</a></td>
@@ -351,7 +351,7 @@
 <tr>
 <td align="center">ResNet34</td>
 <td align="center">uniform -50%</td>
-<td align="center">70.99%/89.95%(-1.36%/-0.87%)</td>
+<td align="center">70.99%/89.95% (-1.36%/-0.87%)</td>
 <td align="center">41</td>
 <td align="center">3.67</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet34_uniform-50.tar">下载链接</a></td>
@@ -359,7 +359,7 @@
 <tr>
 <td align="center">ResNet34</td>
 <td align="center">auto -55.05%</td>
-<td align="center">70.24%/89.63%(-2.04%/-1.06%)</td>
+<td align="center">70.24%/89.63% (-2.04%/-1.06%)</td>
 <td align="center">33</td>
 <td align="center">3.31</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet34_auto-55.tar">下载链接</a></td>
@@ -395,7 +395,7 @@
 <tr>
 <td align="center">MobileNetV1</td>
 <td align="center">ResNet50_vd<sup><a href="#trans1">1</a></sup> distill</td>
-<td align="center">72.77%/90.68%(+1.78%/+1.00%)</td>
+<td align="center">72.77%/90.68% (+1.78%/+1.00%)</td>
 <td align="center">17</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_distilled.tar">下载链接</a></td>
 </tr>
@@ -409,7 +409,7 @@
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">ResNet50_vd distill</td>
-<td align="center">74.28%/91.53%(+2.13%/+0.88%)</td>
+<td align="center">74.28%/91.53% (+2.13%/+0.88%)</td>
 <td align="center">15</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV2_distilled.tar">下载链接</a></td>
 </tr>
@@ -430,7 +430,7 @@
 <tr>
 <td align="center">ResNet50</td>
 <td align="center">ResNet101 distill</td>
-<td align="center">77.29%/93.65%(+0.79%/+0.65%)</td>
+<td align="center">77.29%/93.65% (+0.79%/+0.65%)</td>
 <td align="center">99</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet50_distilled.tar">下载链接</a></td>
 </tr>
@@ -952,7 +952,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../api/quantization_api/" class="btn btn-neutral float-right" title="量化">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../tutorials/quant_post_demo/" class="btn btn-neutral float-right" title="离线量化">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -986,7 +986,7 @@
         <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../api/quantization_api/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../tutorials/quant_post_demo/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
