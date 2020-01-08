@@ -294,35 +294,35 @@
 <tbody>
 <tr>
 <td align="center">MobileNetV1</td>
-<td align="center">-</td>
+<td align="center">Baseline</td>
 <td align="center">70.99%/89.68%</td>
 <td align="center">17</td>
 <td align="center">1.11</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV1_pretrained.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
 <td align="center">uniform -50%</td>
-<td align="center">69.4%/88.66%</td>
+<td align="center">69.4%/88.66% (-1.59%/-1.02%)</td>
 <td align="center">9</td>
 <td align="center">0.56</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_uniform-50.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
 <td align="center">sensitive -30%</td>
-<td align="center">70.4%/89.3%</td>
+<td align="center">70.4%/89.3% (-0.59%/-0.38%)</td>
 <td align="center">12</td>
 <td align="center">0.74</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_sensitive-30.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
 <td align="center">sensitive -50%</td>
-<td align="center">69.8% / 88.9%</td>
+<td align="center">69.8% / 88.9% (-1.19%/-0.78%)</td>
 <td align="center">9</td>
 <td align="center">0.56</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_sensitive-50.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
@@ -330,15 +330,15 @@
 <td align="center">72.15%/90.65%</td>
 <td align="center">15</td>
 <td align="center">0.59</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV2_pretrained.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">uniform -50%</td>
-<td align="center">65.79%/86.11%</td>
+<td align="center">65.79%/86.11%(-6.35%/-4.47%)</td>
 <td align="center">11</td>
 <td align="center">0.296</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV2_uniform-50.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">ResNet34</td>
@@ -346,23 +346,23 @@
 <td align="center">72.15%/90.65%</td>
 <td align="center">84</td>
 <td align="center">7.36</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/ResNet34_pretrained.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">ResNet34</td>
 <td align="center">uniform -50%</td>
-<td align="center">70.99%/89.95%</td>
+<td align="center">70.99%/89.95%(-1.36%/-0.87%)</td>
 <td align="center">41</td>
 <td align="center">3.67</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet34_uniform-50.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">ResNet34</td>
 <td align="center">auto -55.05%</td>
-<td align="center">70.24%/89.63%</td>
+<td align="center">70.24%/89.63%(-2.04%/-1.06%)</td>
 <td align="center">33</td>
 <td align="center">3.31</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet34_auto-55.tar">下载链接</a></td>
 </tr>
 </tbody>
 </table>
@@ -380,14 +380,14 @@
 <tbody>
 <tr>
 <td align="center">MobileNetV1</td>
-<td align="center">-</td>
+<td align="center">student</td>
 <td align="center">70.99%/89.68%</td>
 <td align="center">17</td>
 <td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV1_pretrained.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50_vd</td>
-<td align="center">-</td>
+<td align="center">teacher</td>
 <td align="center">79.12%/94.44%</td>
 <td align="center">99</td>
 <td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_vd_pretrained.tar">下载链接</a></td>
@@ -395,13 +395,13 @@
 <tr>
 <td align="center">MobileNetV1</td>
 <td align="center">ResNet50_vd<sup><a href="#trans1">1</a></sup> distill</td>
-<td align="center">72.77%/90.68%</td>
+<td align="center">72.77%/90.68%(+1.78%/+1.00%)</td>
 <td align="center">17</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_distilled.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
-<td align="center">-</td>
+<td align="center">student</td>
 <td align="center">72.15%/90.65%</td>
 <td align="center">15</td>
 <td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV2_pretrained.tar">下载链接</a></td>
@@ -409,20 +409,20 @@
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">ResNet50_vd distill</td>
-<td align="center">74.28%/91.53%</td>
+<td align="center">74.28%/91.53%(+2.13%/+0.88%)</td>
 <td align="center">15</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV2_distilled.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50</td>
-<td align="center">-</td>
+<td align="center">student</td>
 <td align="center">76.50%/93.00%</td>
 <td align="center">99</td>
 <td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_pretrained.tar">下载链接</a></td>
 </tr>
 <tr>
 <td align="center">ResNet101</td>
-<td align="center">-</td>
+<td align="center">teacher</td>
 <td align="center">77.56%/93.64%</td>
 <td align="center">173</td>
 <td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/ResNet101_pretrained.tar">下载链接</a></td>
@@ -430,7 +430,7 @@
 <tr>
 <td align="center">ResNet50</td>
 <td align="center">ResNet101 distill</td>
-<td align="center">77.29%/93.65%</td>
+<td align="center">77.29%/93.65%(+0.79%/+0.65%)</td>
 <td align="center">99</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet50_distilled.tar">下载链接</a></td>
 </tr>
@@ -643,7 +643,7 @@
 <tbody>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
-<td align="center">-</td>
+<td align="center">Baseline</td>
 <td align="center">Pascal VOC</td>
 <td align="center">8</td>
 <td align="center">76.2</td>
@@ -658,9 +658,9 @@
 <td align="center">sensitive -52.88%</td>
 <td align="center">Pascal VOC</td>
 <td align="center">8</td>
-<td align="center">77.6</td>
-<td align="center">77.7</td>
-<td align="center">75.5</td>
+<td align="center">77.6 (+1.4)</td>
+<td align="center">77.7 (1.0)</td>
+<td align="center">75.5 (+0.2)</td>
 <td align="center">31</td>
 <td align="center">19.08</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenet_v1_voc_prune.tar">下载链接</a></td>
@@ -682,9 +682,9 @@
 <td align="center">sensitive -51.77%</td>
 <td align="center">COCO</td>
 <td align="center">8</td>
-<td align="center">26.0</td>
-<td align="center">25.1</td>
-<td align="center">22.6</td>
+<td align="center">26.0 (-3.3)</td>
+<td align="center">25.1 (-4.2)</td>
+<td align="center">22.6 (-4.4)</td>
 <td align="center">32</td>
 <td align="center">19.94</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenet_v1_prune.tar">下载链接</a></td>
@@ -706,7 +706,7 @@
 <td align="center">sensitive -9.37%</td>
 <td align="center">COCO</td>
 <td align="center">8</td>
-<td align="center">39.3</td>
+<td align="center">39.3 (+0.2)</td>
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">150</td>
@@ -718,7 +718,7 @@
 <td align="center">sensitive -24.68%</td>
 <td align="center">COCO</td>
 <td align="center">8</td>
-<td align="center">37.3</td>
+<td align="center">37.3 (-1.8)</td>
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">113</td>
@@ -742,7 +742,7 @@
 <td align="center">sensitive -9.37%</td>
 <td align="center">COCO</td>
 <td align="center">8</td>
-<td align="center">40.5</td>
+<td align="center">40.5 (-0.9)</td>
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">150</td>
@@ -754,7 +754,7 @@
 <td align="center">sensitive -24.68%</td>
 <td align="center">COCO</td>
 <td align="center">8</td>
-<td align="center">37.8</td>
+<td align="center">37.8 (-3.3)</td>
 <td align="center">-</td>
 <td align="center">-</td>
 <td align="center">113</td>
@@ -807,9 +807,9 @@
 <td align="center">ResNet34-YOLOv3 distill</td>
 <td align="center">Pascal VOC</td>
 <td align="center">8</td>
-<td align="center">79.0</td>
-<td align="center">78.2</td>
-<td align="center">75.5</td>
+<td align="center">79.0 (+2.8)</td>
+<td align="center">78.2 (+1.5)</td>
+<td align="center">75.5 (+0.2)</td>
 <td align="center">94</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenetv1_voc_distilled.tar">下载链接</a></td>
 </tr>
@@ -840,9 +840,9 @@
 <td align="center">ResNet34-YOLOv3 distill</td>
 <td align="center">COCO</td>
 <td align="center">8</td>
-<td align="center">31.4</td>
-<td align="center">30.0</td>
-<td align="center">27.1</td>
+<td align="center">31.4 (+2.1)</td>
+<td align="center">30.0 (+0.7)</td>
+<td align="center">27.1 (+0.1)</td>
 <td align="center">95</td>
 <td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenetv1_coco_distilled.tar">下载链接</a></td>
 </tr>
@@ -914,25 +914,33 @@
 <th align="center">压缩方法</th>
 <th align="center">mIoU</th>
 <th align="center">模型体积（MB）</th>
-<th align="center">FLOPs（M）</th>
+<th align="center">GFLOPs</th>
 <th align="center">下载</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="center">DeepLabv3+/MobileNetv2</td>
-<td align="center">-</td>
-<td align="center">69.81</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
+<td align="center">fast-scnn</td>
+<td align="center">baseline</td>
+<td align="center">69.64</td>
+<td align="center">11</td>
+<td align="center">14.41</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
 <tr>
-<td align="center">DeepLabv3+/MobileNetv2</td>
-<td align="center">prune -xx%</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
+<td align="center">fast-scnn</td>
+<td align="center">uniform  -17.07%</td>
+<td align="center">69.58 (-0.06)</td>
+<td align="center">8.5</td>
+<td align="center">11.95</td>
+<td align="center"><a href="">下载链接</a></td>
+</tr>
+<tr>
+<td align="center">fast-scnn</td>
+<td align="center">sensitive -47.60%</td>
+<td align="center">66.68 (-2.96)</td>
+<td align="center">5.7</td>
+<td align="center">7.55</td>
 <td align="center"><a href="">下载链接</a></td>
 </tr>
 </tbody>
