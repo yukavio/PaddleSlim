@@ -129,7 +129,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../search_space/">搜索空间</a>
+    <a class="" href="../search_space.md">搜索空间</a>
                 </li>
                 <li class="">
                     
@@ -254,13 +254,13 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">注意事项</p>
-</div>
 <ul>
 <li>此接口会改变<code>program</code>结构，并且可能增加一些<code>persistable</code>的变量，所以加载模型参数时请注意和相应的<code>program</code>对应。</li>
 <li>此接口底层经历了<code>fluid.Program</code>-&gt; <code>fluid.framework.IrGraph</code>-&gt;<code>fluid.Program</code>的转变，在<code>fluid.framework.IrGraph</code>中没有<code>Parameter</code>的概念，<code>Variable</code>只有<code>persistable</code>和<code>not persistable</code>的区别，所以在保存和加载参数时，请使用<code>fluid.io.save_persistables</code>和<code>fluid.io.load_persistables</code>接口。</li>
 <li>由于此接口会根据<code>program</code>的结构和量化配置来对<code>program</code>添加op，所以<code>Paddle</code>中一些通过<code>fuse op</code>来加速训练的策略不能使用。已知以下策略在使用量化时必须设为<code>False</code>： <code>fuse_all_reduce_ops, sync_batch_norm</code>。</li>
 <li>如果传入的<code>program</code>中存在和任何op都没有连接的<code>Variable</code>，则会在量化的过程中被优化掉。</li>
 </ul>
+</div>
 <h2 id="convert">convert<a class="headerlink" href="#convert" title="Permanent link">#</a></h2>
 <dl>
 <dt>paddleslim.quant.convert(program, place, config, scope=None, save_int8=False)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/quant/quanter.py">[源代码]</a></dt>
@@ -283,8 +283,8 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">注意事项</p>
-</div>
 <p>因为该接口会对<code>op</code>和<code>Variable</code>做相应的删除和修改，所以此接口只能在训练完成之后调用。如果想转化训练的中间模型，可加载相应的参数之后再使用此接口。</p>
+</div>
 <p><strong>代码示例</strong></p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -388,8 +388,8 @@
 <p>无。</p>
 <div class="admonition note">
 <p class="admonition-title">注意事项</p>
-</div>
 <p>因为该接口会收集校正数据的所有的激活值，所以使用的校正图片不能太多。<code>'KL'</code>散度的计算也比较耗时。</p>
+</div>
 <p><strong>代码示例</strong></p>
 <blockquote>
 <p>注： 此示例不能直接运行，因为需要加载<code>${model_dir}</code>下的模型，所以不能直接运行。</p>

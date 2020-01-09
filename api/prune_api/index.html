@@ -129,7 +129,7 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../search_space/">搜索空间</a>
+    <a class="" href="../search_space.md">搜索空间</a>
                 </li>
                 <li class="">
                     
@@ -184,7 +184,7 @@
               
                 <h2 id="pruner">Pruner<a class="headerlink" href="#pruner" title="Permanent link">#</a></h2>
 <dl>
-<dt>paddleslim.prune.Pruner(criterion="l1_norm")<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/pruner.py#L28">源代码</a></dt>
+<dt>paddleslim.prune.Pruner(criterion="l1_norm")<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/pruner.py#L28">[源代码]</a></dt>
 <dd>
 <p>对卷积网络的通道进行一次剪裁。剪裁一个卷积层的通道，是指剪裁该卷积层输出的通道。卷积层的权重形状为<code>[output_channel, input_channel, kernel_size, kernel_size]</code>，通过剪裁该权重的第一纬度达到剪裁输出通道数的目的。</p>
 </dd>
@@ -202,7 +202,7 @@
 </td></tr></table>
 
 <dl>
-<dt>paddleslim.prune.Pruner.prune(program, scope, params, ratios, place=None, lazy=False, only_graph=False, param_backup=False, param_shape_backup=False)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/pruner.py#L36">源代码</a></dt>
+<dt>paddleslim.prune.Pruner.prune(program, scope, params, ratios, place=None, lazy=False, only_graph=False, param_backup=False, param_shape_backup=False)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/pruner.py#L36">[源代码]</a></dt>
 <dd>
 <p>对目标网络的一组卷积层的权重进行裁剪。</p>
 </dd>
@@ -404,7 +404,7 @@
 <hr />
 <h2 id="sensitivity">sensitivity<a class="headerlink" href="#sensitivity" title="Permanent link">#</a></h2>
 <dl>
-<dt>paddleslim.prune.sensitivity(program, place, param_names, eval_func, sensitivities_file=None, pruned_ratios=None) <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py#L34">源代码</a></dt>
+<dt>paddleslim.prune.sensitivity(program, place, param_names, eval_func, sensitivities_file=None, pruned_ratios=None) <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py#L34">[源代码]</a></dt>
 <dd>
 <p>计算网络中每个卷积层的敏感度。每个卷积层的敏感度信息统计方法为：依次剪掉当前卷积层不同比例的输出通道数，在测试集上计算剪裁后的精度损失。得到敏感度信息后，可以通过观察或其它方式确定每层卷积的剪裁率。</p>
 </dd>
@@ -653,7 +653,7 @@
 
 <h2 id="merge_sensitive">merge_sensitive<a class="headerlink" href="#merge_sensitive" title="Permanent link">#</a></h2>
 <dl>
-<dt>paddleslim.prune.merge_sensitive(sensitivities)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py#L161">源代码</a></dt>
+<dt>paddleslim.prune.merge_sensitive(sensitivities)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py#L161">[源代码]</a></dt>
 <dd>
 <p>合并多个敏感度信息。</p>
 </dd>
@@ -690,7 +690,7 @@
 <p>示例：</p>
 <h2 id="load_sensitivities">load_sensitivities<a class="headerlink" href="#load_sensitivities" title="Permanent link">#</a></h2>
 <dl>
-<dt>paddleslim.prune.load_sensitivities(sensitivities_file)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py#L184">源代码</a></dt>
+<dt>paddleslim.prune.load_sensitivities(sensitivities_file)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py#L184">[源代码]</a></dt>
 <dd>
 <p>从文件中加载敏感度信息。</p>
 </dd>
@@ -706,7 +706,7 @@
 <p>示例：</p>
 <h2 id="get_ratios_by_loss">get_ratios_by_loss<a class="headerlink" href="#get_ratios_by_loss" title="Permanent link">#</a></h2>
 <dl>
-<dt>paddleslim.prune.get_ratios_by_loss(sensitivities, loss)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py#L206">源代码</a></dt>
+<dt>paddleslim.prune.get_ratios_by_loss(sensitivities, loss)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py#L206">[源代码]</a></dt>
 <dd>
 <p>根据敏感度和精度损失阈值计算出一组剪切率。对于参数<code>w</code>, 其剪裁率为使精度损失低于<code>loss</code>的最大剪裁率。</p>
 </dd>
