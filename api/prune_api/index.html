@@ -213,7 +213,7 @@
 <p><strong>program(paddle.fluid.Program)</strong> - 要裁剪的目标网络。更多关于Program的介绍请参考：<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/Program_cn.html#program">Program概念介绍</a>。</p>
 </li>
 <li>
-<p><strong>scope(paddle.fluid.Scope)</strong> - 要裁剪的权重所在的<code>scope</code>，Paddle中用<code>scope</code>实例存放模型参数和运行时变量的值。Scope中的参数值会被<code>inplace</code>的裁剪。更多介绍请参考<a href="">Scope概念介绍</a></p>
+<p><strong>scope(paddle.fluid.Scope)</strong> - 要裁剪的权重所在的<code>scope</code>，Paddle中用<code>scope</code>实例存放模型参数和运行时变量的值。Scope中的参数值会被<code>inplace</code>的裁剪。更多介绍请参考<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/scope_guard_cn.html#scope-guard">scope_guard</a></p>
 </li>
 <li>
 <p><strong>params(list<str>)</strong> - 需要被裁剪的卷积层的参数的名称列表。可以通过以下方式查看模型中所有参数的名称:
@@ -229,7 +229,7 @@
 <p><strong>ratios(list<float>)</strong> - 用于裁剪<code>params</code>的剪切率，类型为列表。该列表长度必须与<code>params</code>的长度一致。</p>
 </li>
 <li>
-<p><strong>place(paddle.fluid.Place)</strong> - 待裁剪参数所在的设备位置，可以是<code>CUDAPlace</code>或<code>CPUPlace</code>。<a href="">Place概念介绍</a></p>
+<p><strong>place(paddle.fluid.Place)</strong> - 待裁剪参数所在的设备位置，可以是<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/CUDAPlace_cn.html#cudaplace">CUDAPlace</a>或<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/CPUPlace_cn.html#cpuplace">CPUPlace</a>。</p>
 </li>
 <li>
 <p><strong>lazy(bool)</strong> - <code>lazy</code>为True时，通过将指定通道的参数置零达到裁剪的目的，参数的<code>shape保持不变</code>；<code>lazy</code>为False时，直接将要裁的通道的参数删除，参数的<code>shape</code>会发生变化。</p>
@@ -415,7 +415,7 @@
 <p><strong>program(paddle.fluid.Program)</strong> - 待评估的目标网络。更多关于Program的介绍请参考：<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/Program_cn.html#program">Program概念介绍</a>。</p>
 </li>
 <li>
-<p><strong>place(paddle.fluid.Place)</strong> - 待分析的参数所在的设备位置，可以是<code>CUDAPlace</code>或<code>CPUPlace</code>。<a href="">Place概念介绍</a></p>
+<p><strong>place(paddle.fluid.Place)</strong> - 待分析的参数所在的设备位置，可以是<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/CUDAPlace_cn.html#cudaplace">CUDAPlace</a>或<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/CPUPlace_cn.html#cpuplace">CPUPlace</a>。</p>
 </li>
 <li>
 <p><strong>param_names(list<str>)</strong> - 待分析的卷积层的参数的名称列表。可以通过以下方式查看模型中所有参数的名称:</p>
