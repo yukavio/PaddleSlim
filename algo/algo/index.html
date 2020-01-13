@@ -125,9 +125,6 @@
     <a class="current" href="./">算法原理</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#_1">目录</a></li>
-    
-
     <li class="toctree-l2"><a href="#1-quantization-aware-training">1. Quantization Aware Training量化介绍</a></li>
     
         <ul>
@@ -209,14 +206,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="_1">目录<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
-<ul>
-<li><a href="https://paddlepaddle.github.io/PaddleSlim/algo/algo/#1-quantization-aware-training">量化原理介绍</a></li>
-<li><a href="https://paddlepaddle.github.io/PaddleSlim/algo/algo/#2">剪裁原理介绍</a></li>
-<li><a href="https://paddlepaddle.github.io/PaddleSlim/algo/algo/#3">蒸馏原理介绍</a></li>
-<li><a href="https://paddlepaddle.github.io/PaddleSlim/algo/algo/#4">轻量级模型结构搜索原理介绍</a></li>
-</ul>
-<h2 id="1-quantization-aware-training">1. Quantization Aware Training量化介绍<a class="headerlink" href="#1-quantization-aware-training" title="Permanent link">#</a></h2>
+                <h2 id="1-quantization-aware-training">1. Quantization Aware Training量化介绍<a class="headerlink" href="#1-quantization-aware-training" title="Permanent link">#</a></h2>
 <h3 id="11">1.1 背景<a class="headerlink" href="#11" title="Permanent link">#</a></h3>
 <p>近年来，定点量化使用更少的比特数（如8-bit、3-bit、2-bit等）表示神经网络的权重和激活已被验证是有效的。定点量化的优点包括低内存带宽、低功耗、低计算资源占用以及低模型存储需求等。</p>
 <p align="center">
@@ -348,7 +338,7 @@ Y_{dq} = \frac{Y_q}{(n - 1) * (n - 1)} * X_m * W_m \
 在剪裁一个卷积核之前，按l1_norm对filter从高到低排序，越靠后的filter越不重要，优先剪掉靠后的filter.</p>
 <h3 id="23">2.3 基于敏感度剪裁卷积网络<a class="headerlink" href="#23" title="Permanent link">#</a></h3>
 <p>根据每个卷积层敏感度的不同，剪掉不同比例的卷积核。</p>
-<h4 id="_2">两个假设<a class="headerlink" href="#_2" title="Permanent link">#</a></h4>
+<h4 id="_1">两个假设<a class="headerlink" href="#_1" title="Permanent link">#</a></h4>
 <ul>
 <li>在一个conv layer的parameter内部，按l1_norm对filter从高到低排序，越靠后的filter越不重要。</li>
 <li>两个layer剪裁相同的比例的filters，我们称对模型精度影响更大的layer的敏感度相对高。</li>
@@ -358,7 +348,7 @@ Y_{dq} = \frac{Y_q}{(n - 1) * (n - 1)} * X_m * W_m \
 <li>layer的剪裁比例与其敏感度成反比</li>
 <li>优先剪裁layer内l1_norm相对低的filter</li>
 </ul>
-<h4 id="_3">敏感度的理解<a class="headerlink" href="#_3" title="Permanent link">#</a></h4>
+<h4 id="_2">敏感度的理解<a class="headerlink" href="#_2" title="Permanent link">#</a></h4>
 <p align="center">
 <img src="https://raw.githubusercontent.com/PaddlePaddle/PaddleSlim/develop/docs/docs/images/algo/pruning_3.png" height=200 width=400 hspace='10'/> <br />
 <strong>图7</strong>
@@ -366,7 +356,7 @@ Y_{dq} = \frac{Y_q}{(n - 1) * (n - 1)} * X_m * W_m \
 
 <p>如**图7**所示，横坐标是将filter剪裁掉的比例，竖坐标是精度的损失，每条彩色虚线表示的是网络中的一个卷积层。
 以不同的剪裁比例**单独**剪裁一个卷积层，并观察其在验证数据集上的精度损失，并绘出**图7**中的虚线。虚线上升较慢的，对应的卷积层相对不敏感，我们优先剪不敏感的卷积层的filter.</p>
-<h4 id="_4">选择最优的剪裁率组合<a class="headerlink" href="#_4" title="Permanent link">#</a></h4>
+<h4 id="_3">选择最优的剪裁率组合<a class="headerlink" href="#_3" title="Permanent link">#</a></h4>
 <p>我们将**图7**中的折线拟合为**图8**中的曲线，每在竖坐标轴上选取一个精度损失值，就在横坐标轴上对应着一组剪裁率，如**图8**中黑色实线所示。
 用户给定一个模型整体的剪裁率，我们通过移动**图5**中的黑色实线来找到一组满足条件的且合法的剪裁率。</p>
 <p align="center">
@@ -374,7 +364,7 @@ Y_{dq} = \frac{Y_q}{(n - 1) * (n - 1)} * X_m * W_m \
 <strong>图8</strong>
 </p>
 
-<h4 id="_5">迭代剪裁<a class="headerlink" href="#_5" title="Permanent link">#</a></h4>
+<h4 id="_4">迭代剪裁<a class="headerlink" href="#_4" title="Permanent link">#</a></h4>
 <p>考虑到多个卷积层间的相关性，一个卷积层的修改可能会影响其它卷积层的敏感度，我们采取了多次剪裁的策略，步骤如下：</p>
 <ul>
 <li>step1: 统计各卷积层的敏感度信息</li>

@@ -183,7 +183,7 @@
 <li><strong>block_mask(list|None)</strong>：- <code>block_mask</code>是一组由0、1组成的列表，0表示当前block是normal block，1表示当前block是reduction block。如果设置了<code>block_mask</code>，则主要以<code>block_mask</code>为主要配置，<code>input_size</code>，<code>output_size</code>和<code>block_num</code>三种配置是无效的。</li>
 </ul>
 <div class="admonition note">
-<p class="admonition-title">note</p>
+<p class="admonition-title">Note</p>
 <ol>
 <li>reduction block表示经过这个block之后的feature map大小下降为之前的一半，normal block表示经过这个block之后feature map大小不变。<br></li>
 <li><code>input_size</code>和<code>output_size</code>用来计算整个模型结构中reduction block数量。</li>
@@ -220,7 +220,7 @@
 <dd>通过一组token得到实际的模型结构，一般用来把搜索到最优的token转换为模型结构用来做最后的训练。</dd>
 </dl>
 <div class="admonition note">
-<p class="admonition-title">note</p>
+<p class="admonition-title">Note</p>
 <p>tokens是一个列表，token映射到搜索空间转换成相应的网络结构，一组token对应唯一的一个网络结构。</p>
 </div>
 <p><strong>参数：</strong></p>
