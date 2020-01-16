@@ -177,7 +177,7 @@
     <li>搜索空间</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/docs/docs/search_space.md"
+        <a href="https://github.com/PaddlePaddle/PaddleSlim/edit/master/docs/search_space.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -243,7 +243,7 @@
 &emsp; 2. token中每个数字的搜索列表长度(<code>range_table</code>函数)，tokens中每个token的索引范围。<br>
 &emsp; 3. 根据token产生模型结构(<code>token2arch</code>函数)，根据搜索到的tokens列表产生模型结构。 <br></p>
 <p>以新增reset block为例说明如何构造自己的search space。自定义的search space不能和已有的search space同名。</p>
-<div class="codehilite"><pre><span></span><span class="c1">### 引入搜索空间基类函数和search space的注册类函数</span>
+<div class="highlight"><pre><span></span><span class="c1">### 引入搜索空间基类函数和search space的注册类函数</span>
 <span class="kn">from</span> <span class="nn">.search_space_base</span> <span class="kn">import</span> <span class="n">SearchSpaceBase</span>
 <span class="kn">from</span> <span class="nn">.search_space_registry</span> <span class="kn">import</span> <span class="n">SEARCHSPACE</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>

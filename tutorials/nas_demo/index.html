@@ -166,7 +166,7 @@
     <li>SA搜索</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/docs/docs/tutorials/nas_demo.md"
+        <a href="https://github.com/PaddlePaddle/PaddleSlim/edit/master/docs/tutorials/nas_demo.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -181,57 +181,57 @@
 <h2 id="_2">接口介绍<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
 <p>请参考。</p>
 <h3 id="1">1. 配置搜索空间<a class="headerlink" href="#1" title="Permanent link">#</a></h3>
-<p>详细的搜索空间配置可以参考<a href="https://paddlepaddle.github.io/PaddleSlim/api/nas_api/">神经网络搜索API文档</a>。
-<div class="codehilite"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;MobileNetV2Space&#39;</span><span class="p">)]</span>
+<p>详细的搜索空间配置可以参考<a href='../../../paddleslim/nas/nas_api.md'>神经网络搜索API文档</a>。
+<div class="highlight"><pre><span></span>config = [(&#39;MobileNetV2Space&#39;)]
 </pre></div></p>
 <h3 id="2-sanas">2. 利用搜索空间初始化SANAS实例<a class="headerlink" href="#2-sanas" title="Permanent link">#</a></h3>
-<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
+<div class="highlight"><pre><span></span>from paddleslim.nas import SANAS
 
-<span class="n">sa_nas</span> <span class="o">=</span> <span class="n">SANAS</span><span class="p">(</span>
-    <span class="n">config</span><span class="p">,</span>
-    <span class="n">server_addr</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">8881</span><span class="p">),</span>
-    <span class="n">init_temperature</span><span class="o">=</span><span class="mf">10.24</span><span class="p">,</span>
-    <span class="n">reduce_rate</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span>
-    <span class="n">search_steps</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-    <span class="n">is_server</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+sa_nas = SANAS(
+    config,
+    server_addr=(&quot;&quot;, 8881),
+    init_temperature=10.24,
+    reduce_rate=0.85,
+    search_steps=300,
+    is_server=True)
 </pre></div>
 
 <h3 id="3-nas">3. 根据实例化的NAS得到当前的网络结构<a class="headerlink" href="#3-nas" title="Permanent link">#</a></h3>
-<div class="codehilite"><pre><span></span><span class="n">archs</span> <span class="o">=</span> <span class="n">sa_nas</span><span class="p">.</span><span class="n">next_archs</span><span class="p">()</span>
+<div class="highlight"><pre><span></span>archs = sa_nas.next_archs()
 </pre></div>
 
 <h3 id="4-program">4. 根据得到的网络结构和输入构造训练和测试program<a class="headerlink" href="#4-program" title="Permanent link">#</a></h3>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<div class="highlight"><pre><span></span>import paddle.fluid as fluid
 
-<span class="n">train_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
-<span class="n">test_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
-<span class="n">startup_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+train_program = fluid.Program()
+test_program = fluid.Program()
+startup_program = fluid.Program()
 
-<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">arch</span> <span class="ow">in</span> <span class="n">archs</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">arch</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-    <span class="n">softmax_out</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">use_cudnn</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
-    <span class="n">avg_cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
-    <span class="n">acc_top1</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+with fluid.program_guard(train_program, startup_program):
+    data = fluid.data(name=&#39;data&#39;, shape=[None, 3, 32, 32], dtype=&#39;float32&#39;)
+    label = fluid.data(name=&#39;label&#39;, shape=[None, 1], dtype=&#39;int64&#39;)
+    for arch in archs:
+        data = arch(data)
+    output = fluid.layers.fc(data, 10)
+    softmax_out = fluid.layers.softmax(input=output, use_cudnn=False)
+    cost = fluid.layers.cross_entropy(input=softmax_out, label=label)
+    avg_cost = fluid.layers.mean(cost)
+    acc_top1 = fluid.layers.accuracy(input=softmax_out, label=label, k=1)
 
-    <span class="n">test_program</span> <span class="o">=</span> <span class="n">train_program</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">sgd</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
-    <span class="n">sgd</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">avg_cost</span><span class="p">)</span>
+    test_program = train_program.clone(for_test=True)
+    sgd = fluid.optimizer.SGD(learning_rate=1e-3)
+    sgd.minimize(avg_cost)
 </pre></div>
 
 <h3 id="5-program">5. 根据构造的训练program添加限制条件<a class="headerlink" href="#5-program" title="Permanent link">#</a></h3>
-<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.analysis</span> <span class="kn">import</span> <span class="n">flops</span>
+<div class="highlight"><pre><span></span>from paddleslim.analysis import flops
 
-<span class="k">if</span> <span class="n">flops</span><span class="p">(</span><span class="n">train_program</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">321208544</span><span class="p">:</span>
-    <span class="k">continue</span>
+if flops(train_program) &gt; 321208544:
+    continue
 </pre></div>
 
 <h3 id="6-score">6. 回传score<a class="headerlink" href="#6-score" title="Permanent link">#</a></h3>
-<div class="codehilite"><pre><span></span><span class="n">sa_nas</span><span class="p">.</span><span class="n">reward</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+<div class="highlight"><pre><span></span>sa_nas.reward(score)
 </pre></div>
               
             </div>

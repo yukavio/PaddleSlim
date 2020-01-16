@@ -150,7 +150,7 @@
     <li>卷积通道剪裁示例</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/docs/docs/tutorials/pruning_demo.md"
+        <a href="https://github.com/PaddlePaddle/PaddleSlim/edit/master/docs/tutorials/pruning_demo.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -173,15 +173,15 @@
 <p>该示例使用了<code>paddleslim.Pruner</code>工具类，用户接口使用介绍请参考：<a href="https://paddlepaddle.github.io/PaddleSlim/api/prune_api/">API文档</a></p>
 <h2 id="_3">确定待裁参数<a class="headerlink" href="#_3" title="Permanent link">#</a></h2>
 <p>不同模型的参数命名不同，在剪裁前需要确定待裁卷积层的参数名称。可通过以下方法列出所有参数名：</p>
-<div class="codehilite"><pre><span></span><span class="k">for</span> <span class="nv">param</span> <span class="nv">in</span> <span class="nv">program</span>.<span class="nv">global_block</span><span class="ss">()</span>.<span class="nv">all_parameters</span><span class="ss">()</span>:
-    <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">param name: {}; shape: {}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">param</span>.<span class="nv">name</span>, <span class="nv">param</span>.<span class="nv">shape</span><span class="ss">))</span>
+<div class="highlight"><pre><span></span>for param in program.global_block().all_parameters():
+    print(&quot;param name: {}; shape: {}&quot;.format(param.name, param.shape))
 </pre></div>
 
 <p>在<code>train.py</code>脚本中，提供了<code>get_pruned_params</code>方法，根据用户设置的选项<code>--model</code>确定要裁剪的参数。</p>
 <h2 id="_4">启动裁剪任务<a class="headerlink" href="#_4" title="Permanent link">#</a></h2>
 <p>通过以下命令启动裁剪任务：</p>
-<div class="codehilite"><pre><span></span><span class="n">export</span> <span class="n">CUDA_VISIBLE_DEVICES</span><span class="o">=</span><span class="mi">0</span>
-<span class="n">python</span> <span class="n">train</span><span class="p">.</span><span class="n">py</span>
+<div class="highlight"><pre><span></span>export CUDA_VISIBLE_DEVICES=0
+python train.py
 </pre></div>
 
 <p>执行<code>python train.py --help</code>查看更多选项。</p>
