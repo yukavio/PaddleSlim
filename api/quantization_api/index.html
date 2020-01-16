@@ -184,23 +184,7 @@
               
                 <h2 id="_1">量化配置<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p>通过字典配置量化参数</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="nv">quant_config_default</span> <span class="o">=</span> {
+<div class="codehilite"><pre><span></span><span class="nv">quant_config_default</span> <span class="o">=</span> {
     <span class="s1">&#39;</span><span class="s">weight_quantize_type</span><span class="s1">&#39;</span>: <span class="s1">&#39;</span><span class="s">abs_max</span><span class="s1">&#39;</span>,
     <span class="s1">&#39;</span><span class="s">activation_quantize_type</span><span class="s1">&#39;</span>: <span class="s1">&#39;</span><span class="s">abs_max</span><span class="s1">&#39;</span>,
     <span class="s1">&#39;</span><span class="s">weight_bits</span><span class="s1">&#39;</span>: <span class="mi">8</span>,
@@ -218,7 +202,6 @@
     <span class="s1">&#39;</span><span class="s">moving_rate</span><span class="s1">&#39;</span>: <span class="mi">0</span>.<span class="mi">9</span>,
 }
 </pre></div>
-</td></tr></table>
 
 <p><strong>参数：</strong></p>
 <ul>
@@ -286,43 +269,7 @@
 <p>因为该接口会对<code>op</code>和<code>Variable</code>做相应的删除和修改，所以此接口只能在训练完成之后调用。如果想转化训练的中间模型，可加载相应的参数之后再使用此接口。</p>
 </div>
 <p><strong>代码示例</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c1">#encoding=utf8</span>
+<div class="codehilite"><pre><span></span><span class="c1">#encoding=utf8</span>
 <span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="kn">import</span> <span class="nn">paddleslim.quant</span> <span class="kn">as</span> <span class="nn">quant</span>
 
@@ -360,7 +307,6 @@
 
 <span class="n">inference_prog</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">quant_eval_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
 </pre></div>
-</td></tr></table>
 
 <p>更详细的用法请参考 <a href='https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/quant/quant_aware'>量化训练demo</a>。</p>
 <h2 id="quant_post">quant_post<a class="headerlink" href="#quant_post" title="Permanent link">#</a></h2>
@@ -394,23 +340,7 @@
 <blockquote>
 <p>注： 此示例不能直接运行，因为需要加载<code>${model_dir}</code>下的模型，所以不能直接运行。</p>
 </blockquote>
-<p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<p><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="kn">as</span> <span class="nn">reader</span>
 <span class="kn">from</span> <span class="nn">paddleslim.quant</span> <span class="kn">import</span> <span class="n">quant_post</span>
 <span class="n">val_reader</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
@@ -428,7 +358,6 @@
         <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
         <span class="n">batch_nums</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
-</td></tr></table>
 更详细的用法请参考 <a href='https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/quant/quant_post'>离线量化demo</a>。</p>
 <h2 id="quant_embedding">quant_embedding<a class="headerlink" href="#quant_embedding" title="Permanent link">#</a></h2>
 <dl>
@@ -454,28 +383,7 @@
 <p><strong>返回类型</strong></p>
 <p><code>fluid.Program</code></p>
 <p><strong>代码示例</strong>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="kn">import</span> <span class="nn">paddleslim.quant</span> <span class="kn">as</span> <span class="nn">quant</span>
 
 <span class="n">train_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
@@ -497,8 +405,7 @@
 
 <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;params_name&#39;</span><span class="p">:</span> <span class="s1">&#39;emb&#39;</span><span class="p">,</span> <span class="s1">&#39;quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;abs_max&#39;</span><span class="p">}</span>
 <span class="hll"><span class="n">quant_program</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_embedding</span><span class="p">(</span><span class="n">infer_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
-</span></pre></div>
-</td></tr></table></p>
+</span></pre></div></p>
 <p>更详细的用法请参考 <a href='https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/quant/quant_embedding'>Embedding量化demo</a>。</p>
               
             </div>

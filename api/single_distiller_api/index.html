@@ -204,24 +204,7 @@
 <p><em>data_name_map</em> 是 <strong>teacher_var name到student_var name的映射</strong>，如果写反可能无法正确进行merge</p>
 </div>
 <p><strong>使用示例：</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="kn">import</span> <span class="nn">paddleslim.dist</span> <span class="kn">as</span> <span class="nn">dist</span>
 <span class="n">student_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">student_program</span><span class="p">):</span>
@@ -240,7 +223,6 @@
 <span class="hll"><span class="n">main_program</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">teacher_program</span><span class="p">,</span> <span class="n">student_program</span><span class="p">,</span>
 </span><span class="hll">                          <span class="n">data_name_map</span><span class="p">,</span> <span class="n">place</span><span class="p">)</span>
 </span></pre></div>
-</td></tr></table>
 
 <h2 id="fsp_loss">fsp_loss<a class="headerlink" href="#fsp_loss" title="Permanent link">#</a></h2>
 <dl>
@@ -259,26 +241,7 @@
 </ul>
 <p><strong>返回：</strong> 由teacher_var1, teacher_var2, student_var1, student_var2组合得到的fsp_loss</p>
 <p><strong>使用示例：</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="kn">import</span> <span class="nn">paddleslim.dist</span> <span class="kn">as</span> <span class="nn">dist</span>
 <span class="n">student_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">student_program</span><span class="p">):</span>
@@ -299,7 +262,6 @@
 <span class="hll">    <span class="n">distillation_loss</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">fsp_loss</span><span class="p">(</span><span class="s1">&#39;teacher_t1.tmp_1&#39;</span><span class="p">,</span> <span class="s1">&#39;teacher_t2.tmp_1&#39;</span><span class="p">,</span>
 </span><span class="hll">                                      <span class="s1">&#39;s1.tmp_1&#39;</span><span class="p">,</span> <span class="s1">&#39;s2.tmp_1&#39;</span><span class="p">,</span> <span class="n">main_program</span><span class="p">)</span>
 </span></pre></div>
-</td></tr></table>
 
 <h2 id="l2_loss">l2_loss<a class="headerlink" href="#l2_loss" title="Permanent link">#</a></h2>
 <dl>
@@ -316,26 +278,7 @@
 </ul>
 <p><strong>返回：</strong> 由teacher_var, student_var组合得到的l2_loss</p>
 <p><strong>使用示例：</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="kn">import</span> <span class="nn">paddleslim.dist</span> <span class="kn">as</span> <span class="nn">dist</span>
 <span class="n">student_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">student_program</span><span class="p">):</span>
@@ -356,7 +299,6 @@
 <span class="hll">    <span class="n">distillation_loss</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">l2_loss</span><span class="p">(</span><span class="s1">&#39;teacher_t2.tmp_1&#39;</span><span class="p">,</span> <span class="s1">&#39;s2.tmp_1&#39;</span><span class="p">,</span>
 </span><span class="hll">                                     <span class="n">main_program</span><span class="p">)</span>
 </span></pre></div>
-</td></tr></table>
 
 <h2 id="soft_label_loss">soft_label_loss<a class="headerlink" href="#soft_label_loss" title="Permanent link">#</a></h2>
 <dl>
@@ -375,26 +317,7 @@
 </ul>
 <p><strong>返回：</strong> 由teacher_var, student_var组合得到的soft_label_loss</p>
 <p><strong>使用示例：</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="kn">import</span> <span class="nn">paddleslim.dist</span> <span class="kn">as</span> <span class="nn">dist</span>
 <span class="n">student_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">student_program</span><span class="p">):</span>
@@ -415,7 +338,6 @@
 <span class="hll">    <span class="n">distillation_loss</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">soft_label_loss</span><span class="p">(</span><span class="s1">&#39;teacher_t2.tmp_1&#39;</span><span class="p">,</span>
 </span><span class="hll">                                             <span class="s1">&#39;s2.tmp_1&#39;</span><span class="p">,</span> <span class="n">main_program</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
 </span></pre></div>
-</td></tr></table>
 
 <h2 id="loss">loss<a class="headerlink" href="#loss" title="Permanent link">#</a></h2>
 <dl>
@@ -432,31 +354,7 @@
 </ul>
 <p><strong>返回</strong>：自定义的损失函数loss</p>
 <p><strong>使用示例：</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
 <span class="kn">import</span> <span class="nn">paddleslim.dist</span> <span class="kn">as</span> <span class="nn">dist</span>
 <span class="n">student_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">student_program</span><span class="p">):</span>
@@ -482,7 +380,6 @@
 <span class="hll">    <span class="n">distillation_loss</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">adaptation_loss</span><span class="p">,</span>
 </span><span class="hll">            <span class="n">t_var</span><span class="o">=</span><span class="s1">&#39;teacher_t2.tmp_1&#39;</span><span class="p">,</span> <span class="n">s_var</span><span class="o">=</span><span class="s1">&#39;s2.tmp_1&#39;</span><span class="p">)</span>
 </span></pre></div>
-</td></tr></table>
 
 <div class="admonition note">
 <p class="admonition-title">注意事项</p>
