@@ -205,13 +205,10 @@
 <p><strong>返回：</strong>
 一个SANAS类的实例</p>
 <p><strong>示例代码：</strong>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
 <span class="n">config</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;MobileNetV2Space&#39;</span><span class="p">)]</span>
 <span class="n">sanas</span> <span class="o">=</span> <span class="n">SANAS</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></p>
+</pre></div></p>
 <dl>
 <dt>paddlesim.nas.SANAS.tokens2arch(tokens)</dt>
 <dd>通过一组token得到实际的模型结构，一般用来把搜索到最优的token转换为模型结构用来做最后的训练。</dd>
@@ -225,19 +222,13 @@ tokens是一个列表，token映射到搜索空间转换成相应的网络结构
 <p><strong>返回：</strong>
 根据传入的token得到一个模型结构实例。</p>
 <p><strong>示例代码：</strong>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
 <span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">token2arch</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">arch</span> <span class="ow">in</span> <span class="n">archs</span><span class="p">:</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">arch</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
     <span class="nb">input</span> <span class="o">=</span> <span class="n">output</span>
-</pre></div>
-</td></tr></table></p>
+</pre></div></p>
 <dl>
 <dt>paddleslim.nas.SANAS.next_archs()</dt>
 <dd>获取下一组模型结构。</dd>
@@ -245,19 +236,13 @@ tokens是一个列表，token映射到搜索空间转换成相应的网络结构
 <p><strong>返回：</strong>
 返回模型结构实例的列表，形式为list。</p>
 <p><strong>示例代码：</strong>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
 <span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">arch</span> <span class="ow">in</span> <span class="n">archs</span><span class="p">:</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">arch</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
     <span class="nb">input</span> <span class="o">=</span> <span class="n">output</span>
-</pre></div>
-</td></tr></table></p>
+</pre></div></p>
 <dl>
 <dt>paddleslim.nas.SANAS.reward(score)</dt>
 <dd>把当前模型结构的得分情况回传。</dd>
