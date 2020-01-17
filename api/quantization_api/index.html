@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../extra.css" rel="stylesheet">
   
   <script>
     // Current page data
@@ -184,45 +185,83 @@
               
                 <h2 id="_1">量化配置<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
 <p>通过字典配置量化参数</p>
-<div class="highlight"><pre><span></span>TENSORRT_OP_TYPES = [
-    &#39;mul&#39;, &#39;conv2d&#39;, &#39;pool2d&#39;, &#39;depthwise_conv2d&#39;, &#39;elementwise_add&#39;,
-    &#39;leaky_relu&#39;
-]
-TRANSFORM_PASS_OP_TYPES = [&#39;conv2d&#39;, &#39;depthwise_conv2d&#39;, &#39;mul&#39;]
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">TENSORRT_OP_TYPES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="s1">&#39;conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;pool2d&#39;</span><span class="p">,</span> <span class="s1">&#39;depthwise_conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;elementwise_add&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;leaky_relu&#39;</span>
+<span class="p">]</span>
+<span class="n">TRANSFORM_PASS_OP_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;depthwise_conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">]</span>
 
-QUANT_DEQUANT_PASS_OP_TYPES = [
-        &quot;pool2d&quot;, &quot;elementwise_add&quot;, &quot;concat&quot;, &quot;softmax&quot;, &quot;argmax&quot;, &quot;transpose&quot;,
-        &quot;equal&quot;, &quot;gather&quot;, &quot;greater_equal&quot;, &quot;greater_than&quot;, &quot;less_equal&quot;,
-        &quot;less_than&quot;, &quot;mean&quot;, &quot;not_equal&quot;, &quot;reshape&quot;, &quot;reshape2&quot;,
-        &quot;bilinear_interp&quot;, &quot;nearest_interp&quot;, &quot;trilinear_interp&quot;, &quot;slice&quot;,
-        &quot;squeeze&quot;, &quot;elementwise_sub&quot;, &quot;relu&quot;, &quot;relu6&quot;, &quot;leaky_relu&quot;, &quot;tanh&quot;, &quot;swish&quot;
-    ]
+<span class="n">QUANT_DEQUANT_PASS_OP_TYPES</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;pool2d&quot;</span><span class="p">,</span> <span class="s2">&quot;elementwise_add&quot;</span><span class="p">,</span> <span class="s2">&quot;concat&quot;</span><span class="p">,</span> <span class="s2">&quot;softmax&quot;</span><span class="p">,</span> <span class="s2">&quot;argmax&quot;</span><span class="p">,</span> <span class="s2">&quot;transpose&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;gather&quot;</span><span class="p">,</span> <span class="s2">&quot;greater_equal&quot;</span><span class="p">,</span> <span class="s2">&quot;greater_than&quot;</span><span class="p">,</span> <span class="s2">&quot;less_equal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;less_than&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;not_equal&quot;</span><span class="p">,</span> <span class="s2">&quot;reshape&quot;</span><span class="p">,</span> <span class="s2">&quot;reshape2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bilinear_interp&quot;</span><span class="p">,</span> <span class="s2">&quot;nearest_interp&quot;</span><span class="p">,</span> <span class="s2">&quot;trilinear_interp&quot;</span><span class="p">,</span> <span class="s2">&quot;slice&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;squeeze&quot;</span><span class="p">,</span> <span class="s2">&quot;elementwise_sub&quot;</span><span class="p">,</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;relu6&quot;</span><span class="p">,</span> <span class="s2">&quot;leaky_relu&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;swish&quot;</span>
+    <span class="p">]</span>
 
-_quant_config_default = {
-    # weight quantize type, default is &#39;channel_wise_abs_max&#39;
-    &#39;weight_quantize_type&#39;: &#39;channel_wise_abs_max&#39;,
-    # activation quantize type, default is &#39;moving_average_abs_max&#39;
-    &#39;activation_quantize_type&#39;: &#39;moving_average_abs_max&#39;,
-    # weight quantize bit num, default is 8
-    &#39;weight_bits&#39;: 8,
-    # activation quantize bit num, default is 8
-    &#39;activation_bits&#39;: 8,
-    # ops of name_scope in not_quant_pattern list, will not be quantized
-    &#39;not_quant_pattern&#39;: [&#39;skip_quant&#39;],
-    # ops of type in quantize_op_types, will be quantized
-    &#39;quantize_op_types&#39;: [&#39;conv2d&#39;, &#39;depthwise_conv2d&#39;, &#39;mul&#39;],
-    # data type after quantization, such as &#39;uint8&#39;, &#39;int8&#39;, etc. default is &#39;int8&#39;
-    &#39;dtype&#39;: &#39;int8&#39;,
-    # window size for &#39;range_abs_max&#39; quantization. defaulf is 10000
-    &#39;window_size&#39;: 10000,
-    # The decay coefficient of moving average, default is 0.9
-    &#39;moving_rate&#39;: 0.9,
-    # if True, &#39;quantize_op_types&#39; will be TENSORRT_OP_TYPES
-    &#39;for_tensorrt&#39;: False,
-    # if True, &#39;quantoze_op_types&#39; will be TRANSFORM_PASS_OP_TYPES + QUANT_DEQUANT_PASS_OP_TYPES
-    &#39;is_full_quantize&#39;: False
-}
+<span class="n">_quant_config_default</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># weight quantize type, default is &#39;channel_wise_abs_max&#39;</span>
+    <span class="s1">&#39;weight_quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;channel_wise_abs_max&#39;</span><span class="p">,</span>
+    <span class="c1"># activation quantize type, default is &#39;moving_average_abs_max&#39;</span>
+    <span class="s1">&#39;activation_quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;moving_average_abs_max&#39;</span><span class="p">,</span>
+    <span class="c1"># weight quantize bit num, default is 8</span>
+    <span class="s1">&#39;weight_bits&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="c1"># activation quantize bit num, default is 8</span>
+    <span class="s1">&#39;activation_bits&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="c1"># ops of name_scope in not_quant_pattern list, will not be quantized</span>
+    <span class="s1">&#39;not_quant_pattern&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;skip_quant&#39;</span><span class="p">],</span>
+    <span class="c1"># ops of type in quantize_op_types, will be quantized</span>
+    <span class="s1">&#39;quantize_op_types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;depthwise_conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">],</span>
+    <span class="c1"># data type after quantization, such as &#39;uint8&#39;, &#39;int8&#39;, etc. default is &#39;int8&#39;</span>
+    <span class="s1">&#39;dtype&#39;</span><span class="p">:</span> <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+    <span class="c1"># window size for &#39;range_abs_max&#39; quantization. defaulf is 10000</span>
+    <span class="s1">&#39;window_size&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="c1"># The decay coefficient of moving average, default is 0.9</span>
+    <span class="s1">&#39;moving_rate&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="c1"># if True, &#39;quantize_op_types&#39; will be TENSORRT_OP_TYPES</span>
+    <span class="s1">&#39;for_tensorrt&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="c1"># if True, &#39;quantoze_op_types&#39; will be TRANSFORM_PASS_OP_TYPES + QUANT_DEQUANT_PASS_OP_TYPES</span>
+    <span class="s1">&#39;is_full_quantize&#39;</span><span class="p">:</span> <span class="kc">False</span>
+<span class="p">}</span>
 </pre></div>
+</td></tr></table>
 
 <p><strong>参数：</strong></p>
 <ul>
@@ -298,37 +337,73 @@ _quant_config_default = {
 </div>
 <p>因为该接口会对<code>op</code>和<code>Variable</code>做相应的删除和修改，所以此接口只能在训练完成之后调用。如果想转化训练的中间模型，可加载相应的参数之后再使用此接口。</p>
 <p><strong>代码示例</strong></p>
-<div class="highlight"><pre><span></span><span class="c1">#encoding=utf8</span>
-<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
-<span class="kn">import</span> <span class="nn">paddleslim.quant</span> <span class="kn">as</span> <span class="nn">quant</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c1">#encoding=utf8</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim.quant</span> <span class="k">as</span> <span class="nn">quant</span>
 
 
 <span class="n">train_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
 
 <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">train_program</span><span class="p">):</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">])</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">])</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
     <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">feat</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">conv</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
     <span class="n">cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">feat</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
     <span class="n">avg_cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">cost</span><span class="p">)</span>
 
-<span class="n">use_gpu</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">use_gpu</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CUDAPlace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">use_gpu</span> <span class="k">else</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
 <span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
 <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">fluid</span><span class="o">.</span><span class="n">default_startup_program</span><span class="p">())</span>
-<span class="n">eval_program</span> <span class="o">=</span> <span class="n">train_program</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">eval_program</span> <span class="o">=</span> <span class="n">train_program</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1">#配置</span>
 <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;weight_quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;abs_max&#39;</span><span class="p">,</span>
         <span class="s1">&#39;activation_quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;moving_average_abs_max&#39;</span><span class="p">}</span>
 <span class="n">build_strategy</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">BuildStrategy</span><span class="p">()</span>
 <span class="n">exec_strategy</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">ExecutionStrategy</span><span class="p">()</span>
 <span class="c1">#调用api</span>
-<span class="hll"><span class="n">quant_train_program</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_aware</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-</span><span class="hll"><span class="n">quant_eval_program</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_aware</span><span class="p">(</span><span class="n">eval_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="hll"><span class="n">quant_train_program</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_aware</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span class="hll"><span class="n">quant_eval_program</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_aware</span><span class="p">(</span><span class="n">eval_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span class="c1">#关闭策略</span>
-<span class="n">build_strategy</span><span class="o">.</span><span class="n">fuse_all_reduce_ops</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">build_strategy</span><span class="o">.</span><span class="n">sync_batch_norm</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">build_strategy</span><span class="o">.</span><span class="n">fuse_all_reduce_ops</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">build_strategy</span><span class="o">.</span><span class="n">sync_batch_norm</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">quant_train_program</span> <span class="o">=</span> <span class="n">quant_train_program</span><span class="o">.</span><span class="n">with_data_parallel</span><span class="p">(</span>
     <span class="n">loss_name</span><span class="o">=</span><span class="n">avg_cost</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
     <span class="n">build_strategy</span><span class="o">=</span><span class="n">build_strategy</span><span class="p">,</span>
@@ -336,6 +411,7 @@ _quant_config_default = {
 
 <span class="n">inference_prog</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">quant_eval_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
 </pre></div>
+</td></tr></table>
 
 <p>更详细的用法请参考 <a href='https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/quant/quant_aware'>量化训练demo</a>。</p>
 <h2 id="quant_post">quant_post<a class="headerlink" href="#quant_post" title="Permanent link">#</a></h2>
@@ -375,11 +451,27 @@ _quant_config_default = {
 <blockquote>
 <p>注： 此示例不能直接运行，因为需要加载<code>${model_dir}</code>下的模型，所以不能直接运行。</p>
 </blockquote>
-<p><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
-<span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="kn">as</span> <span class="nn">reader</span>
+<p><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
 <span class="kn">from</span> <span class="nn">paddleslim.quant</span> <span class="kn">import</span> <span class="n">quant_post</span>
 <span class="n">val_reader</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-<span class="n">use_gpu</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">use_gpu</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CUDAPlace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">use_gpu</span> <span class="k">else</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
 
 <span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
@@ -393,6 +485,7 @@ _quant_config_default = {
         <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
         <span class="n">batch_nums</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
+</td></tr></table>
 更详细的用法请参考 <a href='https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/quant/quant_post'>离线量化demo</a>。</p>
 <h2 id="quant_embedding">quant_embedding<a class="headerlink" href="#quant_embedding" title="Permanent link">#</a></h2>
 <dl>
@@ -418,29 +511,51 @@ _quant_config_default = {
 <p><strong>返回类型</strong></p>
 <p><code>fluid.Program</code></p>
 <p><strong>代码示例</strong>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
-<span class="kn">import</span> <span class="nn">paddleslim.quant</span> <span class="kn">as</span> <span class="nn">quant</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim.quant</span> <span class="k">as</span> <span class="nn">quant</span>
 
 <span class="n">train_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">train_program</span><span class="p">):</span>
-    <span class="n">input_word</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;input_word&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+    <span class="n">input_word</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;input_word&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
     <span class="n">input_emb</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span>
         <span class="nb">input</span><span class="o">=</span><span class="n">input_word</span><span class="p">,</span>
-        <span class="n">is_sparse</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">is_sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span>
         <span class="n">param_attr</span><span class="o">=</span><span class="n">fluid</span><span class="o">.</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;emb&#39;</span><span class="p">,</span>
         <span class="n">initializer</span><span class="o">=</span><span class="n">fluid</span><span class="o">.</span><span class="n">initializer</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">)))</span>
 
-<span class="n">infer_program</span> <span class="o">=</span> <span class="n">train_program</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">infer_program</span> <span class="o">=</span> <span class="n">train_program</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">use_gpu</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">use_gpu</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CUDAPlace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">use_gpu</span> <span class="k">else</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
 <span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
 <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">fluid</span><span class="o">.</span><span class="n">default_startup_program</span><span class="p">())</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;params_name&#39;</span><span class="p">:</span> <span class="s1">&#39;emb&#39;</span><span class="p">,</span> <span class="s1">&#39;quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;abs_max&#39;</span><span class="p">}</span>
 <span class="hll"><span class="n">quant_program</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_embedding</span><span class="p">(</span><span class="n">infer_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
-</span></pre></div></p>
+</span></pre></div>
+</td></tr></table></p>
 <p>更详细的用法请参考 <a href='https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/quant/quant_embedding'>Embedding量化demo</a>。</p>
               
             </div>

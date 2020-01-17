@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../extra.css" rel="stylesheet">
   
   <script>
     // Current page data
@@ -195,9 +196,11 @@
 </ul>
 <p><strong>返回：</strong> 一个Pruner类的实例</p>
 <p><strong>示例代码：</strong></p>
-<div class="highlight"><pre><span></span>from paddleslim.prune import Pruner
-pruner = Pruner()
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">Pruner</span>
+<span class="n">pruner</span> <span class="o">=</span> <span class="n">Pruner</span><span class="p">()</span>
 </pre></div>
+</td></tr></table>
 
 <dl>
 <dt>paddleslim.prune.Pruner.prune(program, scope, params, ratios, place=None, lazy=False, only_graph=False, param_backup=False, param_shape_backup=False)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/pruner.py#L36">源代码</a></dt>
@@ -215,10 +218,13 @@ pruner = Pruner()
 </li>
 <li>
 <p><strong>params(list<str>)</strong> - 需要被裁剪的卷积层的参数的名称列表。可以通过以下方式查看模型中所有参数的名称:
-<div class="highlight"><pre><span></span>for block in program.blocks:
-    for param in block.all_parameters():
-        print(&quot;param: {}; shape: {}&quot;.format(param.name, param.shape))
-</pre></div></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">program</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;param: </span><span class="si">{}</span><span class="s2">; shape: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+</pre></div>
+</td></tr></table></p>
 </li>
 <li>
 <p><strong>ratios(list<float>)</strong> - 用于裁剪<code>params</code>的剪切率，类型为列表。该列表长度必须与<code>params</code>的长度一致。</p>
@@ -253,78 +259,149 @@ pruner = Pruner()
 </ul>
 <p><strong>示例：</strong></p>
 <p>点击<a href="https://aistudio.baidu.com/aistudio/projectDetail/200786">AIStudio</a>执行以下示例代码。
-<div class="highlight"><pre><span></span>import paddle.fluid as fluid
-from paddle.fluid.param_attr import ParamAttr
-from paddleslim.prune import Pruner
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddle.fluid.param_attr</span> <span class="kn">import</span> <span class="n">ParamAttr</span>
+<span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">Pruner</span>
 
-def conv_bn_layer(input,
-                  num_filters,
-                  filter_size,
-                  name,
-                  stride=1,
-                  groups=1,
-                  act=None):
-    conv = fluid.layers.conv2d(
-        input=input,
-        num_filters=num_filters,
-        filter_size=filter_size,
-        stride=stride,
-        padding=(filter_size - 1) // 2,
-        groups=groups,
-        act=None,
-        param_attr=ParamAttr(name=name + &quot;_weights&quot;),
-        bias_attr=False,
-        name=name + &quot;_out&quot;)
-    bn_name = name + &quot;_bn&quot;
-    return fluid.layers.batch_norm(
-        input=conv,
-        act=act,
-        name=bn_name + &#39;_output&#39;,
-        param_attr=ParamAttr(name=bn_name + &#39;_scale&#39;),
-        bias_attr=ParamAttr(bn_name + &#39;_offset&#39;),
-        moving_mean_name=bn_name + &#39;_mean&#39;,
-        moving_variance_name=bn_name + &#39;_variance&#39;, )
+<span class="k">def</span> <span class="nf">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span>
+                  <span class="n">num_filters</span><span class="p">,</span>
+                  <span class="n">filter_size</span><span class="p">,</span>
+                  <span class="n">name</span><span class="p">,</span>
+                  <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">groups</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+        <span class="n">num_filters</span><span class="o">=</span><span class="n">num_filters</span><span class="p">,</span>
+        <span class="n">filter_size</span><span class="o">=</span><span class="n">filter_size</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">=</span><span class="p">(</span><span class="n">filter_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_weights&quot;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_out&quot;</span><span class="p">)</span>
+    <span class="n">bn_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_bn&quot;</span>
+    <span class="k">return</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">batch_norm</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">conv</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="n">act</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_output&#39;</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_scale&#39;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_offset&#39;</span><span class="p">),</span>
+        <span class="n">moving_mean_name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_mean&#39;</span><span class="p">,</span>
+        <span class="n">moving_variance_name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_variance&#39;</span><span class="p">,</span> <span class="p">)</span>
 
-main_program = fluid.Program()
-startup_program = fluid.Program()
-#   X       X              O       X              O
-# conv1--&gt;conv2--&gt;sum1--&gt;conv3--&gt;conv4--&gt;sum2--&gt;conv5--&gt;conv6
-#     |            ^ |                    ^
-#     |____________| |____________________|
-#
-# X: prune output channels
-# O: prune input channels
-with fluid.program_guard(main_program, startup_program):
-    input = fluid.data(name=&quot;image&quot;, shape=[None, 3, 16, 16])
-    conv1 = conv_bn_layer(input, 8, 3, &quot;conv1&quot;)
-    conv2 = conv_bn_layer(conv1, 8, 3, &quot;conv2&quot;)
-    sum1 = conv1 + conv2
-    conv3 = conv_bn_layer(sum1, 8, 3, &quot;conv3&quot;)
-    conv4 = conv_bn_layer(conv3, 8, 3, &quot;conv4&quot;)
-    sum2 = conv4 + sum1
-    conv5 = conv_bn_layer(sum2, 8, 3, &quot;conv5&quot;)
-    conv6 = conv_bn_layer(conv5, 8, 3, &quot;conv6&quot;)
+<span class="n">main_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">startup_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="c1">#   X       X              O       X              O</span>
+<span class="c1"># conv1--&gt;conv2--&gt;sum1--&gt;conv3--&gt;conv4--&gt;sum2--&gt;conv5--&gt;conv6</span>
+<span class="c1">#     |            ^ |                    ^</span>
+<span class="c1">#     |____________| |____________________|</span>
+<span class="c1">#</span>
+<span class="c1"># X: prune output channels</span>
+<span class="c1"># O: prune input channels</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
+    <span class="n">conv1</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv1&quot;</span><span class="p">)</span>
+    <span class="n">conv2</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv2&quot;</span><span class="p">)</span>
+    <span class="n">sum1</span> <span class="o">=</span> <span class="n">conv1</span> <span class="o">+</span> <span class="n">conv2</span>
+    <span class="n">conv3</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">sum1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv3&quot;</span><span class="p">)</span>
+    <span class="n">conv4</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv4&quot;</span><span class="p">)</span>
+    <span class="n">sum2</span> <span class="o">=</span> <span class="n">conv4</span> <span class="o">+</span> <span class="n">sum1</span>
+    <span class="n">conv5</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">sum2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv5&quot;</span><span class="p">)</span>
+    <span class="n">conv6</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv6&quot;</span><span class="p">)</span>
 
-place = fluid.CPUPlace()
-exe = fluid.Executor(place)
-scope = fluid.Scope()
-exe.run(startup_program, scope=scope)
-pruner = Pruner()
-main_program, _, _ = pruner.prune(
-    main_program,
-    scope,
-    params=[&quot;conv4_weights&quot;],
-    ratios=[0.5],
-    place=place,
-    lazy=False,
-    only_graph=False,
-    param_backup=False,
-    param_shape_backup=False)
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+<span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+<span class="n">scope</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Scope</span><span class="p">()</span>
+<span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">startup_program</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+<span class="n">pruner</span> <span class="o">=</span> <span class="n">Pruner</span><span class="p">()</span>
+<span class="n">main_program</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pruner</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span>
+    <span class="n">main_program</span><span class="p">,</span>
+    <span class="n">scope</span><span class="p">,</span>
+    <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;conv4_weights&quot;</span><span class="p">],</span>
+    <span class="n">ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
+    <span class="n">place</span><span class="o">=</span><span class="n">place</span><span class="p">,</span>
+    <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">only_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">param_backup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">param_shape_backup</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-for param in main_program.global_block().all_parameters():
-    if &quot;weights&quot; in param.name:
-        print(&quot;param name: {}; param shape: {}&quot;.format(param.name, param.shape))
-</pre></div></p>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">main_program</span><span class="o">.</span><span class="n">global_block</span><span class="p">()</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;weights&quot;</span> <span class="ow">in</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;param name: </span><span class="si">{}</span><span class="s2">; param shape: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+</pre></div>
+</td></tr></table></p>
 <hr />
 <h2 id="sensitivity">sensitivity<a class="headerlink" href="#sensitivity" title="Permanent link">#</a></h2>
 <dl>
@@ -345,10 +422,13 @@ for param in main_program.global_block().all_parameters():
 <p><strong>param_names(list<str>)</strong> - 待分析的卷积层的参数的名称列表。可以通过以下方式查看模型中所有参数的名称:</p>
 </li>
 </ul>
-<div class="highlight"><pre><span></span>for block in program.blocks:
-    for param in block.all_parameters():
-        print(&quot;param: {}; shape: {}&quot;.format(param.name, param.shape))
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">program</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;param: </span><span class="si">{}</span><span class="s2">; shape: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
+</td></tr></table>
 
 <ul>
 <li>
@@ -365,112 +445,212 @@ for param in main_program.global_block().all_parameters():
 <ul>
 <li><strong>sensitivities(dict)</strong> - 存放敏感度信息的dict，其格式为：</li>
 </ul>
-<div class="highlight"><pre><span></span>{&quot;weight_0&quot;:
-   {0.1: 0.22,
-    0.2: 0.33
-   },
- &quot;weight_1&quot;:
-   {0.1: 0.21,
-    0.2: 0.4
-   }
-}
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="p">{</span><span class="s2">&quot;weight_0&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.22</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.33</span>
+   <span class="p">},</span>
+ <span class="s2">&quot;weight_1&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.21</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.4</span>
+   <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
+</td></tr></table>
 
 <p>其中，<code>weight_0</code>是卷积层参数的名称，sensitivities['weight_0']的<code>value</code>为剪裁比例，<code>value</code>为精度损失的比例。</p>
 <p><strong>示例：</strong></p>
 <p>点击<a href="https://aistudio.baidu.com/aistudio/projectdetail/201401">AIStudio</a>运行以下示例代码。</p>
-<div class="highlight"><pre><span></span>import paddle
-import numpy as np
-import paddle.fluid as fluid
-from paddle.fluid.param_attr import ParamAttr
-from paddleslim.prune import sensitivity
-import paddle.dataset.mnist as reader
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddle.fluid.param_attr</span> <span class="kn">import</span> <span class="n">ParamAttr</span>
+<span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">sensitivity</span>
+<span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
 
-def conv_bn_layer(input,
-                  num_filters,
-                  filter_size,
-                  name,
-                  stride=1,
-                  groups=1,
-                  act=None):
-    conv = fluid.layers.conv2d(
-        input=input,
-        num_filters=num_filters,
-        filter_size=filter_size,
-        stride=stride,
-        padding=(filter_size - 1) // 2,
-        groups=groups,
-        act=None,
-        param_attr=ParamAttr(name=name + &quot;_weights&quot;),
-        bias_attr=False,
-        name=name + &quot;_out&quot;)
-    bn_name = name + &quot;_bn&quot;
-    return fluid.layers.batch_norm(
-        input=conv,
-        act=act,
-        name=bn_name + &#39;_output&#39;,
-        param_attr=ParamAttr(name=bn_name + &#39;_scale&#39;),
-        bias_attr=ParamAttr(bn_name + &#39;_offset&#39;),
-        moving_mean_name=bn_name + &#39;_mean&#39;,
-        moving_variance_name=bn_name + &#39;_variance&#39;, )
+<span class="k">def</span> <span class="nf">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span>
+                  <span class="n">num_filters</span><span class="p">,</span>
+                  <span class="n">filter_size</span><span class="p">,</span>
+                  <span class="n">name</span><span class="p">,</span>
+                  <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">groups</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+        <span class="n">num_filters</span><span class="o">=</span><span class="n">num_filters</span><span class="p">,</span>
+        <span class="n">filter_size</span><span class="o">=</span><span class="n">filter_size</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">=</span><span class="p">(</span><span class="n">filter_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_weights&quot;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_out&quot;</span><span class="p">)</span>
+    <span class="n">bn_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_bn&quot;</span>
+    <span class="k">return</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">batch_norm</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">conv</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="n">act</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_output&#39;</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_scale&#39;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_offset&#39;</span><span class="p">),</span>
+        <span class="n">moving_mean_name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_mean&#39;</span><span class="p">,</span>
+        <span class="n">moving_variance_name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_variance&#39;</span><span class="p">,</span> <span class="p">)</span>
 
-main_program = fluid.Program()
-startup_program = fluid.Program()
-#   X       X              O       X              O
-# conv1--&gt;conv2--&gt;sum1--&gt;conv3--&gt;conv4--&gt;sum2--&gt;conv5--&gt;conv6
-#     |            ^ |                    ^
-#     |____________| |____________________|
-#
-# X: prune output channels
-# O: prune input channels
-image_shape = [1,28,28]
-with fluid.program_guard(main_program, startup_program):
-    image = fluid.data(name=&#39;image&#39;, shape=[None]+image_shape, dtype=&#39;float32&#39;)
-    label = fluid.data(name=&#39;label&#39;, shape=[None, 1], dtype=&#39;int64&#39;)  
-    conv1 = conv_bn_layer(image, 8, 3, &quot;conv1&quot;)
-    conv2 = conv_bn_layer(conv1, 8, 3, &quot;conv2&quot;)
-    sum1 = conv1 + conv2
-    conv3 = conv_bn_layer(sum1, 8, 3, &quot;conv3&quot;)
-    conv4 = conv_bn_layer(conv3, 8, 3, &quot;conv4&quot;)
-    sum2 = conv4 + sum1
-    conv5 = conv_bn_layer(sum2, 8, 3, &quot;conv5&quot;)
-    conv6 = conv_bn_layer(conv5, 8, 3, &quot;conv6&quot;)
-    out = fluid.layers.fc(conv6, size=10, act=&quot;softmax&quot;)
-#    cost = fluid.layers.cross_entropy(input=out, label=label)
-#    avg_cost = fluid.layers.mean(x=cost)
-    acc_top1 = fluid.layers.accuracy(input=out, label=label, k=1)
-#    acc_top5 = fluid.layers.accuracy(input=out, label=label, k=5)
+<span class="n">main_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">startup_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="c1">#   X       X              O       X              O</span>
+<span class="c1"># conv1--&gt;conv2--&gt;sum1--&gt;conv3--&gt;conv4--&gt;sum2--&gt;conv5--&gt;conv6</span>
+<span class="c1">#     |            ^ |                    ^</span>
+<span class="c1">#     |____________| |____________________|</span>
+<span class="c1">#</span>
+<span class="c1"># X: prune output channels</span>
+<span class="c1"># O: prune input channels</span>
+<span class="n">image_shape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">]</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">+</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>  
+    <span class="n">conv1</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv1&quot;</span><span class="p">)</span>
+    <span class="n">conv2</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv2&quot;</span><span class="p">)</span>
+    <span class="n">sum1</span> <span class="o">=</span> <span class="n">conv1</span> <span class="o">+</span> <span class="n">conv2</span>
+    <span class="n">conv3</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">sum1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv3&quot;</span><span class="p">)</span>
+    <span class="n">conv4</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv4&quot;</span><span class="p">)</span>
+    <span class="n">sum2</span> <span class="o">=</span> <span class="n">conv4</span> <span class="o">+</span> <span class="n">sum1</span>
+    <span class="n">conv5</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">sum2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv5&quot;</span><span class="p">)</span>
+    <span class="n">conv6</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv6&quot;</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">conv6</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">)</span>
+<span class="c1">#    cost = fluid.layers.cross_entropy(input=out, label=label)</span>
+<span class="c1">#    avg_cost = fluid.layers.mean(x=cost)</span>
+    <span class="n">acc_top1</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">#    acc_top5 = fluid.layers.accuracy(input=out, label=label, k=5)</span>
 
 
-place = fluid.CPUPlace()
-exe = fluid.Executor(place)
-exe.run(startup_program)
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+<span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+<span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">startup_program</span><span class="p">)</span>
 
-val_reader = paddle.batch(reader.test(), batch_size=128)
-val_feeder = feeder = fluid.DataFeeder(
-        [image, label], place, program=main_program)
+<span class="n">val_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">test</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">val_feeder</span> <span class="o">=</span> <span class="n">feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">],</span> <span class="n">place</span><span class="p">,</span> <span class="n">program</span><span class="o">=</span><span class="n">main_program</span><span class="p">)</span>
 
-def eval_func(program):
+<span class="k">def</span> <span class="nf">eval_func</span><span class="p">(</span><span class="n">program</span><span class="p">):</span>
 
-    acc_top1_ns = []
-    for data in val_reader():
-        acc_top1_n = exe.run(program,
-                             feed=val_feeder.feed(data),
-                             fetch_list=[acc_top1.name])
-        acc_top1_ns.append(np.mean(acc_top1_n))
-    return np.mean(acc_top1_ns)
-param_names = []
-for param in main_program.global_block().all_parameters():
-    if &quot;weights&quot; in param.name:
-        param_names.append(param.name)
-sensitivities = sensitivity(main_program,
-                            place,
-                            param_names,
-                            eval_func,
-                            sensitivities_file=&quot;./sensitive.data&quot;,
-                            pruned_ratios=[0.1, 0.2, 0.3])
-print(sensitivities)
+    <span class="n">acc_top1_ns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">val_reader</span><span class="p">():</span>
+        <span class="n">acc_top1_n</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">program</span><span class="p">,</span>
+                             <span class="n">feed</span><span class="o">=</span><span class="n">val_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                             <span class="n">fetch_list</span><span class="o">=</span><span class="p">[</span><span class="n">acc_top1</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+        <span class="n">acc_top1_ns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc_top1_n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc_top1_ns</span><span class="p">)</span>
+<span class="n">param_names</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">main_program</span><span class="o">.</span><span class="n">global_block</span><span class="p">()</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;weights&quot;</span> <span class="ow">in</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">param_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">sensitivities</span> <span class="o">=</span> <span class="n">sensitivity</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span>
+                            <span class="n">place</span><span class="p">,</span>
+                            <span class="n">param_names</span><span class="p">,</span>
+                            <span class="n">eval_func</span><span class="p">,</span>
+                            <span class="n">sensitivities_file</span><span class="o">=</span><span class="s2">&quot;./sensitive.data&quot;</span><span class="p">,</span>
+                            <span class="n">pruned_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sensitivities</span><span class="p">)</span>
 </pre></div>
+</td></tr></table>
 
 <h2 id="merge_sensitive">merge_sensitive<a class="headerlink" href="#merge_sensitive" title="Permanent link">#</a></h2>
 <dl>
@@ -487,16 +667,25 @@ print(sensitivities)
 <ul>
 <li><strong>sensitivities(dict)</strong> - 合并后的敏感度信息。其格式为：</li>
 </ul>
-<div class="highlight"><pre><span></span>{&quot;weight_0&quot;:
-   {0.1: 0.22,
-    0.2: 0.33
-   },
- &quot;weight_1&quot;:
-   {0.1: 0.21,
-    0.2: 0.4
-   }
-}
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="o">{</span><span class="s2">&quot;weight_0&quot;</span>:
+   <span class="o">{</span><span class="m">0</span>.1: <span class="m">0</span>.22,
+    <span class="m">0</span>.2: <span class="m">0</span>.33
+   <span class="o">}</span>,
+ <span class="s2">&quot;weight_1&quot;</span>:
+   <span class="o">{</span><span class="m">0</span>.1: <span class="m">0</span>.21,
+    <span class="m">0</span>.2: <span class="m">0</span>.4
+   <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
+</td></tr></table>
 
 <p>其中，<code>weight_0</code>是卷积层参数的名称，sensitivities['weight_0']的<code>value</code>为剪裁比例，<code>value</code>为精度损失的比例。</p>
 <p>示例：</p>
