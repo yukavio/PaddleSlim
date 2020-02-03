@@ -65,6 +65,10 @@
     <ul class="subnav">
                 <li class="">
                     
+    <a class="" href="../pruning_tutorial/">图像分类模型通道剪裁-快速开始</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../quant_post_demo/">离线量化</a>
                 </li>
                 <li class=" current">
@@ -195,20 +199,20 @@
     <span class="s1">&#39;dtype&#39;</span><span class="p">:</span> <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
     <span class="s1">&#39;window_size&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
     <span class="s1">&#39;moving_rate&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>
-    <span class="s1">&#39;quant_weight_only&#39;</span><span class="p">:</span> <span class="bp">False</span>
+    <span class="s1">&#39;quant_weight_only&#39;</span><span class="p">:</span> <span class="kc">False</span>
 <span class="p">}</span>
 </pre></div>
 
 <h3 id="2-programop">2. 对训练和测试program插入可训练量化op<a class="headerlink" href="#2-programop" title="Permanent link">#</a></h3>
-<div class="codehilite"><pre><span></span><span class="n">val_program</span> <span class="o">=</span> <span class="n">quant_aware</span><span class="p">(</span><span class="n">val_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">quant_config</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="n">val_program</span> <span class="o">=</span> <span class="n">quant_aware</span><span class="p">(</span><span class="n">val_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">quant_config</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">compiled_train_prog</span> <span class="o">=</span> <span class="n">quant_aware</span><span class="p">(</span><span class="n">train_prog</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">quant_config</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">compiled_train_prog</span> <span class="o">=</span> <span class="n">quant_aware</span><span class="p">(</span><span class="n">train_prog</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">quant_config</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
 <h3 id="3build">3.关掉指定build策略<a class="headerlink" href="#3build" title="Permanent link">#</a></h3>
 <div class="codehilite"><pre><span></span><span class="n">build_strategy</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">BuildStrategy</span><span class="p">()</span>
-<span class="n">build_strategy</span><span class="o">.</span><span class="n">fuse_all_reduce_ops</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">build_strategy</span><span class="o">.</span><span class="n">sync_batch_norm</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">build_strategy</span><span class="o">.</span><span class="n">fuse_all_reduce_ops</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">build_strategy</span><span class="o">.</span><span class="n">sync_batch_norm</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">exec_strategy</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">ExecutionStrategy</span><span class="p">()</span>
 <span class="n">compiled_train_prog</span> <span class="o">=</span> <span class="n">compiled_train_prog</span><span class="o">.</span><span class="n">with_data_parallel</span><span class="p">(</span>
         <span class="n">loss_name</span><span class="o">=</span><span class="n">avg_cost</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
@@ -220,8 +224,8 @@
 <div class="codehilite"><pre><span></span><span class="n">float_program</span><span class="p">,</span> <span class="n">int8_program</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">val_program</span><span class="p">,</span> 
                                       <span class="n">place</span><span class="p">,</span>
                                       <span class="n">quant_config</span><span class="p">,</span>
-                                      <span class="n">scope</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                                      <span class="n">save_int8</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                                      <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                      <span class="n">save_int8</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
 <h3 id="5">5.保存预测模型<a class="headerlink" href="#5" title="Permanent link">#</a></h3>

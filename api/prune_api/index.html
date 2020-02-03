@@ -65,6 +65,10 @@
     <ul class="subnav">
                 <li class="">
                     
+    <a class="" href="../../tutorials/pruning_tutorial/">图像分类模型通道剪裁-快速开始</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../../tutorials/quant_post_demo/">离线量化</a>
                 </li>
                 <li class="">
@@ -218,7 +222,7 @@
 <p><strong>params(list<str>)</strong> - 需要被裁剪的卷积层的参数的名称列表。可以通过以下方式查看模型中所有参数的名称:
 <div class="codehilite"><pre><span></span><span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">program</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;param: {}; shape: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;param: </span><span class="si">{}</span><span class="s2">; shape: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div></p>
 </li>
 <li>
@@ -254,7 +258,7 @@
 </ul>
 <p><strong>示例：</strong></p>
 <p>点击<a href="https://aistudio.baidu.com/aistudio/projectDetail/200786">AIStudio</a>执行以下示例代码。
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
 <span class="kn">from</span> <span class="nn">paddle.fluid.param_attr</span> <span class="kn">import</span> <span class="n">ParamAttr</span>
 <span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">Pruner</span>
 
@@ -264,7 +268,7 @@
                   <span class="n">name</span><span class="p">,</span>
                   <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                   <span class="n">groups</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                  <span class="n">act</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+                  <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
         <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
         <span class="n">num_filters</span><span class="o">=</span><span class="n">num_filters</span><span class="p">,</span>
@@ -272,9 +276,9 @@
         <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
         <span class="n">padding</span><span class="o">=</span><span class="p">(</span><span class="n">filter_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span>
         <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
-        <span class="n">act</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_weights&quot;</span><span class="p">),</span>
-        <span class="n">bias_attr</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_out&quot;</span><span class="p">)</span>
     <span class="n">bn_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_bn&quot;</span>
     <span class="k">return</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">batch_norm</span><span class="p">(</span>
@@ -296,7 +300,7 @@
 <span class="c1"># X: prune output channels</span>
 <span class="c1"># O: prune input channels</span>
 <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
-    <span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
     <span class="n">conv1</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv1&quot;</span><span class="p">)</span>
     <span class="n">conv2</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv2&quot;</span><span class="p">)</span>
     <span class="n">sum1</span> <span class="o">=</span> <span class="n">conv1</span> <span class="o">+</span> <span class="n">conv2</span>
@@ -317,14 +321,14 @@
     <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;conv4_weights&quot;</span><span class="p">],</span>
     <span class="n">ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
     <span class="n">place</span><span class="o">=</span><span class="n">place</span><span class="p">,</span>
-    <span class="n">lazy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-    <span class="n">only_graph</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-    <span class="n">param_backup</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-    <span class="n">param_shape_backup</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">only_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">param_backup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">param_shape_backup</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">main_program</span><span class="o">.</span><span class="n">global_block</span><span class="p">()</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
     <span class="k">if</span> <span class="s2">&quot;weights&quot;</span> <span class="ow">in</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;param name: {}; param shape: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;param name: </span><span class="si">{}</span><span class="s2">; param shape: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div></p>
 <hr />
 <h2 id="sensitivity">sensitivity<a class="headerlink" href="#sensitivity" title="Permanent link">#</a></h2>
@@ -348,7 +352,7 @@
 </ul>
 <div class="codehilite"><pre><span></span><span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">program</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;param: {}; shape: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;param: </span><span class="si">{}</span><span class="s2">; shape: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
 
 <ul>
@@ -381,11 +385,11 @@
 <p><strong>示例：</strong></p>
 <p>点击<a href="https://aistudio.baidu.com/aistudio/projectdetail/201401">AIStudio</a>运行以下示例代码。</p>
 <div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
 <span class="kn">from</span> <span class="nn">paddle.fluid.param_attr</span> <span class="kn">import</span> <span class="n">ParamAttr</span>
 <span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">sensitivity</span>
-<span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="kn">as</span> <span class="nn">reader</span>
+<span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
 
 <span class="k">def</span> <span class="nf">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span>
                   <span class="n">num_filters</span><span class="p">,</span>
@@ -393,7 +397,7 @@
                   <span class="n">name</span><span class="p">,</span>
                   <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                   <span class="n">groups</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                  <span class="n">act</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+                  <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
         <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
         <span class="n">num_filters</span><span class="o">=</span><span class="n">num_filters</span><span class="p">,</span>
@@ -401,9 +405,9 @@
         <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
         <span class="n">padding</span><span class="o">=</span><span class="p">(</span><span class="n">filter_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span>
         <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
-        <span class="n">act</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_weights&quot;</span><span class="p">),</span>
-        <span class="n">bias_attr</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_out&quot;</span><span class="p">)</span>
     <span class="n">bn_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_bn&quot;</span>
     <span class="k">return</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">batch_norm</span><span class="p">(</span>
@@ -426,8 +430,8 @@
 <span class="c1"># O: prune input channels</span>
 <span class="n">image_shape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">]</span>
 <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span><span class="o">+</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>  
+    <span class="n">image</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">+</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>  
     <span class="n">conv1</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv1&quot;</span><span class="p">)</span>
     <span class="n">conv2</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv2&quot;</span><span class="p">)</span>
     <span class="n">sum1</span> <span class="o">=</span> <span class="n">conv1</span> <span class="o">+</span> <span class="n">conv2</span>
@@ -470,7 +474,7 @@
                             <span class="n">eval_func</span><span class="p">,</span>
                             <span class="n">sensitivities_file</span><span class="o">=</span><span class="s2">&quot;./sensitive.data&quot;</span><span class="p">,</span>
                             <span class="n">pruned_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">sensitivities</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sensitivities</span><span class="p">)</span>
 </pre></div>
 
 <h2 id="merge_sensitive">merge_sensitive<a class="headerlink" href="#merge_sensitive" title="Permanent link">#</a></h2>
