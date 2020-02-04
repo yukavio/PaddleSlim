@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>大规模可扩展知识蒸馏框架 Pantheon - PaddleSlim Docs</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u5927\u89c4\u6a21\u53ef\u6269\u5c55\u77e5\u8bc6\u84b8\u998f\u6846\u67b6 Pantheon";
+    var mkdocs_page_input_path = "api/pantheon_api.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> PaddleSlim Docs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../model_zoo/">模型库</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">教程</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../tutorials/pruning_tutorial/">图像分类模型通道剪裁-快速开始</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/quant_post_demo/">离线量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/quant_aware_demo/">量化训练</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/quant_embedding_demo/">Embedding量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/nas_demo/">SA搜索</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/one_shot_nas_demo/">One-shot搜索</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../search_space/">搜索空间</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/distillation_demo/">知识蒸馏</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../quantization_api/">量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../prune_api/">剪枝与敏感度</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../analysis_api/">模型分析</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../single_distiller_api/">简单知识蒸馏</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">大规模可扩展知识蒸馏框架 Pantheon</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#teacher">Teacher</a></li>
+    
+
+    <li class="toctree-l3"><a href="#student">Student</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../nas_api/">SA搜索</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../one_shot_api/">One-shot搜索</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../search_space/">搜索空间</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../table_latency/">硬件延时评估表</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../algo/algo/">算法原理</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">PaddleSlim Docs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>API &raquo;</li>
+        
+      
+    
+    <li>大规模可扩展知识蒸馏框架 Pantheon</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/PaddlePaddle/PaddleSlim/edit/master/docs/api/pantheon_api.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="teacher">Teacher<a class="headerlink" href="#teacher" title="Permanent link">#</a></h2>
+<dl>
+<dt>pantheon.Teacher()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L78">source code</a></dt>
+<dd>
+<p>The class defined for the teacher model. Generate knowledge data and transfer them to the student model.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong></p>
+<ul>
+<li>
+<p><strong>out_path (str|None)</strong> - The path to dump knowledge data for offline mode.</p>
+</li>
+<li>
+<p><strong>out_port (int|None)</strong> - The IP port number to send out knowledge for online mode, should be unique when launching multiple teachers in the same node.</p>
+</li>
+</ul>
+<p><strong>Return:</strong> An object of class Teacher</p>
+<dl>
+<dt>pantheon.Teacher.start()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L133">source code</a></dt>
+<dd>
+<p>Start teacher service, sychronize with student and launch the thread
+  to monitor commands from student.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong> None</p>
+<p><strong>Return:</strong> None</p>
+<dl>
+<dt>pantheon.Teacher.send(data)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L181">source code</a></dt>
+<dd>
+<p>Send one data object to student.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong></p>
+<ul>
+<li><strong>data (Python data):</strong> - The data to be sent, can be any type of Python data object.</li>
+</ul>
+<p><strong>Return:</strong> None</p>
+<dl>
+<dt>pantheon.Teacher.recv()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L196">source code</a></dt>
+<dd>
+<p>Recieve one data object from student.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong> None</p>
+<p><strong>Return:</strong></p>
+<ul>
+<li>The received data, can be any type of Python data object.</li>
+</ul>
+<dl>
+<dt>pantheon.Teacher.dump(knowledge)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L214">source code</a></dt>
+<dd>
+<p>Dump one batch knowledge data into the output file, only used in the offline mode.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong></p>
+<ul>
+<li><strong>knowledge (dict):</strong> - The knowledge data to be dumped.  </li>
+</ul>
+<p><strong>Return:</strong> None</p>
+<dl>
+<dt>pantheon.Teacher.start_knowledge_service(feed_list, schema, program, reader_config, exe, buf_size=10, times=1)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L259">source code</a></dt>
+<dd>
+<p>Start the knowledge service to generate and transfer knowledge data. In GPU mode, the devices to execute knowledge prediction will be determined by the
+  environment variable <strong>FLAGS_selected_gpus</strong>, or by <strong>CUDA_VISIBLE_DEVICES</strong> if it is not set, and by <strong>CPU_NUM</strong> (default 1) in CPU mode. Only supported in static graph.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong></p>
+<ul>
+<li><strong>feed_list (list):</strong> - A list of feed Variables or their names for the
+                              input teacher Program.</li>
+<li><strong>schema (dict):</strong> - A dictionary to specify keys and fetched Variables<br />
+                        to generate knowledge.</li>
+<li><strong>program (fluid.Program):</strong> - Inference Program of the teacher model.</li>
+<li>
+<p><strong>reader_config (dict):</strong> - The config for data reader. Support all the three types of generators used by <a href="https://www.paddlepaddle.org.cn/documentation/docs/en/api/io/PyReader.html">fluid.io.PyReader</a> and <a href="https://www.paddlepaddle.org.cn/documentation/docs/en/api/io/DataLoader.html#dataloader">fluid.io.DataLoader</a>, and their configs contain the key-value pair of the generator type and a generator object, plus other necessary argument pairs. See the following:</p>
+</li>
+<li>
+<p>1) sample generator:</p>
+<div class="codehilite"><pre><span></span> <span class="n">reader</span><span class="err">\</span><span class="n">_config</span><span class="o">=</span><span class="err">{</span><span class="ss">&quot;sample\_generator&quot;</span><span class="p">:</span> <span class="o">#</span><span class="k">some</span><span class="err">\</span><span class="n">_sample</span><span class="err">\</span><span class="n">_generator</span><span class="p">,</span>
+               <span class="ss">&quot;batch\_size&quot;</span><span class="p">:</span> <span class="o">#</span><span class="n">batch</span><span class="err">\</span><span class="n">_size</span><span class="p">,</span> <span class="ss">&quot;drop\_last&quot;</span><span class="p">:</span> <span class="o">#</span><span class="k">drop</span><span class="err">\</span><span class="n">_last</span><span class="err">}</span><span class="p">,</span>
+
+<span class="s1">&#39;drop\_last&#39;</span> <span class="k">set</span> <span class="k">to</span> <span class="k">True</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span>
+</pre></div>
+
+
+<ul>
+<li>
+<p>2) sample list generator:</p>
+<p>reader_config={"sample_list_generator": #some_sample_list_generator},
+   - 3) batch generator:</p>
+<p>reader_config={"batch_generator": #some_batch_genrator}.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>The trial to parse config will be in the order of 1) -&gt; 3), and any other unrelated keys in these configs will be ignored.</p>
+<ul>
+<li><strong>exe (fluid.Executor):</strong> The executor to run the input program.</li>
+<li><strong>buf_size (int):</strong> The size of buffers for data reader and knowledge
+                            writer on each device.</li>
+<li><strong>times (int):</strong> The maximum repeated serving times, default 1. Whenever
+                         the public method <strong>get_knowledge_generator()</strong> in Student
+                         object called once, the serving times will be added one,
+                         until reaching the maximum and ending the service.</li>
+</ul>
+<p><strong>Return:</strong> None</p>
+<p><strong>Examples:</strong></p>
+<p>Note: this example should be run with the example of class <strong>Student</strong>.</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddleslim.pantheon</span> <span class="kn">import</span> <span class="n">Teacher</span>
+
+<span class="n">startup</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">startup</span><span class="p">):</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;pixel&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">images</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">softmax_with_cross_entropy</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+<span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+<span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">startup</span><span class="p">)</span>
+
+<span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+        <span class="n">paddle</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">cifar</span><span class="o">.</span><span class="n">train10</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="n">teacher</span> <span class="o">=</span> <span class="n">Teacher</span><span class="p">(</span><span class="n">out_path</span><span class="o">=</span><span class="s2">&quot;example_knowledge.dat&quot;</span><span class="p">,</span> <span class="c1"># offline mode</span>
+                  <span class="c1">#out_port=5000                    # online mode</span>
+                  <span class="p">)</span>
+<span class="n">teacher</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">teacher</span><span class="o">.</span><span class="n">start_knowledge_service</span><span class="p">(</span>
+    <span class="n">feed_list</span><span class="o">=</span><span class="p">[</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">],</span>
+    <span class="n">schema</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;logits&quot;</span><span class="p">:</span> <span class="n">logits</span><span class="p">,</span>
+            <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">},</span>
+    <span class="n">program</span><span class="o">=</span><span class="n">program</span><span class="p">,</span>
+    <span class="n">reader_config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;sample_list_generator&quot;</span><span class="p">:</span> <span class="n">train_reader</span><span class="p">},</span>
+    <span class="n">exe</span><span class="o">=</span><span class="n">exe</span><span class="p">)</span>
+</pre></div>
+
+<h2 id="student">Student<a class="headerlink" href="#student" title="Permanent link">#</a></h2>
+<dl>
+<dt>pantheon.Student(merge_strategy=None)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L34">source code</a></dt>
+<dd>
+<p>The class defined for the student model. Receive knowledge data from
+teacher model and carry out knowledge merging.  </p>
+</dd>
+</dl>
+<p><strong>Args:</strong></p>
+<ul>
+<li><strong>merge_strategy (dict|None):</strong> - A dictionary whose keys are the common schemas shared by different teachers, and each corresponding value specifies the merging strategy for different schemas respectively, supporting <strong>sum</strong> and <strong>mean</strong> now.</li>
+</ul>
+<p><strong>Return:</strong> An object of class Student.</p>
+<dl>
+<dt>pantheon.Student.register_teacher(in_path=None, in_address=None)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L72">source code</a></dt>
+<dd>
+<p>Register one teacher model and assign the order number to it as  its id, with the file path (offline mode) or IP address (online  mode) that the teacher model writes knowledge data to.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong></p>
+<ul>
+<li><strong>in_path (str|None):</strong> The input file path. Default None.</li>
+<li><strong>in_address (str|None):</strong> The input IP address, in the format "\&lt;IP address>:\&lt;IP port>" (e.g. "127.0.0.1:8080"). Default None.</li>
+</ul>
+<p><strong>Return:</strong>  None</p>
+<dl>
+<dt>pantheon.Student.start()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L213">source code</a></dt>
+<dd>
+<p>End teachers' registration and synchronize with all of them.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong> None</p>
+<p><strong>Return:</strong>  None</p>
+<dl>
+<dt>pantheon.Student.send(self, data, teacher_ids=None)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L240">source code</a></dt>
+<dd>
+<p>Send data to teachers.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong></p>
+<ul>
+<li><strong>data (Python data):</strong> - A Python data object to be sent.</li>
+<li><strong>teacher_ids (list|None):</strong> - A list of teacher ids to send data. If set to None, send the data to all teachers. Default None.</li>
+</ul>
+<p><strong>Return:</strong>  None</p>
+<dl>
+<dt>pantheon.Student.recv(teacher_id)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L262">source code</a></dt>
+<dd>
+<p>Receive data from one teacher.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong></p>
+<ul>
+<li><strong>teacher_id (int):</strong> - The id of teacher that receives data from.</li>
+</ul>
+<p><strong>Return:</strong>  </p>
+<ul>
+<li>The received data object.</li>
+</ul>
+<dl>
+<dt>pantheon.Student.get_knowledge_desc()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L283">source code</a></dt>
+<dd>
+<p>Get description for knowledge, including shape, data type and lod level for each schema.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong> None</p>
+<p><strong>Return:</strong>  </p>
+<ul>
+<li>Knowledge description, which is a dict.</li>
+</ul>
+<dl>
+<dt>pantheon.Student.get_knowledge_qsize()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L318">source code</a></dt>
+<dd>
+<p>Get the real-time size of knowledge queue. If this size is denoted as
+   <strong>qsize</strong>, it means that there are <strong>qsize</strong> batch knowledge data
+   already pushed into knowledge queue and waiting for the knowledge
+   generator to pop out. It's dynamic and limited up to 100, the capacity
+   of the knowledge queue.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong> None</p>
+<p><strong>Return:</strong>  </p>
+<ul>
+<li>The real-time size of knowledge queue.</li>
+</ul>
+<dl>
+<dt>pantheon.Student.get_knowledge_generator(batch_size, drop_last=False)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L334">source code</a></dt>
+<dd>
+<p>Get the generator for knowledge data, return None if last generator doesn't finish yet.</p>
+</dd>
+</dl>
+<p><strong>Args:</strong></p>
+<ul>
+<li><strong>batch_size (int):</strong> - The batch size of returned knowledge data.</li>
+<li><strong>drop_last (bool):</strong> - Whether to drop the last batch if its size is less than batch size.</li>
+</ul>
+<p><strong>Return:</strong></p>
+<ul>
+<li>The wrapper of knowledge data generator.</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<p>Note: this example should be run with the example of class <strong>Teacher</strong>.</p>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.pantheon</span> <span class="kn">import</span> <span class="n">Student</span>
+
+<span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="p">()</span>
+
+<span class="n">student</span><span class="o">.</span><span class="n">register_teacher</span><span class="p">(</span><span class="n">in_path</span><span class="o">=</span><span class="s2">&quot;example_knowledge.dat&quot;</span><span class="p">,</span>  <span class="c1"># offline mode</span>
+                         <span class="c1">#in_address=&quot;127.0.0.1:5000&quot;      # online mode</span>
+                         <span class="p">)</span>
+<span class="n">student</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">knowledge_desc</span> <span class="o">=</span> <span class="n">student</span><span class="o">.</span><span class="n">get_knowledge_desc</span><span class="p">()</span>
+<span class="n">data_generator</span> <span class="o">=</span> <span class="n">student</span><span class="o">.</span><span class="n">get_knowledge_generator</span><span class="p">(</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># get knowledge data</span>
+<span class="k">for</span> <span class="n">knowledge</span> <span class="ow">in</span> <span class="n">data_generator</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;knowledge queue size: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">student</span><span class="o">.</span><span class="n">get_knowledge_qsize</span><span class="p">()))</span>
+
+    <span class="c1"># do something else</span>
+</pre></div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../nas_api/" class="btn btn-neutral float-right" title="SA搜索">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../single_distiller_api/" class="btn btn-neutral" title="简单知识蒸馏"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/PaddlePaddle/PaddleSlim/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../single_distiller_api/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../nas_api/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../mathjax-config.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

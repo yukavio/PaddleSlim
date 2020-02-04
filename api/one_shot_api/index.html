@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>One-shot搜索 - PaddleSlim Docs</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "One-shot\u641c\u7d22";
+    var mkdocs_page_input_path = "api/one_shot_api.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> PaddleSlim Docs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../model_zoo/">模型库</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">教程</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../tutorials/pruning_tutorial/">图像分类模型通道剪裁-快速开始</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/quant_post_demo/">离线量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/quant_aware_demo/">量化训练</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/quant_embedding_demo/">Embedding量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/nas_demo/">SA搜索</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/one_shot_nas_demo/">One-shot搜索</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../search_space/">搜索空间</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../tutorials/distillation_demo/">知识蒸馏</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../quantization_api/">量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../prune_api/">剪枝与敏感度</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../analysis_api/">模型分析</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../single_distiller_api/">简单知识蒸馏</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../pantheon_api/">大规模可扩展知识蒸馏框架 Pantheon</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../nas_api/">SA搜索</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">One-shot搜索</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#oneshotsearch">OneShotSearch</a></li>
+    
+
+    <li class="toctree-l3"><a href="#oneshotsupernet">OneShotSuperNet</a></li>
+    
+
+    <li class="toctree-l3"><a href="#supermnasnet">SuperMnasnet</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../search_space/">搜索空间</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../table_latency/">硬件延时评估表</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../algo/algo/">算法原理</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">PaddleSlim Docs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>API &raquo;</li>
+        
+      
+    
+    <li>One-shot搜索</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/PaddlePaddle/PaddleSlim/edit/master/docs/api/one_shot_api.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="oneshotsearch">OneShotSearch<a class="headerlink" href="#oneshotsearch" title="Permanent link">#</a></h2>
+<dl>
+<dt>paddleslim.nas.one_shot.OneShotSearch(model, eval_func, strategy='sa', search_steps=100)<a href="">代码</a></dt>
+<dd>
+<p>从超级网络中搜索出一个最佳的子网络。</p>
+</dd>
+</dl>
+<p><strong>参数：</strong></p>
+<ul>
+<li>
+<p><strong>model(fluid.dygraph.layer):</strong> 通过在<code>OneShotSuperNet</code>前后添加若该模块构建的动态图模块。因为<code>OneShotSuperNet</code>是一个超网络，所以<code>model</code>也是一个超网络。换句话说，在<code>model</code>模块的子模块中，至少有一个是<code>OneShotSuperNet</code>的实例。该方法从<code>model</code>超网络中搜索得到一个最佳的子网络。超网络<code>model</code>需要先被训练，具体细节请参考<a href="">OneShotSuperNet</a>。</p>
+</li>
+<li>
+<p><strong>eval_func:</strong> 用于评估子网络性能的回调函数。该回调函数需要接受<code>model</code>为参数，并调用<code>model</code>的<code>forward</code>方法进行性能评估。</p>
+</li>
+<li>
+<p><strong>strategy(str):</strong> 搜索策略的名称。默认为'sa'， 当前仅支持'sa'.</p>
+</li>
+<li>
+<p><strong>search_steps(int):</strong> 搜索轮次数。默认为100。</p>
+</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul>
+<li><strong>best_tokens:</strong> 表示最佳子网络的编码信息（tokens）。</li>
+</ul>
+<p><strong>示例代码：</strong></p>
+<p>请参考<a href="">one-shot NAS示例</a></p>
+<h2 id="oneshotsupernet">OneShotSuperNet<a class="headerlink" href="#oneshotsupernet" title="Permanent link">#</a></h2>
+<p>用于<code>OneShot</code>搜索策略的超级网络的基类，所有超级网络的实现要继承该类。</p>
+<dl>
+<dt>paddleslim.nas.one_shot.OneShotSuperNet(name_scope)</dt>
+<dd>
+<p>构造方法。</p>
+</dd>
+</dl>
+<p><strong>参数：</strong></p>
+<ul>
+<li>**name_scope:(str) **超级网络的命名空间。</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul>
+<li><strong>super_net:</strong> 一个<code>OneShotSuperNet</code>实例。</li>
+</ul>
+<dl>
+<dt>init_tokens()</dt>
+<dd>
+<p>获得当前超级网络的初始化子网络的编码，主要用于搜索。</p>
+</dd>
+</dl>
+<p><strong>返回：</strong></p>
+<ul>
+<li><strong>tokens(list<int>):</strong> 一个子网络的编码。</li>
+</ul>
+<dl>
+<dt>range_table()</dt>
+<dd>
+<p>超级网络中各个子网络由一组整型数字编码表示，该方法返回编码每个位置的取值范围。</p>
+</dd>
+</dl>
+<p><strong>返回：</strong></p>
+<ul>
+<li><strong>range_table(tuple):</strong> 子网络编码每一位的取值范围。<code>range_table</code>格式为<code>(min_values, max_values)</code>，其中，<code>min_values</code>为一个整型数组，表示每个编码位置可选取的最小值；<code>max_values</code>表示每个编码位置可选取的最大值。</li>
+</ul>
+<dl>
+<dt>_forward_impl(input, tokens)</dt>
+<dd>
+<p>前向计算函数。<code>OneShotSuperNet</code>的子类需要实现该函数。</p>
+</dd>
+</dl>
+<p><strong>参数：</strong></p>
+<ul>
+<li>
+<p><strong>input(Variable):</strong> 超级网络的输入。</p>
+</li>
+<li>
+<p><strong>tokens(list<int>):</strong> 执行前向计算所用的子网络的编码。默认为<code>None</code>，即随机选取一个子网络执行前向。</p>
+</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul>
+<li><strong>output(Variable):</strong> 前向计算的输出</li>
+</ul>
+<dl>
+<dt>forward(self, input, tokens=None)</dt>
+<dd>
+<p>执行前向计算。</p>
+</dd>
+</dl>
+<p><strong>参数：</strong></p>
+<ul>
+<li>
+<p><strong>input(Variable):</strong> 超级网络的输入。</p>
+</li>
+<li>
+<p><strong>tokens(list<int>):</strong> 执行前向计算所用的子网络的编码。默认为<code>None</code>，即随机选取一个子网络执行前向。</p>
+</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul>
+<li><strong>output(Variable):</strong> 前向计算的输出</li>
+</ul>
+<dl>
+<dt>_random_tokens()</dt>
+<dd>
+<p>随机选取一个子网络，并返回其编码。</p>
+</dd>
+</dl>
+<p><strong>返回：</strong></p>
+<ul>
+<li><strong>tokens(list<int>):</strong> 一个子网络的编码。</li>
+</ul>
+<h2 id="supermnasnet">SuperMnasnet<a class="headerlink" href="#supermnasnet" title="Permanent link">#</a></h2>
+<p>在<a href="https://arxiv.org/abs/1807.11626">Mnasnet</a>基础上修改得到的超级网络, 该类继承自<code>OneShotSuperNet</code>.</p>
+<dl>
+<dt>paddleslim.nas.one_shot.SuperMnasnet(name_scope, input_channels=3, out_channels=1280, repeat_times=[6, 6, 6, 6, 6, 6], stride=[1, 1, 1, 1, 2, 1], channels=[16, 24, 40, 80, 96, 192, 320], use_auxhead=False)</dt>
+<dd>
+<p>构造函数。</p>
+</dd>
+</dl>
+<p><strong>参数：</strong></p>
+<ul>
+<li>
+<p><strong>name_scope(str):</strong> 命名空间。</p>
+</li>
+<li>
+<p><strong>input_channels(str):</strong> 当前超级网络的输入的特征图的通道数量。</p>
+</li>
+<li>
+<p><strong>out_channels(str):</strong> 当前超级网络的输出的特征图的通道数量。</p>
+</li>
+<li>
+<p><strong>repeat_times(list):</strong> 每种<code>block</code>重复的次数。</p>
+</li>
+<li>
+<p><strong>stride(list):</strong> 一种<code>block</code>重复堆叠成<code>repeat_block</code>，<code>stride</code>表示每个<code>repeat_block</code>的下采样比例。</p>
+</li>
+<li>
+<p><strong>channels(list):</strong> channels[i]和channels[i+1]分别表示第i个<code>repeat_block</code>的输入特征图的通道数和输出特征图的通道数。</p>
+</li>
+<li>
+<p><strong>use_auxhead(bool):</strong> 是否使用辅助特征图。如果设置为<code>True</code>，则<code>SuperMnasnet</code>除了返回输出特征图，还还返回辅助特征图。默认为False.</p>
+</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul>
+<li><strong>instance(SuperMnasnet):</strong> 一个<code>SuperMnasnet</code>实例</li>
+</ul>
+<p><strong>示例：</strong>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<span class="k">class</span> <span class="nc">MNIST</span><span class="p">(</span><span class="n">fluid</span><span class="o">.</span><span class="n">dygraph</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MNIST</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="n">SuperMnasnet</span><span class="p">(</span>
+            <span class="n">name_scope</span><span class="o">=</span><span class="s2">&quot;super_net&quot;</span><span class="p">,</span> <span class="n">input_channels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pool_2_shape</span> <span class="o">=</span> <span class="mi">50</span> <span class="o">*</span> <span class="mi">13</span> <span class="o">*</span> <span class="mi">13</span>
+        <span class="n">SIZE</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pool_2_shape</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">SIZE</span><span class="p">))</span><span class="o">**</span><span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fc</span> <span class="o">=</span> <span class="n">Linear</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pool_2_shape</span><span class="p">,</span>
+            <span class="mi">10</span><span class="p">,</span>
+            <span class="n">param_attr</span><span class="o">=</span><span class="n">fluid</span><span class="o">.</span><span class="n">param_attr</span><span class="o">.</span><span class="n">ParamAttr</span><span class="p">(</span>
+                <span class="n">initializer</span><span class="o">=</span><span class="n">fluid</span><span class="o">.</span><span class="n">initializer</span><span class="o">.</span><span class="n">NormalInitializer</span><span class="p">(</span>
+                    <span class="n">loc</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">)),</span>
+            <span class="n">act</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">tokens</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arch</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">tokens</span><span class="o">=</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool_2_shape</span><span class="p">])</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">acc</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">acc</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span>
+</pre></div></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../search_space/" class="btn btn-neutral float-right" title="搜索空间">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../nas_api/" class="btn btn-neutral" title="SA搜索"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/PaddlePaddle/PaddleSlim/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../nas_api/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../search_space/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../mathjax-config.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

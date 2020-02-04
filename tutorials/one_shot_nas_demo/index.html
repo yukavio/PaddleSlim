@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>One-shot搜索 - PaddleSlim Docs</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "One-shot\u641c\u7d22";
+    var mkdocs_page_input_path = "tutorials/one_shot_nas_demo.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> PaddleSlim Docs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../model_zoo/">模型库</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">教程</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../pruning_tutorial/">图像分类模型通道剪裁-快速开始</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../quant_post_demo/">离线量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../quant_aware_demo/">量化训练</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../quant_embedding_demo/">Embedding量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../nas_demo/">SA搜索</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">One-shot搜索</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#one-shot-nas">One Shot NAS 示例</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#_1">关键代码介绍</a></li>
+        
+            <li><a class="toctree-l4" href="#_6">启动示例</a></li>
+        
+            <li><a class="toctree-l4" href="#faq">FAQ</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../search_space/">搜索空间</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../distillation_demo/">知识蒸馏</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">API</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../../api/quantization_api/">量化</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/prune_api/">剪枝与敏感度</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/analysis_api/">模型分析</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/single_distiller_api/">简单知识蒸馏</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/pantheon_api/">大规模可扩展知识蒸馏框架 Pantheon</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/nas_api/">SA搜索</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../api/one_shot_api/">One-shot搜索</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../search_space/">搜索空间</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../table_latency/">硬件延时评估表</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../algo/algo/">算法原理</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">PaddleSlim Docs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>教程 &raquo;</li>
+        
+      
+    
+    <li>One-shot搜索</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/PaddlePaddle/PaddleSlim/edit/master/docs/tutorials/one_shot_nas_demo.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="one-shot-nas">One Shot NAS 示例<a class="headerlink" href="#one-shot-nas" title="Permanent link">#</a></h1>
+<blockquote>
+<p>该示例依赖Paddle1.7.0或Paddle develop版本。</p>
+</blockquote>
+<p>该示例使用MNIST数据，介绍了如何使用PaddleSlim的OneShotNAS接口搜索出一个分类网络。OneShotNAS仅支持动态图，所以该示例完全使用Paddle动态图模式。</p>
+<h2 id="_1">关键代码介绍<a class="headerlink" href="#_1" title="Permanent link">#</a></h2>
+<p>One-shot网络结构搜索策略包含以下步骤：</p>
+<ol>
+<li>定义超网络</li>
+<li>训练超网络</li>
+<li>基于超网络搜索子网络</li>
+<li>训练最佳子网络</li>
+</ol>
+<p>以下按序介绍各个步骤的关键代码。</p>
+<h3 id="_2">定义超级网络<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
+<p>按照动态图教程，定义一个分类网络模块，该模块包含4个子模块：<code>_simple_img_conv_pool_1</code>,<code>_simple_img_conv_pool_2</code>,<code>super_net</code>和<code>fc</code>，其中<code>super_net</code>为<code>SuperMnasnet</code>的一个实例。</p>
+<p>在前向计算过程中，输入图像先后经过子模块<code>_simple_img_conv_pool_1</code>、<code>super_net</code>、<code>_simple_img_conv_pool_2</code>和<code>fc</code>的前向计算。</p>
+<p>代码如下所示：
+<div class="codehilite"><pre><span></span><span class="k">class</span> <span class="n">MNIST</span>(<span class="n">fluid</span>.<span class="n">dygraph</span>.<span class="n">Layer</span>):
+    <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>):
+        <span class="n">super</span>(<span class="n">MNIST</span>, <span class="k">self</span>).<span class="n">__init__</span>()
+
+        <span class="k">self</span>.<span class="n">_simple_img_conv_pool_1</span> = <span class="n">SimpleImgConv</span>(<span class="mi">1</span>, <span class="mi">20</span>, <span class="mi">2</span>, <span class="n">act</span>=<span class="s">&quot;relu&quot;</span>)
+        <span class="k">self</span>.<span class="n">arch</span> = <span class="n">SuperMnasnet</span>(
+            <span class="n">name_scope</span>=<span class="s">&quot;super_net&quot;</span>, <span class="n">input_channels</span>=<span class="mi">20</span>, <span class="n">out_channels</span>=<span class="mi">20</span>)
+        <span class="k">self</span>.<span class="n">_simple_img_conv_pool_2</span> = <span class="n">SimpleImgConv</span>(<span class="mi">20</span>, <span class="mi">50</span>, <span class="mi">2</span>, <span class="n">act</span>=<span class="s">&quot;relu&quot;</span>)
+
+        <span class="k">self</span>.<span class="n">pool_2_shape</span> = <span class="mi">50</span> * <span class="mi">13</span> * <span class="mi">13</span>
+        <span class="n">SIZE</span> = <span class="mi">10</span>
+        <span class="n">scale</span> = (<span class="mf">2.0</span> / (<span class="k">self</span>.<span class="n">pool_2_shape</span><span class="o">**</span><span class="mi">2</span> * <span class="n">SIZE</span>))**<span class="mf">0.5</span>
+        <span class="k">self</span>.<span class="n">_fc</span> = <span class="n">Linear</span>(
+            <span class="k">self</span>.<span class="n">pool_2_shape</span>,
+            <span class="mi">10</span>,
+            <span class="n">param_attr</span>=<span class="n">fluid</span>.<span class="n">param_attr</span>.<span class="n">ParamAttr</span>(
+                <span class="n">initializer</span>=<span class="n">fluid</span>.<span class="n">initializer</span>.<span class="n">NormalInitializer</span>(
+                    <span class="n">loc</span>=<span class="mf">0.0</span>, <span class="n">scale</span>=<span class="n">scale</span>)),
+            <span class="n">act</span>=<span class="s">&quot;softmax&quot;</span>)
+
+    <span class="n">def</span> <span class="n">forward</span>(<span class="k">self</span>, <span class="n">inputs</span>, <span class="n">label</span>=<span class="n">None</span>, <span class="n">tokens</span>=<span class="n">None</span>):
+        <span class="o">x</span> = <span class="k">self</span>.<span class="n">_simple_img_conv_pool_1</span>(<span class="n">inputs</span>)
+
+        <span class="o">x</span> = <span class="k">self</span>.<span class="n">arch</span>(<span class="o">x</span>, <span class="n">tokens</span>=<span class="n">tokens</span>)  <span class="c1"># addddddd</span>
+        <span class="o">x</span> = <span class="k">self</span>.<span class="n">_simple_img_conv_pool_2</span>(<span class="o">x</span>)
+        <span class="o">x</span> = <span class="n">fluid</span>.<span class="n">layers</span>.<span class="n">reshape</span>(<span class="o">x</span>, <span class="nb">shape</span>=[-<span class="mi">1</span>, <span class="k">self</span>.<span class="n">pool_2_shape</span>])
+        <span class="o">x</span> = <span class="k">self</span>.<span class="n">_fc</span>(<span class="o">x</span>)
+        <span class="k">if</span> <span class="n">label</span> <span class="k">is</span> <span class="nb">not</span> <span class="n">None:</span>
+            <span class="n">acc</span> = <span class="n">fluid</span>.<span class="n">layers</span>.<span class="n">accuracy</span>(<span class="n">input</span>=<span class="o">x</span>, <span class="n">label</span>=<span class="n">label</span>)
+            <span class="k">return</span> <span class="o">x</span>, <span class="n">acc</span>
+        <span class="n">else:</span>
+            <span class="k">return</span> <span class="o">x</span>
+</pre></div></p>
+<p>动态图模块MNIST的forward函数接受一个参数<code>tokens</code>，用于指定在前向计算中使用的子网络，如果<code>tokens</code>为None，则随机选取一个子网络进行前向计算。</p>
+<h3 id="_3">训练超级网络<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
+<p>网络训练的逻辑定义在<code>train_mnist</code>函数中，将<code>tokens</code>参数设置为None，进行超网络训练，即在每个batch选取一个超网络进行训练。</p>
+<p>代码如下所示：</p>
+<div class="codehilite"><pre><span></span><span class="err">with fluid.dygraph.guard(place):</span>
+<span class="err">    model = MNIST()</span>
+<span class="err">    train_mnist(args, model)</span>
+</pre></div>
+
+<h3 id="_4">搜索最佳子网络<a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
+<p>使用PaddleSlim提供的<code>OneShotSearch</code>接口搜索最佳子网络。传入已定义且训练好的超网络实例<code>model</code>和一个用于评估子网络的回调函数<code>test_mnist</code>.</p>
+<p>代码如下：</p>
+<div class="codehilite"><pre><span></span><span class="err">best_tokens = OneShotSearch(model, test_mnist)</span>
+</pre></div>
+
+<h3 id="_5">训练最佳子网络<a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
+<p>获得最佳的子网络的编码<code>best_tokens</code>后，调用之前定义的<code>train_mnist</code>方法进行子网络的训练。代码如下：</p>
+<div class="codehilite"><pre><span></span><span class="err">train_mnist(args, model, best_tokens)</span>
+</pre></div>
+
+<h2 id="_6">启动示例<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
+<p>执行以下代码运行示例：</p>
+<div class="codehilite"><pre><span></span><span class="err">python train.py</span>
+</pre></div>
+
+<p>执行<code>python train.py --help</code>查看更多可配置选项。</p>
+<h2 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">#</a></h2>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../search_space/" class="btn btn-neutral float-right" title="搜索空间">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../nas_demo/" class="btn btn-neutral" title="SA搜索"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/PaddlePaddle/PaddleSlim/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../nas_demo/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../search_space/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../mathjax-config.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>
