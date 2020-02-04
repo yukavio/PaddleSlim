@@ -196,7 +196,7 @@
               
                 <h2 id="teacher">Teacher<a class="headerlink" href="#teacher" title="Permanent link">#</a></h2>
 <dl>
-<dt>pantheon.Teacher()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L78">source code</a></dt>
+<dt>pantheon.Teacher() <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L78">source</a></dt>
 <dd>
 <p>The class defined for the teacher model. Generate knowledge data and transfer them to the student model.</p>
 </dd>
@@ -212,7 +212,7 @@
 </ul>
 <p><strong>Return:</strong> An object of class Teacher</p>
 <dl>
-<dt>pantheon.Teacher.start()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L133">source code</a></dt>
+<dt>pantheon.Teacher.start() <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L133">source</a></dt>
 <dd>
 <p>Start teacher service, sychronize with student and launch the thread
   to monitor commands from student.</p>
@@ -221,7 +221,7 @@
 <p><strong>Args:</strong> None</p>
 <p><strong>Return:</strong> None</p>
 <dl>
-<dt>pantheon.Teacher.send(data)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L181">source code</a></dt>
+<dt>pantheon.Teacher.send(data) <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L181">source</a></dt>
 <dd>
 <p>Send one data object to student.</p>
 </dd>
@@ -232,7 +232,7 @@
 </ul>
 <p><strong>Return:</strong> None</p>
 <dl>
-<dt>pantheon.Teacher.recv()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L196">source code</a></dt>
+<dt>pantheon.Teacher.recv() <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L196">source</a></dt>
 <dd>
 <p>Recieve one data object from student.</p>
 </dd>
@@ -243,7 +243,7 @@
 <li>The received data, can be any type of Python data object.</li>
 </ul>
 <dl>
-<dt>pantheon.Teacher.dump(knowledge)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L214">source code</a></dt>
+<dt>pantheon.Teacher.dump(knowledge) <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L214">source</a></dt>
 <dd>
 <p>Dump one batch knowledge data into the output file, only used in the offline mode.</p>
 </dd>
@@ -254,7 +254,7 @@
 </ul>
 <p><strong>Return:</strong> None</p>
 <dl>
-<dt>pantheon.Teacher.start_knowledge_service(feed_list, schema, program, reader_config, exe, buf_size=10, times=1)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L259">source code</a></dt>
+<dt>pantheon.Teacher.start_knowledge_service(feed_list, schema, program, reader_config, exe, buf_size=10, times=1) <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/teacher.py#L259">source</a></dt>
 <dd>
 <p>Start the knowledge service to generate and transfer knowledge data. In GPU mode, the devices to execute knowledge prediction will be determined by the
   environment variable <strong>FLAGS_selected_gpus</strong>, or by <strong>CUDA_VISIBLE_DEVICES</strong> if it is not set, and by <strong>CPU_NUM</strong> (default 1) in CPU mode. Only supported in static graph.</p>
@@ -272,26 +272,37 @@
 </li>
 <li>
 <p>1) sample generator:</p>
-<div class="codehilite"><pre><span></span> <span class="n">reader</span><span class="err">\</span><span class="n">_config</span><span class="o">=</span><span class="err">{</span><span class="ss">&quot;sample\_generator&quot;</span><span class="p">:</span> <span class="o">#</span><span class="k">some</span><span class="err">\</span><span class="n">_sample</span><span class="err">\</span><span class="n">_generator</span><span class="p">,</span>
-               <span class="ss">&quot;batch\_size&quot;</span><span class="p">:</span> <span class="o">#</span><span class="n">batch</span><span class="err">\</span><span class="n">_size</span><span class="p">,</span> <span class="ss">&quot;drop\_last&quot;</span><span class="p">:</span> <span class="o">#</span><span class="k">drop</span><span class="err">\</span><span class="n">_last</span><span class="err">}</span><span class="p">,</span>
-
-<span class="s1">&#39;drop\_last&#39;</span> <span class="k">set</span> <span class="k">to</span> <span class="k">True</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span>
+<div class="codehilite"><pre><span></span><span class="err"> ```</span>
+<span class="err"> reader_config={&quot;sample_generator&quot;: some_sample_generator,</span>
+<span class="err">               &quot;batch_size&quot;: batch_size, &quot;drop_last&quot;: drop_last}</span>
+<span class="err"> # drop_last set to True by default</span>
+<span class="err"> ```</span>
 </pre></div>
 
 
-<ul>
+</li>
 <li>
 <p>2) sample list generator:</p>
-<p>reader_config={"sample_list_generator": #some_sample_list_generator},
-   - 3) batch generator:</p>
-<p>reader_config={"batch_generator": #some_batch_genrator}.</p>
+<div class="codehilite"><pre><span></span><span class="err">```</span>
+<span class="err"> reader_config={&quot;sample_list_generator&quot;: some_sample_list_generator}</span>
+<span class="err">```</span>
+</pre></div>
+
+
 </li>
-</ul>
-</li>
-</ul>
+<li>
+<p>3) batch generator:</p>
+<div class="codehilite"><pre><span></span><span class="err">```</span>
+<span class="err">reader_config={&quot;batch_generator&quot;: some_batch_genrator}</span>
+<span class="err">```</span>
+</pre></div>
+
+
 <p>The trial to parse config will be in the order of 1) -&gt; 3), and any other unrelated keys in these configs will be ignored.</p>
-<ul>
-<li><strong>exe (fluid.Executor):</strong> The executor to run the input program.</li>
+</li>
+<li>
+<p><strong>exe (fluid.Executor):</strong> The executor to run the input program.</p>
+</li>
 <li><strong>buf_size (int):</strong> The size of buffers for data reader and knowledge
                             writer on each device.</li>
 <li><strong>times (int):</strong> The maximum repeated serving times, default 1. Whenever
@@ -301,7 +312,6 @@
 </ul>
 <p><strong>Return:</strong> None</p>
 <p><strong>Examples:</strong></p>
-<p>Note: this example should be run with the example of class <strong>Student</strong>.</p>
 <div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
 <span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
 <span class="kn">from</span> <span class="nn">paddleslim.pantheon</span> <span class="kn">import</span> <span class="n">Teacher</span>
@@ -336,9 +346,13 @@
     <span class="n">exe</span><span class="o">=</span><span class="n">exe</span><span class="p">)</span>
 </pre></div>
 
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This example should be run with the example of class <strong>Student</strong>.</p>
+</div>
 <h2 id="student">Student<a class="headerlink" href="#student" title="Permanent link">#</a></h2>
 <dl>
-<dt>pantheon.Student(merge_strategy=None)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L34">source code</a></dt>
+<dt>pantheon.Student(merge_strategy=None) <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L34">source</a></dt>
 <dd>
 <p>The class defined for the student model. Receive knowledge data from
 teacher model and carry out knowledge merging.  </p>
@@ -350,7 +364,7 @@ teacher model and carry out knowledge merging.  </p>
 </ul>
 <p><strong>Return:</strong> An object of class Student.</p>
 <dl>
-<dt>pantheon.Student.register_teacher(in_path=None, in_address=None)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L72">source code</a></dt>
+<dt>pantheon.Student.register_teacher(in_path=None, in_address=None) <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L72">source</a></dt>
 <dd>
 <p>Register one teacher model and assign the order number to it as  its id, with the file path (offline mode) or IP address (online  mode) that the teacher model writes knowledge data to.</p>
 </dd>
@@ -362,7 +376,7 @@ teacher model and carry out knowledge merging.  </p>
 </ul>
 <p><strong>Return:</strong>  None</p>
 <dl>
-<dt>pantheon.Student.start()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L213">source code</a></dt>
+<dt>pantheon.Student.start() <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L213">source</a></dt>
 <dd>
 <p>End teachers' registration and synchronize with all of them.</p>
 </dd>
@@ -370,7 +384,7 @@ teacher model and carry out knowledge merging.  </p>
 <p><strong>Args:</strong> None</p>
 <p><strong>Return:</strong>  None</p>
 <dl>
-<dt>pantheon.Student.send(self, data, teacher_ids=None)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L240">source code</a></dt>
+<dt>pantheon.Student.send(self, data, teacher_ids=None) <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L240">source</a></dt>
 <dd>
 <p>Send data to teachers.</p>
 </dd>
@@ -382,7 +396,7 @@ teacher model and carry out knowledge merging.  </p>
 </ul>
 <p><strong>Return:</strong>  None</p>
 <dl>
-<dt>pantheon.Student.recv(teacher_id)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L262">source code</a></dt>
+<dt>pantheon.Student.recv(teacher_id) <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L262">source</a></dt>
 <dd>
 <p>Receive data from one teacher.</p>
 </dd>
@@ -396,7 +410,7 @@ teacher model and carry out knowledge merging.  </p>
 <li>The received data object.</li>
 </ul>
 <dl>
-<dt>pantheon.Student.get_knowledge_desc()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L283">source code</a></dt>
+<dt>pantheon.Student.get_knowledge_desc() <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L283">source</a></dt>
 <dd>
 <p>Get description for knowledge, including shape, data type and lod level for each schema.</p>
 </dd>
@@ -407,7 +421,7 @@ teacher model and carry out knowledge merging.  </p>
 <li>Knowledge description, which is a dict.</li>
 </ul>
 <dl>
-<dt>pantheon.Student.get_knowledge_qsize()<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L318">source code</a></dt>
+<dt>pantheon.Student.get_knowledge_qsize() <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L318">source</a></dt>
 <dd>
 <p>Get the real-time size of knowledge queue. If this size is denoted as
    <strong>qsize</strong>, it means that there are <strong>qsize</strong> batch knowledge data
@@ -422,7 +436,7 @@ teacher model and carry out knowledge merging.  </p>
 <li>The real-time size of knowledge queue.</li>
 </ul>
 <dl>
-<dt>pantheon.Student.get_knowledge_generator(batch_size, drop_last=False)<a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L334">source code</a></dt>
+<dt>pantheon.Student.get_knowledge_generator(batch_size, drop_last=False) <a href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/pantheon/student.py#L334">source</a></dt>
 <dd>
 <p>Get the generator for knowledge data, return None if last generator doesn't finish yet.</p>
 </dd>
@@ -457,6 +471,11 @@ teacher model and carry out knowledge merging.  </p>
 
     <span class="c1"># do something else</span>
 </pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This example should be run with the example of class <strong>Teacher</strong>.</p>
+</div>
               
             </div>
           </div>
