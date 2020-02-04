@@ -269,34 +269,19 @@
 <li><strong>program (fluid.Program):</strong> - Inference Program of the teacher model.</li>
 <li>
 <p><strong>reader_config (dict):</strong> - The config for data reader. Support all the three types of generators used by <a href="https://www.paddlepaddle.org.cn/documentation/docs/en/api/io/PyReader.html">fluid.io.PyReader</a> and <a href="https://www.paddlepaddle.org.cn/documentation/docs/en/api/io/DataLoader.html#dataloader">fluid.io.DataLoader</a>, and their configs contain the key-value pair of the generator type and a generator object, plus other necessary argument pairs. See the following:</p>
-</li>
-<li>
-<p>1) sample generator:</p>
-<div class="codehilite"><pre><span></span><span class="err"> ```</span>
-<span class="err"> reader_config={&quot;sample_generator&quot;: some_sample_generator,</span>
+<p>1) <strong>sample generator:</strong></p>
+<div class="codehilite"><pre><span></span><span class="err">reader_config={&quot;sample_generator&quot;: some_sample_generator,</span>
 <span class="err">               &quot;batch_size&quot;: batch_size, &quot;drop_last&quot;: drop_last}</span>
-<span class="err"> # drop_last set to True by default</span>
-<span class="err"> ```</span>
+<span class="err"># drop_last set to True by default</span>
 </pre></div>
 
-
-</li>
-<li>
-<p>2) sample list generator:</p>
-<div class="codehilite"><pre><span></span><span class="err">```</span>
-<span class="err"> reader_config={&quot;sample_list_generator&quot;: some_sample_list_generator}</span>
-<span class="err">```</span>
+<p>2) <strong>sample list generator:</strong></p>
+<div class="codehilite"><pre><span></span><span class="err">reader_config={&quot;sample_list_generator&quot;: some_sample_list_generator}</span>
 </pre></div>
 
-
-</li>
-<li>
-<p>3) batch generator:</p>
-<div class="codehilite"><pre><span></span><span class="err">```</span>
-<span class="err">reader_config={&quot;batch_generator&quot;: some_batch_genrator}</span>
-<span class="err">```</span>
+<p>3) <strong>batch generator:</strong></p>
+<div class="codehilite"><pre><span></span><span class="err">reader_config={&quot;batch_generator&quot;: some_batch_genrator}</span>
 </pre></div>
-
 
 <p>The trial to parse config will be in the order of 1) -&gt; 3), and any other unrelated keys in these configs will be ignored.</p>
 </li>
