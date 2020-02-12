@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>图像分类网络结构搜索-快速开始 &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="快速开始" href="index.html"/>
+        <link rel="next" title="进阶教程" href="../tutorials/index.html"/>
+        <link rel="prev" title="图像分类模型离线量化-快速开始" href="quant_post_tutorial.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">快速开始</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pruning_tutorial.html">图像分类模型通道剪裁-快速开始</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distillation_tutorial.html">图像分类模型知识蒸馏-快速开始</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quant_aware_tutorial.html">图像分类模型量化训练-快速开始</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quant_post_tutorial.html">图像分类模型离线量化-快速开始</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">图像分类网络结构搜索-快速开始</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1. 导入依赖</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sanas">2. 初始化SANAS搜索实例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3. 构建网络</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">4. 定义输入数据函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">5. 定义训练函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">6. 定义评估函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">7. 启动搜索实验</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">7.1 获取模型结构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#program">7.2 构造program</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">7.3 定义输入数据</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">7.4 训练模型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">7.5 评估模型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">7.6 回传当前模型的得分</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">8. 完整示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_cn/index.html">API文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">快速开始</a> &raquo;</li>
+      
+    <li>图像分类网络结构搜索-快速开始</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/quick_start/nas_tutorial.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>图像分类网络结构搜索-快速开始<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>该教程以图像分类模型MobileNetV2为例，说明如何在cifar10数据集上快速使用<a class="reference external" href="../api/nas_api">网络结构搜索接口</a>。
+该示例包含以下步骤：</p>
+<ol class="simple">
+<li>导入依赖</li>
+<li>初始化SANAS搜索实例</li>
+<li>构建网络</li>
+<li>定义输入数据函数</li>
+<li>定义训练函数</li>
+<li>定义评估函数</li>
+<li>启动搜索实验
+7.1 获取模型结构
+7.2 构造program
+7.3 定义输入数据
+7.4 训练模型
+7.5 评估模型
+7.6 回传当前模型的得分</li>
+<li>完整示例</li>
+</ol>
+<p>以下章节依次介绍每个步骤的内容。</p>
+<div class="section" id="id2">
+<h2>1. 导入依赖<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>请确认已正确安装Paddle，导入需要的依赖包。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="k">as</span> <span class="nn">slim</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sanas">
+<h2>2. 初始化SANAS搜索实例<a class="headerlink" href="#sanas" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sanas</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">nas</span><span class="o">.</span><span class="n">SANAS</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;MobileNetV2Space&#39;</span><span class="p">)],</span> <span class="n">server_addr</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">8337</span><span class="p">),</span> <span class="n">save_checkpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>3. 构建网络<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>根据传入的网络结构构造训练program和测试program。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_program</span><span class="p">(</span><span class="n">archs</span><span class="p">):</span>
+    <span class="n">train_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+    <span class="n">startup_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">archs</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="n">softmax_out</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">use_cudnn</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+        <span class="n">avg_cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+        <span class="n">acc_top1</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">acc_top5</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">test_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">default_main_program</span><span class="p">()</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">avg_cost</span><span class="p">)</span>
+
+        <span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+        <span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+        <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">startup_program</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">test_program</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">),</span> <span class="n">avg_cost</span><span class="p">,</span> <span class="n">acc_top1</span><span class="p">,</span> <span class="n">acc_top5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>4. 定义输入数据函数<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>使用的数据集为cifar10，paddle框架中<code class="docutils literal"><span class="pre">paddle.dataset.cifar</span></code>包括了cifar数据集的下载和读取，代码如下：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">input_data</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+    <span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">cifar</span><span class="o">.</span><span class="n">train10</span><span class="p">(</span><span class="n">cycle</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">buf_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+    <span class="n">train_feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>
+    <span class="n">eval_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">cifar</span><span class="o">.</span><span class="n">test10</span><span class="p">(</span><span class="n">cycle</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+    <span class="n">eval_feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>5. 定义训练函数<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>根据训练program和训练数据进行训练。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">start_train</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">,</span> <span class="n">data_feeder</span><span class="p">):</span> 
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">avg_cost</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top5</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_reader</span><span class="p">():</span>
+        <span class="n">batch_reward</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TRAIN: loss: </span><span class="si">{}</span><span class="s2">, acc1: </span><span class="si">{}</span><span class="s2">, acc5:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">batch_reward</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">batch_reward</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>6. 定义评估函数<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>根据评估program和评估数据进行评估。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">start_eval</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">,</span> <span class="n">data_feeder</span><span class="p">):</span>
+    <span class="n">reward</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">avg_cost</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top5</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_reader</span><span class="p">():</span>
+        <span class="n">batch_reward</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">)</span>
+        <span class="n">reward_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">batch_reward</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">reward</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reward_avg</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TEST: loss: </span><span class="si">{}</span><span class="s2">, acc1: </span><span class="si">{}</span><span class="s2">, acc5:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">batch_reward</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">batch_reward</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="n">finally_reward</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">reward</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FINAL TEST: avg_cost: </span><span class="si">{}</span><span class="s2">, acc1: </span><span class="si">{}</span><span class="s2">, acc5: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">finally_reward</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">finally_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">finally_reward</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">finally_reward</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>7. 启动搜索实验<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>以下步骤拆解说明了如何获得当前模型结构以及获得当前模型结构之后应该有的步骤，如果想要看如何启动搜索实验的完整示例可以看步骤9。</p>
+<div class="section" id="id8">
+<h3>7.1 获取模型结构<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>调用<code class="docutils literal"><span class="pre">next_archs()</span></code>函数获取到下一个模型结构。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="program">
+<h3>7.2 构造program<a class="headerlink" href="#program" title="永久链接至标题">¶</a></h3>
+<p>调用步骤3中的函数，根据4.1中的模型结构构造相应的program。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">eval_program</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">avg_cost</span><span class="p">,</span> <span class="n">acc_top1</span><span class="p">,</span> <span class="n">acc_top5</span> <span class="o">=</span> <span class="n">build_program</span><span class="p">(</span><span class="n">archs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>7.3 定义输入数据<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>7.4 训练模型<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>根据上面得到的训练program和评估数据启动训练。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">start_train</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h3>7.5 评估模型<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>根据上面得到的评估program和评估数据启动评估。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">finally_reward</span> <span class="o">=</span> <span class="n">start_eval</span><span class="p">(</span><span class="n">eval_program</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3>7.6 回传当前模型的得分<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sanas</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">finally_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id13">
+<h2>8. 完整示例<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<p>以下是一个完整的搜索实验示例，示例中使用FLOPs作为约束条件，搜索实验一共搜索3个step，表示搜索到3个满足条件的模型结构进行训练，每搜索到一个网络结构训练7个epoch。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">eval_progarm</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">avg_cost</span><span class="p">,</span> <span class="n">acc_top1</span><span class="p">,</span> <span class="n">acc_top5</span> <span class="o">=</span> <span class="n">build_program</span><span class="p">(</span><span class="n">archs</span><span class="p">)</span>
+    <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+
+    <span class="n">current_flops</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">train_program</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">current_flops</span> <span class="o">&gt;</span> <span class="mi">321208544</span><span class="p">:</span>
+        <span class="k">continue</span>
+    
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+        <span class="n">start_train</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">)</span>
+
+    <span class="n">finally_reward</span> <span class="o">=</span> <span class="n">start_eval</span><span class="p">(</span><span class="n">eval_program</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span><span class="p">)</span>
+
+    <span class="n">sanas</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">finally_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../tutorials/index.html" class="btn btn-neutral float-right" title="进阶教程" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="quant_post_tutorial.html" class="btn btn-neutral" title="图像分类模型离线量化-快速开始" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>OneShotNAS &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="API文档" href="index.html"/>
+        <link rel="next" title="多进程蒸馏" href="pantheon_api.html"/>
+        <link rel="prev" title="SA-NAS" href="nas_api.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API文档</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="analysis_api.html">模型分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nas_api.html">SA-NAS</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">OneShotNAS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#oneshotsearch">OneShotSearch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oneshotsupernet">OneShotSuperNet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#supermnasnet">SuperMnasnet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">多进程蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prune_api.html">卷积层通道剪裁</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quantization_api.html">量化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single_distiller_api.html">简单蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="search_space.html">搜索空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table_latency.html">硬件延时评估表</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">API文档</a> &raquo;</li>
+      
+    <li>OneShotNAS</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_cn/one_shot_api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="oneshotnas">
+<h1>OneShotNAS<a class="headerlink" href="#oneshotnas" title="永久链接至标题">¶</a></h1>
+<div class="section" id="oneshotsearch">
+<h2>OneShotSearch<a class="headerlink" href="#oneshotsearch" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.nas.one_shot.OneShotSearch">
+<code class="descclassname">paddleslim.nas.one_shot.</code><code class="descname">OneShotSearch</code><span class="sig-paren">(</span><em>model</em>, <em>eval_func</em>, <em>strategy='sa'</em>, <em>search_steps=100</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.nas.one_shot.OneShotSearch" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>从超级网络中搜索出一个最佳的子网络。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>model(fluid.dygraph.layer):</strong> 通过在 <code class="docutils literal"><span class="pre">OneShotSuperNet</span></code> 前后添加若该模块构建的动态图模块。因为 <code class="docutils literal"><span class="pre">OneShotSuperNet</span></code> 是一个超网络，所以 <code class="docutils literal"><span class="pre">model</span></code> 也是一个超网络。换句话说，在 <code class="docutils literal"><span class="pre">model</span></code> 模块的子模块中，至少有一个是 <code class="docutils literal"><span class="pre">OneShotSuperNet</span></code> 的实例。该方法从 <code class="docutils literal"><span class="pre">model</span></code> 超网络中搜索得到一个最佳的子网络。超网络 <code class="docutils literal"><span class="pre">model</span></code> 需要先被训练，具体细节请参考[OneShotSuperNet]()。</li>
+<li><strong>eval_func:</strong> 用于评估子网络性能的回调函数。该回调函数需要接受 <code class="docutils literal"><span class="pre">model</span></code> 为参数，并调用 <code class="docutils literal"><span class="pre">model</span></code> 的 <code class="docutils literal"><span class="pre">forward</span></code> 方法进行性能评估。</li>
+<li><strong>strategy(str):</strong> 搜索策略的名称。默认为 <code class="docutils literal"><span class="pre">sa</span></code> ， 当前仅支持 <code class="docutils literal"><span class="pre">sa</span></code> .</li>
+<li><strong>search_steps(int):</strong> 搜索轮次数。默认为100。</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul class="simple">
+<li><strong>best_tokens:</strong> 表示最佳子网络的编码信息（tokens）。</li>
+</ul>
+<p><strong>示例代码：</strong></p>
+<p>请参考[one-shot NAS示例]()</p>
+</div>
+<div class="section" id="oneshotsupernet">
+<h2>OneShotSuperNet<a class="headerlink" href="#oneshotsupernet" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.nas.one_shot.OneShotSuperNet">
+<em class="property">class </em><code class="descclassname">paddleslim.nas.one_shot.</code><code class="descname">OneShotSuperNet</code><span class="sig-paren">(</span><em>name_scope</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.nas.one_shot.OneShotSuperNet" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>用于`OneShot`搜索策略的超级网络的基类，所有超级网络的实现要继承该类。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><a href="#id1"><span class="problematic" id="id2">**</span></a>name_scope:(str) <a href="#id3"><span class="problematic" id="id4">**</span></a>超级网络的命名空间。</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul>
+<li><p class="first"><strong>super_net:</strong> 一个`OneShotSuperNet`实例。</p>
+<blockquote>
+<div><dl class="method">
+<dt id="init_tokens">
+<code class="descname">init_tokens</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#init_tokens" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>获得当前超级网络的初始化子网络的编码，主要用于搜索。</p>
+<p><strong>返回：</strong></p>
+<ul class="simple">
+<li><strong>tokens(list&lt;int&gt;):</strong> 一个子网络的编码。</li>
+</ul>
+<p>range_table()</p>
+<p>: 超级网络中各个子网络由一组整型数字编码表示，该方法返回编码每个位置的取值范围。</p>
+<p><strong>返回：</strong></p>
+<ul class="simple">
+<li><strong>range_table(tuple):</strong> 子网络编码每一位的取值范围。 <code class="docutils literal"><span class="pre">range_table</span></code> 格式为 <code class="docutils literal"><span class="pre">(min_values,</span> <span class="pre">max_values)</span></code> ，其中， <code class="docutils literal"><span class="pre">min_values</span></code> 为一个整型数组，表示每个编码位置可选取的最小值； <code class="docutils literal"><span class="pre">max_values</span></code> 表示每个编码位置可选取的最大值。</li>
+</ul>
+<dl class="method">
+<dt id="_forward_impl">
+<code class="descname">_forward_impl</code><span class="sig-paren">(</span><em>input</em>, <em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#_forward_impl" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>前向计算函数。 <code class="docutils literal"><span class="pre">OneShotSuperNet</span></code> 的子类需要实现该函数。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>input(Variable):</strong> 超级网络的输入。</li>
+<li><strong>tokens(list&lt;int&gt;):</strong> 执行前向计算所用的子网络的编码。默认为 <code class="docutils literal"><span class="pre">None</span></code> ，即随机选取一个子网络执行前向。</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul class="simple">
+<li><strong>output(Variable):</strong> 前向计算的输出</li>
+</ul>
+<dl class="method">
+<dt id="forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>self</em>, <em>input</em>, <em>tokens=None</em><span class="sig-paren">)</span><a class="headerlink" href="#forward" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>执行前向计算。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>input(Variable):</strong> 超级网络的输入。</li>
+<li><strong>tokens(list&lt;int&gt;):</strong> 执行前向计算所用的子网络的编码。默认为 <code class="docutils literal"><span class="pre">None</span></code> ，即随机选取一个子网络执行前向。</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul class="simple">
+<li><strong>output(Variable):</strong> 前向计算的输出</li>
+</ul>
+<dl class="method">
+<dt id="_random_tokens">
+<code class="descname">_random_tokens</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_random_tokens" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>随机选取一个子网络，并返回其编码。</p>
+<p><strong>返回：</strong></p>
+<ul class="simple">
+<li><strong>tokens(list&lt;int&gt;):</strong> 一个子网络的编码。</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="supermnasnet">
+<h2>SuperMnasnet<a class="headerlink" href="#supermnasnet" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.nas.one_shot.SuperMnasnet">
+<em class="property">class </em><code class="descclassname">paddleslim.nas.one_shot.</code><code class="descname">SuperMnasnet</code><span class="sig-paren">(</span><em>name_scope, input_channels=3, out_channels=1280, repeat_times=[6, 6, 6, 6, 6, 6], stride=[1, 1, 1, 1, 2, 1], channels=[16, 24, 40, 80, 96, 192, 320], use_auxhead=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.nas.one_shot.SuperMnasnet" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>在 <a class="reference external" href="https://arxiv.org/abs/1807.11626">Mnasnet</a> 基础上修改得到的超级网络, 该类继承自 <code class="docutils literal"><span class="pre">OneShotSuperNet</span></code> .</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>name_scope(str):</strong> 命名空间。</li>
+<li><strong>input_channels(str):</strong> 当前超级网络的输入的特征图的通道数量。</li>
+<li><strong>out_channels(str):</strong> 当前超级网络的输出的特征图的通道数量。</li>
+<li><strong>repeat_times(list):</strong> 每种 <code class="docutils literal"><span class="pre">block</span></code> 重复的次数。</li>
+<li><strong>stride(list):</strong> 一种 <code class="docutils literal"><span class="pre">block</span></code> 重复堆叠成 <code class="docutils literal"><span class="pre">repeat_block</span></code> ， <code class="docutils literal"><span class="pre">stride</span></code> 表示每个 <code class="docutils literal"><span class="pre">repeat_block</span></code> 的下采样比例。</li>
+<li><strong>channels(list):</strong> <code class="docutils literal"><span class="pre">channels[i]</span></code> 和 <code class="docutils literal"><span class="pre">channels[i+1]</span></code> 分别表示第i个 <code class="docutils literal"><span class="pre">repeat_block</span></code> 的输入特征图的通道数和输出特征图的通道数。</li>
+<li><strong>use_auxhead(bool):</strong> 是否使用辅助特征图。如果设置为 <code class="docutils literal"><span class="pre">True</span></code> ，则 <code class="docutils literal"><span class="pre">SuperMnasnet</span></code> 除了返回输出特征图，还还返回辅助特征图。默认为False.</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul class="simple">
+<li><strong>instance(SuperMnasnet):</strong> 一个 <code class="docutils literal"><span class="pre">SuperMnasnet</span></code> 实例</li>
+</ul>
+<p><strong>示例：</strong>
+.. code-block:: python</p>
+<blockquote>
+<div><p>import paddle
+import paddle.fluid as fluid
+class MNIST(fluid.dygraph.Layer):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def __init__(self):</dt>
+<dd><p class="first">super(MNIST, self).__init__()
+self.arch = SuperMnasnet(</p>
+<blockquote>
+<div>name_scope=&#8221;super_net&#8221;, input_channels=20, out_channels=20)</div></blockquote>
+<p>self.pool_2_shape = 50 * 13 * 13
+SIZE = 10
+scale = (2.0 / (self.pool_2_shape**2 * SIZE))**0.5
+self._fc = Linear(</p>
+<blockquote class="last">
+<div><p>self.pool_2_shape,
+10,
+param_attr=fluid.param_attr.ParamAttr(</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>initializer=fluid.initializer.NormalInitializer(</dt>
+<dd>loc=0.0, scale=scale)),</dd>
+</dl>
+</div></blockquote>
+<p>act=&#8221;softmax&#8221;)</p>
+</div></blockquote>
+</dd>
+</dl>
+<p>def forward(self, inputs, label=None, tokens=None):</p>
+<blockquote>
+<div><p>x = self.arch(inputs, tokens=tokens)
+x = fluid.layers.reshape(x, shape=[-1, self.pool_2_shape])
+x = self._fc(x)
+if label is not None:</p>
+<blockquote>
+<div>acc = fluid.layers.accuracy(input=x, label=label)
+return x, acc</div></blockquote>
+<dl class="docutils">
+<dt>else:</dt>
+<dd>return x</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pantheon_api.html" class="btn btn-neutral float-right" title="多进程蒸馏" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nas_api.html" class="btn btn-neutral" title="SA-NAS" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

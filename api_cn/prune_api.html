@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>卷积层通道剪裁 &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="API文档" href="index.html"/>
+        <link rel="next" title="量化" href="quantization_api.html"/>
+        <link rel="prev" title="多进程蒸馏" href="pantheon_api.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API文档</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="analysis_api.html">模型分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nas_api.html">SA-NAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="one_shot_api.html">OneShotNAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">多进程蒸馏</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">卷积层通道剪裁</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pruner">Pruner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sensitivity">sensitivity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#merge-sensitive">merge_sensitive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#load-sensitivities">load_sensitivities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-ratios-by-loss">get_ratios_by_loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quantization_api.html">量化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single_distiller_api.html">简单蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="search_space.html">搜索空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table_latency.html">硬件延时评估表</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">API文档</a> &raquo;</li>
+      
+    <li>卷积层通道剪裁</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_cn/prune_api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>卷积层通道剪裁<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="pruner">
+<h2>Pruner<a class="headerlink" href="#pruner" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.prune.Pruner">
+<em class="property">class </em><code class="descclassname">paddleslim.prune.</code><code class="descname">Pruner</code><span class="sig-paren">(</span><em>criterion=&quot;l1_norm&quot;</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.prune.Pruner" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/pruner.py#L28">源代码</a></p>
+<p>对卷积网络的通道进行一次剪裁。剪裁一个卷积层的通道，是指剪裁该卷积层输出的通道。卷积层的权重形状为 <code class="docutils literal"><span class="pre">[output_channel,</span> <span class="pre">input_channel,</span> <span class="pre">kernel_size,</span> <span class="pre">kernel_size]</span></code> ，通过剪裁该权重的第一纬度达到剪裁输出通道数的目的。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>criterion</strong> - 评估一个卷积层内通道重要性所参考的指标。目前仅支持 <code class="docutils literal"><span class="pre">l1_norm</span></code> 。默认为 <code class="docutils literal"><span class="pre">l1_norm</span></code> 。</li>
+</ul>
+<p><strong>返回：</strong> 一个Pruner类的实例</p>
+<p><strong>示例代码：</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">Pruner</span>
+<span class="n">pruner</span> <span class="o">=</span> <span class="n">Pruner</span><span class="p">()</span>
+</pre></div>
+</div>
+<blockquote>
+<div><dl class="method">
+<dt id="paddleslim.prune.Pruner.prune">
+<code class="descclassname">paddleslim.prune.Pruner.</code><code class="descname">prune</code><span class="sig-paren">(</span><em>program</em>, <em>scope</em>, <em>params</em>, <em>ratios</em>, <em>place=None</em>, <em>lazy=False</em>, <em>only_graph=False</em>, <em>param_backup=False</em>, <em>param_shape_backup=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.prune.Pruner.prune" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>对目标网络的一组卷积层的权重进行裁剪。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>program(paddle.fluid.Program)</strong> - 要裁剪的目标网络。更多关于Program的介绍请参考：<a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/Program_cn.html#program">Program概念介绍</a>。</li>
+<li><strong>scope(paddle.fluid.Scope)</strong> - 要裁剪的权重所在的 <code class="docutils literal"><span class="pre">scope</span></code> ，Paddle中用 <code class="docutils literal"><span class="pre">scope</span></code> 实例存放模型参数和运行时变量的值。Scope中的参数值会被 <code class="docutils literal"><span class="pre">inplace</span></code> 的裁剪。更多介绍请参考: <a href="#id9"><span class="problematic" id="id10">`Scope概念介绍 &lt;&gt;`_</span></a></li>
+<li><strong>params(list&lt;str&gt;)</strong> - 需要被裁剪的卷积层的参数的名称列表。可以通过以下方式查看模型中所有参数的名称:</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">program</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;param: </span><span class="si">{}</span><span class="s2">; shape: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>ratios(list&lt;float&gt;)</strong> - 用于裁剪 <code class="docutils literal"><span class="pre">params</span></code> 的剪切率，类型为列表。该列表长度必须与 <code class="docutils literal"><span class="pre">params</span></code> 的长度一致。</li>
+<li><strong>place(paddle.fluid.Place)</strong> - 待裁剪参数所在的设备位置，可以是 <code class="docutils literal"><span class="pre">CUDAPlace</span></code> 或 <code class="docutils literal"><span class="pre">CPUPlace</span></code> 。[Place概念介绍]()</li>
+<li><strong>lazy(bool)</strong> - <code class="docutils literal"><span class="pre">lazy</span></code> 为True时，通过将指定通道的参数置零达到裁剪的目的，参数的 <code class="docutils literal"><span class="pre">shape保持不变</span></code> ； <code class="docutils literal"><span class="pre">lazy</span></code> 为False时，直接将要裁的通道的参数删除，参数的 <code class="docutils literal"><span class="pre">shape</span></code> 会发生变化。</li>
+<li><strong>only_graph(bool)</strong> - 是否只裁剪网络结构。在Paddle中，Program定义了网络结构，Scope存储参数的数值。一个Scope实例可以被多个Program使用，比如定义了训练网络的Program和定义了测试网络的Program是使用同一个Scope实例的。 <code class="docutils literal"><span class="pre">only_graph</span></code> 为True时，只对Program中定义的卷积的通道进行剪裁； <code class="docutils literal"><span class="pre">only_graph</span></code> 为false时，Scope中卷积参数的数值也会被剪裁。默认为False。</li>
+<li><strong>param_backup(bool)</strong> - 是否返回对参数值的备份。默认为False。</li>
+<li><strong>param_shape_backup(bool)</strong> - 是否返回对参数 <code class="docutils literal"><span class="pre">shape</span></code> 的备份。默认为False。</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul class="simple">
+<li><strong>pruned_program(paddle.fluid.Program)</strong> - 被裁剪后的Program。</li>
+<li><strong>param_backup(dict)</strong> - 对参数数值的备份，用于恢复Scope中的参数数值。</li>
+<li><strong>param_shape_backup(dict)</strong> - 对参数形状的备份。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<p>点击 <a class="reference external" href="https://aistudio.baidu.com/aistudio/projectDetail/200786">AIStudio</a> 执行以下示例代码。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddle.fluid.param_attr</span> <span class="kn">import</span> <span class="n">ParamAttr</span>
+<span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">Pruner</span>
+
+<span class="k">def</span> <span class="nf">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span>
+                  <span class="n">num_filters</span><span class="p">,</span>
+                  <span class="n">filter_size</span><span class="p">,</span>
+                  <span class="n">name</span><span class="p">,</span>
+                  <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">groups</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+        <span class="n">num_filters</span><span class="o">=</span><span class="n">num_filters</span><span class="p">,</span>
+        <span class="n">filter_size</span><span class="o">=</span><span class="n">filter_size</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">=</span><span class="p">(</span><span class="n">filter_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_weights&quot;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_out&quot;</span><span class="p">)</span>
+    <span class="n">bn_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_bn&quot;</span>
+    <span class="k">return</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">batch_norm</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">conv</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="n">act</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_output&#39;</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_scale&#39;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_offset&#39;</span><span class="p">),</span>
+        <span class="n">moving_mean_name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_mean&#39;</span><span class="p">,</span>
+        <span class="n">moving_variance_name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_variance&#39;</span><span class="p">,</span> <span class="p">)</span>
+
+<span class="n">main_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">startup_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="c1">#   X       X              O       X              O</span>
+<span class="c1"># conv1--&gt;conv2--&gt;sum1--&gt;conv3--&gt;conv4--&gt;sum2--&gt;conv5--&gt;conv6</span>
+<span class="c1">#     |            ^ |                    ^</span>
+<span class="c1">#     |____________| |____________________|</span>
+<span class="c1">#</span>
+<span class="c1"># X: prune output channels</span>
+<span class="c1"># O: prune input channels</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
+    <span class="n">conv1</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv1&quot;</span><span class="p">)</span>
+    <span class="n">conv2</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv2&quot;</span><span class="p">)</span>
+    <span class="n">sum1</span> <span class="o">=</span> <span class="n">conv1</span> <span class="o">+</span> <span class="n">conv2</span>
+    <span class="n">conv3</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">sum1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv3&quot;</span><span class="p">)</span>
+    <span class="n">conv4</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv4&quot;</span><span class="p">)</span>
+    <span class="n">sum2</span> <span class="o">=</span> <span class="n">conv4</span> <span class="o">+</span> <span class="n">sum1</span>
+    <span class="n">conv5</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">sum2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv5&quot;</span><span class="p">)</span>
+    <span class="n">conv6</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv6&quot;</span><span class="p">)</span>
+
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+<span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+<span class="n">scope</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Scope</span><span class="p">()</span>
+<span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">startup_program</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+<span class="n">pruner</span> <span class="o">=</span> <span class="n">Pruner</span><span class="p">()</span>
+<span class="n">main_program</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pruner</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span>
+    <span class="n">main_program</span><span class="p">,</span>
+    <span class="n">scope</span><span class="p">,</span>
+    <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;conv4_weights&quot;</span><span class="p">],</span>
+    <span class="n">ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
+    <span class="n">place</span><span class="o">=</span><span class="n">place</span><span class="p">,</span>
+    <span class="n">lazy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">only_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">param_backup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">param_shape_backup</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">main_program</span><span class="o">.</span><span class="n">global_block</span><span class="p">()</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;weights&quot;</span> <span class="ow">in</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;param name: </span><span class="si">{}</span><span class="s2">; param shape: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="sensitivity">
+<h2>sensitivity<a class="headerlink" href="#sensitivity" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.prune.sensitivity">
+<code class="descclassname">paddleslim.prune.</code><code class="descname">sensitivity</code><span class="sig-paren">(</span><em>program</em>, <em>place</em>, <em>param_names</em>, <em>eval_func</em>, <em>sensitivities_file=None</em>, <em>pruned_ratios=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.prune.sensitivity" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py">源代码</a></p>
+<p>计算网络中每个卷积层的敏感度。每个卷积层的敏感度信息统计方法为：依次剪掉当前卷积层不同比例的输出通道数，在测试集上计算剪裁后的精度损失。得到敏感度信息后，可以通过观察或其它方式确定每层卷积的剪裁率。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>program(paddle.fluid.Program)</strong> - 待评估的目标网络。更多关于Program的介绍请参考：<a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/Program_cn.html#program">Program概念介绍</a>。</li>
+<li><strong>place(paddle.fluid.Place)</strong> - 待分析的参数所在的设备位置，可以是 <code class="docutils literal"><span class="pre">CUDAPlace</span></code> 或 <code class="docutils literal"><span class="pre">CPUPlace</span></code> 。[Place概念介绍]()</li>
+<li><strong>param_names(list&lt;str&gt;)</strong> - 待分析的卷积层的参数的名称列表。可以通过以下方式查看模型中所有参数的名称:</li>
+</ul>
+<ul class="simple">
+<li><strong>eval_func(function)</strong> - 用于评估裁剪后模型效果的回调函数。该回调函数接受被裁剪后的 <code class="docutils literal"><span class="pre">program</span></code> 为参数，返回一个表示当前program的精度，用以计算当前裁剪带来的精度损失。</li>
+<li><strong>sensitivities_file(str)</strong> - 保存敏感度信息的本地文件系统的文件。在敏感度计算过程中，会持续将新计算出的敏感度信息追加到该文件中。重启任务后，文件中已有敏感度信息不会被重复计算。该文件可以用 <code class="docutils literal"><span class="pre">pickle</span></code> 加载。</li>
+<li><strong>pruned_ratios(list&lt;float&gt;)</strong> - 计算卷积层敏感度信息时，依次剪掉的通道数比例。默认为 <code class="docutils literal"><span class="pre">[0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3,</span> <span class="pre">0.4,</span> <span class="pre">0.5,</span> <span class="pre">0.6,</span> <span class="pre">0.7,</span> <span class="pre">0.8,</span> <span class="pre">0.9]</span></code> 。</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul class="simple">
+<li><strong>sensitivities(dict)</strong> - 存放敏感度信息的dict，其格式为：</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;weight_0&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.22</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.33</span>
+   <span class="p">},</span>
+ <span class="s2">&quot;weight_1&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.21</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.4</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>其中， <code class="docutils literal"><span class="pre">weight_0</span></code> 是卷积层参数的名称， <code class="docutils literal"><span class="pre">sensitivities['weight_0']</span></code> 的 <code class="docutils literal"><span class="pre">value</span></code> 为剪裁比例， <code class="docutils literal"><span class="pre">value</span></code> 为精度损失的比例。</p>
+<p><strong>示例：</strong></p>
+<p>点击 <a class="reference external" href="https://aistudio.baidu.com/aistudio/projectdetail/201401">AIStudio</a> 运行以下示例代码。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddle.fluid.param_attr</span> <span class="kn">import</span> <span class="n">ParamAttr</span>
+<span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">sensitivity</span>
+<span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
+
+<span class="k">def</span> <span class="nf">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span>
+                  <span class="n">num_filters</span><span class="p">,</span>
+                  <span class="n">filter_size</span><span class="p">,</span>
+                  <span class="n">name</span><span class="p">,</span>
+                  <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">groups</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+        <span class="n">num_filters</span><span class="o">=</span><span class="n">num_filters</span><span class="p">,</span>
+        <span class="n">filter_size</span><span class="o">=</span><span class="n">filter_size</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">=</span><span class="p">(</span><span class="n">filter_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_weights&quot;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_out&quot;</span><span class="p">)</span>
+    <span class="n">bn_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_bn&quot;</span>
+    <span class="k">return</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">batch_norm</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">conv</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="n">act</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_output&#39;</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_scale&#39;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_offset&#39;</span><span class="p">),</span>
+        <span class="n">moving_mean_name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_mean&#39;</span><span class="p">,</span>
+        <span class="n">moving_variance_name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_variance&#39;</span><span class="p">,</span> <span class="p">)</span>
+
+<span class="n">main_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">startup_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="c1">#   X       X              O       X              O</span>
+<span class="c1"># conv1--&gt;conv2--&gt;sum1--&gt;conv3--&gt;conv4--&gt;sum2--&gt;conv5--&gt;conv6</span>
+<span class="c1">#     |            ^ |                    ^</span>
+<span class="c1">#     |____________| |____________________|</span>
+<span class="c1">#</span>
+<span class="c1"># X: prune output channels</span>
+<span class="c1"># O: prune input channels</span>
+<span class="n">image_shape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">]</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">+</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+    <span class="n">conv1</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv1&quot;</span><span class="p">)</span>
+    <span class="n">conv2</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv2&quot;</span><span class="p">)</span>
+    <span class="n">sum1</span> <span class="o">=</span> <span class="n">conv1</span> <span class="o">+</span> <span class="n">conv2</span>
+    <span class="n">conv3</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">sum1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv3&quot;</span><span class="p">)</span>
+    <span class="n">conv4</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv4&quot;</span><span class="p">)</span>
+    <span class="n">sum2</span> <span class="o">=</span> <span class="n">conv4</span> <span class="o">+</span> <span class="n">sum1</span>
+    <span class="n">conv5</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">sum2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv5&quot;</span><span class="p">)</span>
+    <span class="n">conv6</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv6&quot;</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">conv6</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">)</span>
+<span class="c1">#    cost = fluid.layers.cross_entropy(input=out, label=label)</span>
+<span class="c1">#    avg_cost = fluid.layers.mean(x=cost)</span>
+    <span class="n">acc_top1</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">#    acc_top5 = fluid.layers.accuracy(input=out, label=label, k=5)</span>
+
+
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+<span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+<span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">startup_program</span><span class="p">)</span>
+
+<span class="n">val_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">test</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">val_feeder</span> <span class="o">=</span> <span class="n">feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">],</span> <span class="n">place</span><span class="p">,</span> <span class="n">program</span><span class="o">=</span><span class="n">main_program</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">eval_func</span><span class="p">(</span><span class="n">program</span><span class="p">):</span>
+
+    <span class="n">acc_top1_ns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">val_reader</span><span class="p">():</span>
+        <span class="n">acc_top1_n</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">program</span><span class="p">,</span>
+                             <span class="n">feed</span><span class="o">=</span><span class="n">val_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                             <span class="n">fetch_list</span><span class="o">=</span><span class="p">[</span><span class="n">acc_top1</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+        <span class="n">acc_top1_ns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc_top1_n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc_top1_ns</span><span class="p">)</span>
+<span class="n">param_names</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">main_program</span><span class="o">.</span><span class="n">global_block</span><span class="p">()</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;weights&quot;</span> <span class="ow">in</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">param_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">sensitivities</span> <span class="o">=</span> <span class="n">sensitivity</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span>
+                            <span class="n">place</span><span class="p">,</span>
+                            <span class="n">param_names</span><span class="p">,</span>
+                            <span class="n">eval_func</span><span class="p">,</span>
+                            <span class="n">sensitivities_file</span><span class="o">=</span><span class="s2">&quot;./sensitive.data&quot;</span><span class="p">,</span>
+                            <span class="n">pruned_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sensitivities</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="merge-sensitive">
+<h2>merge_sensitive<a class="headerlink" href="#merge-sensitive" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.prune.merge_sensitive">
+<code class="descclassname">paddleslim.prune.</code><code class="descname">merge_sensitive</code><span class="sig-paren">(</span><em>sensitivities</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.prune.merge_sensitive" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py">源代码</a></p>
+<p>合并多个敏感度信息。</p>
+<p>参数：</p>
+<ul class="simple">
+<li><strong>sensitivities(list&lt;dict&gt; | list&lt;str&gt;)</strong> - 待合并的敏感度信息，可以是字典的列表，或者是存放敏感度信息的文件的路径列表。</li>
+</ul>
+<p>返回：</p>
+<ul class="simple">
+<li><strong>sensitivities(dict)</strong> - 合并后的敏感度信息。其格式为：</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">{</span><span class="s2">&quot;weight_0&quot;</span>:
+   <span class="o">{</span><span class="m">0</span>.1: <span class="m">0</span>.22,
+    <span class="m">0</span>.2: <span class="m">0</span>.33
+   <span class="o">}</span>,
+ <span class="s2">&quot;weight_1&quot;</span>:
+   <span class="o">{</span><span class="m">0</span>.1: <span class="m">0</span>.21,
+    <span class="m">0</span>.2: <span class="m">0</span>.4
+   <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>其中， <code class="docutils literal"><span class="pre">weight_0</span></code> 是卷积层参数的名称， <code class="docutils literal"><span class="pre">sensitivities['weight_0']</span></code> 的 <code class="docutils literal"><span class="pre">value</span></code> 为剪裁比例， <code class="docutils literal"><span class="pre">value</span></code> 为精度损失的比例。</p>
+<p>示例：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">merge_sensitive</span>
+<span class="n">sen0</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;weight_0&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.22</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.33</span>
+   <span class="p">},</span>
+ <span class="s2">&quot;weight_1&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.21</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.4</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">sen1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;weight_0&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.3</span><span class="p">:</span> <span class="mf">0.41</span><span class="p">,</span>
+   <span class="p">},</span>
+ <span class="s2">&quot;weight_2&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.10</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.35</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">sensitivities</span> <span class="o">=</span> <span class="n">merge_sensitive</span><span class="p">([</span><span class="n">sen0</span><span class="p">,</span> <span class="n">sen1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sensitivities</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="load-sensitivities">
+<h2>load_sensitivities<a class="headerlink" href="#load-sensitivities" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.prune.load_sensitivities">
+<code class="descclassname">paddleslim.prune.</code><code class="descname">load_sensitivities</code><span class="sig-paren">(</span><em>sensitivities_file</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.prune.load_sensitivities" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py#L184">源代码</a></p>
+<p>从文件中加载敏感度信息。</p>
+<p>参数：</p>
+<ul class="simple">
+<li><strong>sensitivities_file(str)</strong> - 存放敏感度信息的本地文件.</li>
+</ul>
+<p>返回：</p>
+<ul class="simple">
+<li><strong>sensitivities(dict)</strong> - 敏感度信息。</li>
+</ul>
+<p>示例：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">load_sensitivities</span>
+<span class="n">sen</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;weight_0&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.22</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.33</span>
+   <span class="p">},</span>
+ <span class="s2">&quot;weight_1&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.21</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.4</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">sensitivities_file</span> <span class="o">=</span> <span class="s2">&quot;sensitive_api_demo.data&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sensitivities_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">sen</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="n">sensitivities</span> <span class="o">=</span> <span class="n">load_sensitivities</span><span class="p">(</span><span class="n">sensitivities_file</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sensitivities</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-ratios-by-loss">
+<h2>get_ratios_by_loss<a class="headerlink" href="#get-ratios-by-loss" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.prune.get_ratios_by_loss">
+<code class="descclassname">paddleslim.prune.</code><code class="descname">get_ratios_by_loss</code><span class="sig-paren">(</span><em>sensitivities</em>, <em>loss</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.prune.get_ratios_by_loss" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/prune/sensitive.py">源代码</a></p>
+<p>根据敏感度和精度损失阈值计算出一组剪切率。对于参数 <code class="docutils literal"><span class="pre">w</span></code> , 其剪裁率为使精度损失低于 <code class="docutils literal"><span class="pre">loss</span></code> 的最大剪裁率。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>sensitivities(dict)</strong> - 敏感度信息。</li>
+<li><strong>loss</strong> - 精度损失阈值。</li>
+</ul>
+<p><strong>返回：</strong></p>
+<ul class="simple">
+<li><strong>ratios(dict)</strong> - 一组剪切率。 <code class="docutils literal"><span class="pre">key</span></code> 是待剪裁参数的名称。 <code class="docutils literal"><span class="pre">value</span></code> 是对应参数的剪裁率。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.prune</span> <span class="kn">import</span> <span class="n">get_ratios_by_loss</span>
+<span class="n">sen</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;weight_0&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.22</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.33</span>
+   <span class="p">},</span>
+ <span class="s2">&quot;weight_1&quot;</span><span class="p">:</span>
+   <span class="p">{</span><span class="mf">0.1</span><span class="p">:</span> <span class="mf">0.21</span><span class="p">,</span>
+    <span class="mf">0.2</span><span class="p">:</span> <span class="mf">0.4</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">ratios</span> <span class="o">=</span> <span class="n">get_ratios_by_loss</span><span class="p">(</span><span class="n">sen</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ratios</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="quantization_api.html" class="btn btn-neutral float-right" title="量化" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pantheon_api.html" class="btn btn-neutral" title="多进程蒸馏" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

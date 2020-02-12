@@ -1,0 +1,914 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>paddleslim.core package &mdash; PaddleSlim 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index_en.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_en.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install_en.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index_en.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index_en.html">Aadvanced Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index_en.html">API Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo_en.html">Model Zoo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index_en.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index_en.html">Docs</a> &raquo;</li>
+      
+    <li>paddleslim.core package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_en/paddleslim.core.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-paddleslim.core">
+<span id="paddleslim-core-package"></span><h1>paddleslim.core package<a class="headerlink" href="#module-paddleslim.core" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="paddleslim.core.GraphWrapper">
+<em class="property">class </em><code class="descclassname">paddleslim.core.</code><code class="descname">GraphWrapper</code><span class="sig-paren">(</span><em>program=None</em>, <em>in_nodes=[]</em>, <em>out_nodes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>It is a wrapper of paddle.fluid.framework.IrGraph with some special functions
+for paddle slim framework.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>program</strong> (<em>framework.Program</em>) &#8211; A program with</li>
+<li><strong>in_nodes</strong> (<em>dict</em>) &#8211; A dict to indicate the input nodes of the graph.
+The key is user-defined and human-readable name.
+The value is the name of Variable.</li>
+<li><strong>out_nodes</strong> (<em>dict</em>) &#8211; A dict to indicate the input nodes of the graph.
+The key is user-defined and human-readable name.
+The value is the name of Variable.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.all_parameters">
+<code class="descname">all_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.all_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the parameters in this graph.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of VarWrapper instances.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;VarWrapper&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.clone">
+<code class="descname">clone</code><span class="sig-paren">(</span><em>for_test=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clone a new graph from current graph.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The wrapper of a new graph.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference internal" href="#paddleslim.core.GraphWrapper" title="paddleslim.core.GraphWrapper">GraphWrapper</a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.get_param_by_op">
+<code class="descname">get_param_by_op</code><span class="sig-paren">(</span><em>op</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.get_param_by_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters used by target operator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.infer_shape">
+<code class="descname">infer_shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.infer_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the groups of convolution layer according to current filters.
+It is used after loading pruned parameters from file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.is_parameter">
+<code class="descname">is_parameter</code><span class="sig-paren">(</span><em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.is_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the given variable is parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var</strong> (<a class="reference internal" href="#paddleslim.core.graph_wrapper.VarWrapper" title="paddleslim.core.graph_wrapper.VarWrapper"><em>VarWrapper</em></a>) &#8211; The given varibale.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.is_persistable">
+<code class="descname">is_persistable</code><span class="sig-paren">(</span><em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.is_persistable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the given variable is persistable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var</strong> (<a class="reference internal" href="#paddleslim.core.graph_wrapper.VarWrapper" title="paddleslim.core.graph_wrapper.VarWrapper"><em>VarWrapper</em></a>) &#8211; The given varibale.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.next_ops">
+<code class="descname">next_ops</code><span class="sig-paren">(</span><em>op</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.next_ops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the next operators of target operator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>op</strong> (<a class="reference internal" href="#paddleslim.core.graph_wrapper.OpWrapper" title="paddleslim.core.graph_wrapper.OpWrapper"><em>OpWrapper</em></a>) &#8211; Target operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of operators.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;OpWrapper&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.numel_params">
+<code class="descname">numel_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.numel_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of elements in all parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.ops">
+<code class="descname">ops</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.ops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all operator nodes included in the graph as a set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.pre_ops">
+<code class="descname">pre_ops</code><span class="sig-paren">(</span><em>op</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.pre_ops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the previous operators of target operator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>op</strong> (<a class="reference internal" href="#paddleslim.core.graph_wrapper.OpWrapper" title="paddleslim.core.graph_wrapper.OpWrapper"><em>OpWrapper</em></a>) &#8211; Target operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of operators.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;OpWrapper&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.program">
+<code class="descname">program</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.program" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the program in current wrapper.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.update_groups_of_conv">
+<code class="descname">update_groups_of_conv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.update_groups_of_conv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.update_param_shape">
+<code class="descname">update_param_shape</code><span class="sig-paren">(</span><em>scope</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.update_param_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the shape of parameters in the graph according to tensors in scope.
+It is used after loading pruned parameters from file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.var">
+<code class="descname">var</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.var" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the variable by variable name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.GraphWrapper.vars">
+<code class="descname">vars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.GraphWrapper.vars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the variables.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.core.VarWrapper">
+<em class="property">class </em><code class="descclassname">paddleslim.core.</code><code class="descname">VarWrapper</code><span class="sig-paren">(</span><em>var</em>, <em>graph</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.VarWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="paddleslim.core.VarWrapper.inputs">
+<code class="descname">inputs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.VarWrapper.inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the operators that use this variable as output.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of operators.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;OpWrapper&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.VarWrapper.is_parameter">
+<code class="descname">is_parameter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.VarWrapper.is_parameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.VarWrapper.name">
+<code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.VarWrapper.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the variable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.VarWrapper.outputs">
+<code class="descname">outputs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.VarWrapper.outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the operators that use this variable as input.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of operators.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;OpWrapper&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.VarWrapper.set_shape">
+<code class="descname">set_shape</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.VarWrapper.set_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the shape of the variable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.VarWrapper.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.VarWrapper.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the shape of the varibale.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.core.OpWrapper">
+<em class="property">class </em><code class="descclassname">paddleslim.core.</code><code class="descname">OpWrapper</code><span class="sig-paren">(</span><em>op</em>, <em>graph</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="paddleslim.core.OpWrapper.all_inputs">
+<code class="descname">all_inputs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper.all_inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the input variables of this operator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.OpWrapper.all_outputs">
+<code class="descname">all_outputs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper.all_outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the output variables of this operator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.OpWrapper.attr">
+<code class="descname">attr</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper.attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the attribute by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) &#8211; the attribute name.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The attribute value. The return value
+can be any valid attribute type.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool|int|str|float|list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.OpWrapper.idx">
+<code class="descname">idx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper.idx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the id of this operator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.OpWrapper.inputs">
+<code class="descname">inputs</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper.inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the varibales by the input name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.OpWrapper.is_bwd_op">
+<code class="descname">is_bwd_op</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper.is_bwd_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this operator is backward op.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.OpWrapper.is_opt_op">
+<code class="descname">is_opt_op</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper.is_opt_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this operator is optimizer op.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.OpWrapper.outputs">
+<code class="descname">outputs</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper.outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the varibales by the output name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.OpWrapper.set_attr">
+<code class="descname">set_attr</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper.set_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of attribute by attribute&#8217;s name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> (<em>str</em>) &#8211; the attribute name.</li>
+<li><strong>value</strong> (<em>bool|int|str|float|list</em>) &#8211; the value of the attribute.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.OpWrapper.type">
+<code class="descname">type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.OpWrapper.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of this operator.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.core.Registry">
+<em class="property">class </em><code class="descclassname">paddleslim.core.</code><code class="descname">Registry</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.Registry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="paddleslim.core.Registry.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.Registry.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="paddleslim.core.Registry.module_dict">
+<code class="descname">module_dict</code><a class="headerlink" href="#paddleslim.core.Registry.module_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="paddleslim.core.Registry.name">
+<code class="descname">name</code><a class="headerlink" href="#paddleslim.core.Registry.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.Registry.register">
+<code class="descname">register</code><span class="sig-paren">(</span><em>cls</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.Registry.register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-paddleslim.core.graph_wrapper">
+<span id="paddleslim-core-graph-wrapper-module"></span><h2>paddleslim.core.graph_wrapper module<a class="headerlink" href="#module-paddleslim.core.graph_wrapper" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper">
+<em class="property">class </em><code class="descclassname">paddleslim.core.graph_wrapper.</code><code class="descname">GraphWrapper</code><span class="sig-paren">(</span><em>program=None</em>, <em>in_nodes=[]</em>, <em>out_nodes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>It is a wrapper of paddle.fluid.framework.IrGraph with some special functions
+for paddle slim framework.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>program</strong> (<em>framework.Program</em>) &#8211; A program with</li>
+<li><strong>in_nodes</strong> (<em>dict</em>) &#8211; A dict to indicate the input nodes of the graph.
+The key is user-defined and human-readable name.
+The value is the name of Variable.</li>
+<li><strong>out_nodes</strong> (<em>dict</em>) &#8211; A dict to indicate the input nodes of the graph.
+The key is user-defined and human-readable name.
+The value is the name of Variable.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.all_parameters">
+<code class="descname">all_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.all_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the parameters in this graph.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of VarWrapper instances.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;VarWrapper&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.clone">
+<code class="descname">clone</code><span class="sig-paren">(</span><em>for_test=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clone a new graph from current graph.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The wrapper of a new graph.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference internal" href="#paddleslim.core.GraphWrapper" title="paddleslim.core.GraphWrapper">GraphWrapper</a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.get_param_by_op">
+<code class="descname">get_param_by_op</code><span class="sig-paren">(</span><em>op</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.get_param_by_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters used by target operator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.infer_shape">
+<code class="descname">infer_shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.infer_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the groups of convolution layer according to current filters.
+It is used after loading pruned parameters from file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.is_parameter">
+<code class="descname">is_parameter</code><span class="sig-paren">(</span><em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.is_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the given variable is parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var</strong> (<a class="reference internal" href="#paddleslim.core.graph_wrapper.VarWrapper" title="paddleslim.core.graph_wrapper.VarWrapper"><em>VarWrapper</em></a>) &#8211; The given varibale.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.is_persistable">
+<code class="descname">is_persistable</code><span class="sig-paren">(</span><em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.is_persistable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the given variable is persistable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var</strong> (<a class="reference internal" href="#paddleslim.core.graph_wrapper.VarWrapper" title="paddleslim.core.graph_wrapper.VarWrapper"><em>VarWrapper</em></a>) &#8211; The given varibale.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.next_ops">
+<code class="descname">next_ops</code><span class="sig-paren">(</span><em>op</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.next_ops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the next operators of target operator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>op</strong> (<a class="reference internal" href="#paddleslim.core.graph_wrapper.OpWrapper" title="paddleslim.core.graph_wrapper.OpWrapper"><em>OpWrapper</em></a>) &#8211; Target operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of operators.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;OpWrapper&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.numel_params">
+<code class="descname">numel_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.numel_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of elements in all parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.ops">
+<code class="descname">ops</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.ops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all operator nodes included in the graph as a set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.pre_ops">
+<code class="descname">pre_ops</code><span class="sig-paren">(</span><em>op</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.pre_ops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the previous operators of target operator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>op</strong> (<a class="reference internal" href="#paddleslim.core.graph_wrapper.OpWrapper" title="paddleslim.core.graph_wrapper.OpWrapper"><em>OpWrapper</em></a>) &#8211; Target operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of operators.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;OpWrapper&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.program">
+<code class="descname">program</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.program" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the program in current wrapper.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.update_groups_of_conv">
+<code class="descname">update_groups_of_conv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.update_groups_of_conv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.update_param_shape">
+<code class="descname">update_param_shape</code><span class="sig-paren">(</span><em>scope</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.update_param_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the shape of parameters in the graph according to tensors in scope.
+It is used after loading pruned parameters from file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.var">
+<code class="descname">var</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.var" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the variable by variable name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.GraphWrapper.vars">
+<code class="descname">vars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.GraphWrapper.vars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the variables.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.core.graph_wrapper.VarWrapper">
+<em class="property">class </em><code class="descclassname">paddleslim.core.graph_wrapper.</code><code class="descname">VarWrapper</code><span class="sig-paren">(</span><em>var</em>, <em>graph</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.VarWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.VarWrapper.inputs">
+<code class="descname">inputs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.VarWrapper.inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the operators that use this variable as output.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of operators.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;OpWrapper&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.VarWrapper.is_parameter">
+<code class="descname">is_parameter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.VarWrapper.is_parameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.VarWrapper.name">
+<code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.VarWrapper.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the variable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.VarWrapper.outputs">
+<code class="descname">outputs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.VarWrapper.outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the operators that use this variable as input.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of operators.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;OpWrapper&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.VarWrapper.set_shape">
+<code class="descname">set_shape</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.VarWrapper.set_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the shape of the variable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.VarWrapper.shape">
+<code class="descname">shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.VarWrapper.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the shape of the varibale.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper">
+<em class="property">class </em><code class="descclassname">paddleslim.core.graph_wrapper.</code><code class="descname">OpWrapper</code><span class="sig-paren">(</span><em>op</em>, <em>graph</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper.all_inputs">
+<code class="descname">all_inputs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper.all_inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the input variables of this operator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper.all_outputs">
+<code class="descname">all_outputs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper.all_outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the output variables of this operator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper.attr">
+<code class="descname">attr</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper.attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the attribute by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) &#8211; the attribute name.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The attribute value. The return value
+can be any valid attribute type.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool|int|str|float|list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper.idx">
+<code class="descname">idx</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper.idx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the id of this operator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper.inputs">
+<code class="descname">inputs</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper.inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the varibales by the input name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper.is_bwd_op">
+<code class="descname">is_bwd_op</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper.is_bwd_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this operator is backward op.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper.is_opt_op">
+<code class="descname">is_opt_op</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper.is_opt_op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether this operator is optimizer op.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper.outputs">
+<code class="descname">outputs</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper.outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the varibales by the output name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper.set_attr">
+<code class="descname">set_attr</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper.set_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value of attribute by attribute&#8217;s name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> (<em>str</em>) &#8211; the attribute name.</li>
+<li><strong>value</strong> (<em>bool|int|str|float|list</em>) &#8211; the value of the attribute.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.graph_wrapper.OpWrapper.type">
+<code class="descname">type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.graph_wrapper.OpWrapper.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of this operator.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.core.registry">
+<span id="paddleslim-core-registry-module"></span><h2>paddleslim.core.registry module<a class="headerlink" href="#module-paddleslim.core.registry" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.core.registry.Registry">
+<em class="property">class </em><code class="descclassname">paddleslim.core.registry.</code><code class="descname">Registry</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.registry.Registry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="paddleslim.core.registry.Registry.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.registry.Registry.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="paddleslim.core.registry.Registry.module_dict">
+<code class="descname">module_dict</code><a class="headerlink" href="#paddleslim.core.registry.Registry.module_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="paddleslim.core.registry.Registry.name">
+<code class="descname">name</code><a class="headerlink" href="#paddleslim.core.registry.Registry.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.core.registry.Registry.register">
+<code class="descname">register</code><span class="sig-paren">(</span><em>cls</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.core.registry.Registry.register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

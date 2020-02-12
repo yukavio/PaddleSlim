@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>欢迎使用PaddleSlim &mdash; PaddleSlim 1.0 文档</title>
+  <title>PaddleSlim简介 &mdash; PaddleSlim 1.0 文档</title>
   
 
   
@@ -33,8 +33,9 @@
         <link rel="index" title="索引"
               href="genindex.html"/>
         <link rel="search" title="搜索" href="search.html"/>
-    <link rel="top" title="PaddleSlim 1.0 文档" href="#"/>
-        <link rel="next" title="English Documents" href="index_en.html"/> 
+    <link rel="top" title="PaddleSlim 1.0 文档" href="index.html"/>
+        <link rel="next" title="安装" href="install.html"/>
+        <link rel="prev" title="English Documents" href="index_en.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -52,7 +53,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> PaddleSlim
+            <a href="index.html" class="icon icon-home"> PaddleSlim
           
 
           
@@ -79,9 +80,12 @@
           
             
             
-                <ul>
+                <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index_en.html">English Documents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PaddleSlim简介</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">功能</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quick_start/index.html">快速开始</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">进阶教程</a></li>
@@ -101,7 +105,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">PaddleSlim</a>
+        <a href="index.html">PaddleSlim</a>
       </nav>
 
 
@@ -116,13 +120,13 @@
 
 <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="#">Docs</a> &raquo;</li>
+    <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>欢迎使用PaddleSlim</li>
+    <li>PaddleSlim简介</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/intro.md.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -133,17 +137,35 @@
            <div itemprop="articleBody">
             
   <div class="section" id="paddleslim">
-<h1>欢迎使用PaddleSlim<a class="headerlink" href="#paddleslim" title="永久链接至标题">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="index_en.html">English Documents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">PaddleSlim简介</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">安装</a></li>
-<li class="toctree-l1"><a class="reference internal" href="quick_start/index.html">快速开始</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">进阶教程</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_cn/index.html">API文档</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">模型库</a></li>
-<li class="toctree-l1"><a class="reference internal" href="algo/algo.html">算法原理</a></li>
+<h1>PaddleSlim简介<a class="headerlink" href="#paddleslim" title="永久链接至标题">¶</a></h1>
+<p>PaddleSlim是PaddlePaddle框架的一个子模块，主要用于压缩图像领域模型。在PaddleSlim中，不仅实现了目前主流的网络剪枝、量化、蒸馏三种压缩策略，还实现了超参数搜索和小模型网络结构搜索功能。在后续版本中，会添加更多的压缩策略，以及完善对NLP领域模型的支持。</p>
+<div class="section" id="id1">
+<h2>功能<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li>模型剪裁<ul>
+<li>支持通道均匀模型剪裁（uniform pruning)</li>
+<li>基于敏感度的模型剪裁</li>
+<li>基于进化算法的自动模型剪裁三种方式</li>
+</ul>
+</li>
+<li>量化训练<ul>
+<li>在线量化训练（training aware）</li>
+<li>离线量化（post training）</li>
+<li>支持对权重全局量化和Channel-Wise量化</li>
+</ul>
+</li>
+<li>知识蒸馏<ul>
+<li>支持单进程知识蒸馏</li>
+<li>支持多进程分布式知识蒸馏</li>
+</ul>
+</li>
+<li>神经网络结构自动搜索（NAS）<ul>
+<li>支持One-Shot网络结构自动搜索（Ont-Shot-NAS）</li>
+<li>支持基于进化算法的轻量神经网络结构自动搜索（Light-NAS）</li>
+<li>支持 FLOPS / 硬件延时约束</li>
+<li>支持多平台模型延时评估</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -155,8 +177,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="index_en.html" class="btn btn-neutral float-right" title="English Documents" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="install.html" class="btn btn-neutral float-right" title="安装" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+      
+        <a href="index_en.html" class="btn btn-neutral" title="English Documents" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

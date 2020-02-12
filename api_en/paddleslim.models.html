@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>paddleslim.models package &mdash; PaddleSlim 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index_en.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_en.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install_en.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index_en.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index_en.html">Aadvanced Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index_en.html">API Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo_en.html">Model Zoo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index_en.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index_en.html">Docs</a> &raquo;</li>
+      
+    <li>paddleslim.models package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_en/paddleslim.models.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-paddleslim.models">
+<span id="paddleslim-models-package"></span><h1>paddleslim.models package<a class="headerlink" href="#module-paddleslim.models" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="paddleslim.models.image_classification">
+<code class="descclassname">paddleslim.models.</code><code class="descname">image_classification</code><span class="sig-paren">(</span><em>model</em>, <em>image_shape</em>, <em>class_num</em>, <em>use_gpu=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.image_classification" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-paddleslim.models.classification_models">
+<span id="paddleslim-models-classification-models-module"></span><h2>paddleslim.models.classification_models module<a class="headerlink" href="#module-paddleslim.models.classification_models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.models.classification_models.MobileNet">
+<em class="property">class </em><code class="descclassname">paddleslim.models.classification_models.</code><code class="descname">MobileNet</code><a class="headerlink" href="#paddleslim.models.classification_models.MobileNet" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="paddleslim.models.classification_models.MobileNet.conv_bn_layer">
+<code class="descname">conv_bn_layer</code><span class="sig-paren">(</span><em>input</em>, <em>filter_size</em>, <em>num_filters</em>, <em>stride</em>, <em>padding</em>, <em>channels=None</em>, <em>num_groups=1</em>, <em>act='relu'</em>, <em>use_cudnn=True</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.MobileNet.conv_bn_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.classification_models.MobileNet.depthwise_separable">
+<code class="descname">depthwise_separable</code><span class="sig-paren">(</span><em>input</em>, <em>num_filters1</em>, <em>num_filters2</em>, <em>num_groups</em>, <em>stride</em>, <em>scale</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.MobileNet.depthwise_separable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.classification_models.MobileNet.net">
+<code class="descname">net</code><span class="sig-paren">(</span><em>input</em>, <em>class_dim=1000</em>, <em>scale=1.0</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.MobileNet.net" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.models.classification_models.ResNet34">
+<code class="descclassname">paddleslim.models.classification_models.</code><code class="descname">ResNet34</code><span class="sig-paren">(</span><em>prefix_name=''</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.ResNet34" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.models.classification_models.ResNet50">
+<code class="descclassname">paddleslim.models.classification_models.</code><code class="descname">ResNet50</code><span class="sig-paren">(</span><em>prefix_name=''</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.ResNet50" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.models.classification_models.MobileNetV2">
+<em class="property">class </em><code class="descclassname">paddleslim.models.classification_models.</code><code class="descname">MobileNetV2</code><span class="sig-paren">(</span><em>scale=1.0</em>, <em>change_depth=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.MobileNetV2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="paddleslim.models.classification_models.MobileNetV2.conv_bn_layer">
+<code class="descname">conv_bn_layer</code><span class="sig-paren">(</span><em>input</em>, <em>filter_size</em>, <em>num_filters</em>, <em>stride</em>, <em>padding</em>, <em>channels=None</em>, <em>num_groups=1</em>, <em>if_act=True</em>, <em>name=None</em>, <em>use_cudnn=True</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.MobileNetV2.conv_bn_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.classification_models.MobileNetV2.inverted_residual_unit">
+<code class="descname">inverted_residual_unit</code><span class="sig-paren">(</span><em>input</em>, <em>num_in_filter</em>, <em>num_filters</em>, <em>ifshortcut</em>, <em>stride</em>, <em>filter_size</em>, <em>padding</em>, <em>expansion_factor</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.MobileNetV2.inverted_residual_unit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.classification_models.MobileNetV2.invresi_blocks">
+<code class="descname">invresi_blocks</code><span class="sig-paren">(</span><em>input</em>, <em>in_c</em>, <em>t</em>, <em>c</em>, <em>n</em>, <em>s</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.MobileNetV2.invresi_blocks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.classification_models.MobileNetV2.net">
+<code class="descname">net</code><span class="sig-paren">(</span><em>input</em>, <em>class_dim=1000</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.MobileNetV2.net" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.classification_models.MobileNetV2.shortcut">
+<code class="descname">shortcut</code><span class="sig-paren">(</span><em>input</em>, <em>data_residual</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.classification_models.MobileNetV2.shortcut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.models.mobilenet">
+<span id="paddleslim-models-mobilenet-module"></span><h2>paddleslim.models.mobilenet module<a class="headerlink" href="#module-paddleslim.models.mobilenet" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.models.mobilenet.MobileNet">
+<em class="property">class </em><code class="descclassname">paddleslim.models.mobilenet.</code><code class="descname">MobileNet</code><a class="headerlink" href="#paddleslim.models.mobilenet.MobileNet" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="paddleslim.models.mobilenet.MobileNet.conv_bn_layer">
+<code class="descname">conv_bn_layer</code><span class="sig-paren">(</span><em>input</em>, <em>filter_size</em>, <em>num_filters</em>, <em>stride</em>, <em>padding</em>, <em>channels=None</em>, <em>num_groups=1</em>, <em>act='relu'</em>, <em>use_cudnn=True</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet.MobileNet.conv_bn_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.mobilenet.MobileNet.depthwise_separable">
+<code class="descname">depthwise_separable</code><span class="sig-paren">(</span><em>input</em>, <em>num_filters1</em>, <em>num_filters2</em>, <em>num_groups</em>, <em>stride</em>, <em>scale</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet.MobileNet.depthwise_separable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.mobilenet.MobileNet.net">
+<code class="descname">net</code><span class="sig-paren">(</span><em>input</em>, <em>class_dim=1000</em>, <em>scale=1.0</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet.MobileNet.net" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="paddleslim-models-mobilenet-v2-module">
+<h2>paddleslim.models.mobilenet_v2 module<a class="headerlink" href="#paddleslim-models-mobilenet-v2-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-paddleslim.models.mobilenet_v2"></span><dl class="class">
+<dt id="paddleslim.models.mobilenet_v2.MobileNetV2">
+<em class="property">class </em><code class="descclassname">paddleslim.models.mobilenet_v2.</code><code class="descname">MobileNetV2</code><span class="sig-paren">(</span><em>scale=1.0</em>, <em>change_depth=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet_v2.MobileNetV2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="paddleslim.models.mobilenet_v2.MobileNetV2.conv_bn_layer">
+<code class="descname">conv_bn_layer</code><span class="sig-paren">(</span><em>input</em>, <em>filter_size</em>, <em>num_filters</em>, <em>stride</em>, <em>padding</em>, <em>channels=None</em>, <em>num_groups=1</em>, <em>if_act=True</em>, <em>name=None</em>, <em>use_cudnn=True</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet_v2.MobileNetV2.conv_bn_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.mobilenet_v2.MobileNetV2.inverted_residual_unit">
+<code class="descname">inverted_residual_unit</code><span class="sig-paren">(</span><em>input</em>, <em>num_in_filter</em>, <em>num_filters</em>, <em>ifshortcut</em>, <em>stride</em>, <em>filter_size</em>, <em>padding</em>, <em>expansion_factor</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet_v2.MobileNetV2.inverted_residual_unit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.mobilenet_v2.MobileNetV2.invresi_blocks">
+<code class="descname">invresi_blocks</code><span class="sig-paren">(</span><em>input</em>, <em>in_c</em>, <em>t</em>, <em>c</em>, <em>n</em>, <em>s</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet_v2.MobileNetV2.invresi_blocks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.mobilenet_v2.MobileNetV2.net">
+<code class="descname">net</code><span class="sig-paren">(</span><em>input</em>, <em>class_dim=1000</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet_v2.MobileNetV2.net" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.mobilenet_v2.MobileNetV2.shortcut">
+<code class="descname">shortcut</code><span class="sig-paren">(</span><em>input</em>, <em>data_residual</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet_v2.MobileNetV2.shortcut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.models.mobilenet_v2.MobileNetV2_x1_0">
+<code class="descclassname">paddleslim.models.mobilenet_v2.</code><code class="descname">MobileNetV2_x1_0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet_v2.MobileNetV2_x1_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.models.mobilenet_v2.MobileNetV2_x1_5">
+<code class="descclassname">paddleslim.models.mobilenet_v2.</code><code class="descname">MobileNetV2_x1_5</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet_v2.MobileNetV2_x1_5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.models.mobilenet_v2.MobileNetV2_x2_0">
+<code class="descclassname">paddleslim.models.mobilenet_v2.</code><code class="descname">MobileNetV2_x2_0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet_v2.MobileNetV2_x2_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.models.mobilenet_v2.MobileNetV2_scale">
+<code class="descclassname">paddleslim.models.mobilenet_v2.</code><code class="descname">MobileNetV2_scale</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.mobilenet_v2.MobileNetV2_scale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.models.resnet">
+<span id="paddleslim-models-resnet-module"></span><h2>paddleslim.models.resnet module<a class="headerlink" href="#module-paddleslim.models.resnet" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.models.resnet.ResNet">
+<em class="property">class </em><code class="descclassname">paddleslim.models.resnet.</code><code class="descname">ResNet</code><span class="sig-paren">(</span><em>layers=50</em>, <em>prefix_name=''</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.resnet.ResNet" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="paddleslim.models.resnet.ResNet.basic_block">
+<code class="descname">basic_block</code><span class="sig-paren">(</span><em>input</em>, <em>num_filters</em>, <em>stride</em>, <em>is_first</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.resnet.ResNet.basic_block" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.resnet.ResNet.bottleneck_block">
+<code class="descname">bottleneck_block</code><span class="sig-paren">(</span><em>input</em>, <em>num_filters</em>, <em>stride</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.resnet.ResNet.bottleneck_block" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.resnet.ResNet.conv_bn_layer">
+<code class="descname">conv_bn_layer</code><span class="sig-paren">(</span><em>input</em>, <em>num_filters</em>, <em>filter_size</em>, <em>stride=1</em>, <em>groups=1</em>, <em>act=None</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.resnet.ResNet.conv_bn_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.resnet.ResNet.net">
+<code class="descname">net</code><span class="sig-paren">(</span><em>input</em>, <em>class_dim=1000</em>, <em>conv1_name='conv1'</em>, <em>fc_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.resnet.ResNet.net" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.models.resnet.ResNet.shortcut">
+<code class="descname">shortcut</code><span class="sig-paren">(</span><em>input</em>, <em>ch_out</em>, <em>stride</em>, <em>is_first</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.resnet.ResNet.shortcut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.models.resnet.ResNet34">
+<code class="descclassname">paddleslim.models.resnet.</code><code class="descname">ResNet34</code><span class="sig-paren">(</span><em>prefix_name=''</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.resnet.ResNet34" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.models.resnet.ResNet50">
+<code class="descclassname">paddleslim.models.resnet.</code><code class="descname">ResNet50</code><span class="sig-paren">(</span><em>prefix_name=''</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.resnet.ResNet50" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.models.resnet.ResNet101">
+<code class="descclassname">paddleslim.models.resnet.</code><code class="descname">ResNet101</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.resnet.ResNet101" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.models.resnet.ResNet152">
+<code class="descclassname">paddleslim.models.resnet.</code><code class="descname">ResNet152</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.resnet.ResNet152" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.models.util">
+<span id="paddleslim-models-util-module"></span><h2>paddleslim.models.util module<a class="headerlink" href="#module-paddleslim.models.util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.models.util.image_classification">
+<code class="descclassname">paddleslim.models.util.</code><code class="descname">image_classification</code><span class="sig-paren">(</span><em>model</em>, <em>image_shape</em>, <em>class_num</em>, <em>use_gpu=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.models.util.image_classification" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Nerual Architecture Search for Image Classification &mdash; PaddleSlim 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Quick Start" href="index_en.html"/>
+        <link rel="next" title="Training-aware Quantization of image classification model - quick start" href="quant_aware_tutorial_en.html"/>
+        <link rel="prev" title="Channel Pruning for Image Classification" href="pruning_tutorial_en.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index_en.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_en.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install_en.html">Install</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_en.html">Quick Start</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pruning_tutorial_en.html">Channel Pruning for Image Classification</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Nerual Architecture Search for Image Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#import-dependency">1. import dependency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#initial-sanas-instance">2. initial SANAS instance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-function-about-building-program">3. define function about building program</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-function-about-input-data">4. define function about input data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-function-about-training">5. define function about training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-funciton-about-evaluation">6. define funciton about evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#start-search">7. start search</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fetch-model-architecture">7.1 fetch model architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-program">7.2 build program</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#define-input-data">7.3 define input data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#train-model">7.4 train model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#evaluate-model">7.5 evaluate model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reture-score">7.6 reture score</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#full-example">8. full example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quant_aware_tutorial_en.html">Training-aware Quantization of image classification model - quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quant_post_tutorial_en.html">Post-training Quantization of image classification model - quick start</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index_en.html">Aadvanced Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_en/index_en.html">API Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo_en.html">Model Zoo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index_en.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index_en.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index_en.html">Quick Start</a> &raquo;</li>
+      
+    <li>Nerual Architecture Search for Image Classification</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/quick_start/nas_tutorial_en.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nerual-architecture-search-for-image-classification">
+<h1>Nerual Architecture Search for Image Classification<a class="headerlink" href="#nerual-architecture-search-for-image-classification" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial shows how to use <a class="reference external" href="../api/nas_api">API</a> about SANAS in PaddleSlim. We start experiment based on MobileNetV2 as example. The tutorial contains follow section.</p>
+<ol class="simple">
+<li>necessary imports</li>
+<li>initial SANAS instance</li>
+<li>define function about building program</li>
+<li>define function about input data</li>
+<li>define function about training</li>
+<li>define funciton about evaluation</li>
+<li>start search
+7.1 fetch model architecture
+7.2 build program
+7.3 define input data
+7.4 train model
+7.5 evaluate model
+7.6 reture score</li>
+<li>full example</li>
+</ol>
+<p>The following chapter describes each steps in order.</p>
+<div class="section" id="import-dependency">
+<h2>1. import dependency<a class="headerlink" href="#import-dependency" title="Permalink to this headline">¶</a></h2>
+<p>Please make sure that you haved installed Paddle correctly, then do the necessary imports.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="k">as</span> <span class="nn">slim</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initial-sanas-instance">
+<h2>2. initial SANAS instance<a class="headerlink" href="#initial-sanas-instance" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sanas</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">nas</span><span class="o">.</span><span class="n">SANAS</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;MobileNetV2Space&#39;</span><span class="p">)],</span> <span class="n">server_addr</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">8337</span><span class="p">),</span> <span class="n">save_checkpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-function-about-building-program">
+<h2>3. define function about building program<a class="headerlink" href="#define-function-about-building-program" title="Permalink to this headline">¶</a></h2>
+<p>Build program about training and evaluation according to the model architecture.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_program</span><span class="p">(</span><span class="n">archs</span><span class="p">):</span>
+    <span class="n">train_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+    <span class="n">startup_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">archs</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="n">softmax_out</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">use_cudnn</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+        <span class="n">avg_cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+        <span class="n">acc_top1</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">acc_top5</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">test_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">default_main_program</span><span class="p">()</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">avg_cost</span><span class="p">)</span>
+
+        <span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+        <span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+        <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">startup_program</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">test_program</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">),</span> <span class="n">avg_cost</span><span class="p">,</span> <span class="n">acc_top1</span><span class="p">,</span> <span class="n">acc_top5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-function-about-input-data">
+<h2>4. define function about input data<a class="headerlink" href="#define-function-about-input-data" title="Permalink to this headline">¶</a></h2>
+<p>The dataset we used is cifar10, and <code class="docutils literal"><span class="pre">paddle.dataset.cifar</span></code> in Paddle including the download and pre-read about cifar.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">input_data</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+    <span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">cifar</span><span class="o">.</span><span class="n">train10</span><span class="p">(</span><span class="n">cycle</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">buf_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+    <span class="n">train_feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>
+    <span class="n">eval_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">cifar</span><span class="o">.</span><span class="n">test10</span><span class="p">(</span><span class="n">cycle</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+    <span class="n">eval_feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-function-about-training">
+<h2>5. define function about training<a class="headerlink" href="#define-function-about-training" title="Permalink to this headline">¶</a></h2>
+<p>Start training.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">start_train</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">,</span> <span class="n">data_feeder</span><span class="p">):</span> 
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">avg_cost</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top5</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_reader</span><span class="p">():</span>
+        <span class="n">batch_reward</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TRAIN: loss: </span><span class="si">{}</span><span class="s2">, acc1: </span><span class="si">{}</span><span class="s2">, acc5:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">batch_reward</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">batch_reward</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-funciton-about-evaluation">
+<h2>6. define funciton about evaluation<a class="headerlink" href="#define-funciton-about-evaluation" title="Permalink to this headline">¶</a></h2>
+<p>Start evaluating.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">start_eval</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">,</span> <span class="n">data_feeder</span><span class="p">):</span>
+    <span class="n">reward</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">avg_cost</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top5</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_reader</span><span class="p">():</span>
+        <span class="n">batch_reward</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">)</span>
+        <span class="n">reward_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">batch_reward</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">reward</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reward_avg</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TEST: loss: </span><span class="si">{}</span><span class="s2">, acc1: </span><span class="si">{}</span><span class="s2">, acc5:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">batch_reward</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">batch_reward</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="n">finally_reward</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">reward</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FINAL TEST: avg_cost: </span><span class="si">{}</span><span class="s2">, acc1: </span><span class="si">{}</span><span class="s2">, acc5: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">finally_reward</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">finally_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">finally_reward</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">finally_reward</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="start-search">
+<h2>7. start search<a class="headerlink" href="#start-search" title="Permalink to this headline">¶</a></h2>
+<p>The following steps describes how to get current model architecture and what need to do after get the model architecture. If you want to start a full example directly, please jump to Step 9.</p>
+<div class="section" id="fetch-model-architecture">
+<h3>7.1 fetch model architecture<a class="headerlink" href="#fetch-model-architecture" title="Permalink to this headline">¶</a></h3>
+<p>Get Next model architecture by <code class="docutils literal"><span class="pre">next_archs()</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-program">
+<h3>7.2 build program<a class="headerlink" href="#build-program" title="Permalink to this headline">¶</a></h3>
+<p>Get program according to the function in Step3 and model architecture from Step 7.1.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">eval_program</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">avg_cost</span><span class="p">,</span> <span class="n">acc_top1</span><span class="p">,</span> <span class="n">acc_top5</span> <span class="o">=</span> <span class="n">build_program</span><span class="p">(</span><span class="n">archs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-input-data">
+<h3>7.3 define input data<a class="headerlink" href="#define-input-data" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="train-model">
+<h3>7.4 train model<a class="headerlink" href="#train-model" title="Permalink to this headline">¶</a></h3>
+<p>Start training according to train program and data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">start_train</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="evaluate-model">
+<h3>7.5 evaluate model<a class="headerlink" href="#evaluate-model" title="Permalink to this headline">¶</a></h3>
+<p>Start evaluation according to evaluation program and data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">finally_reward</span> <span class="o">=</span> <span class="n">start_eval</span><span class="p">(</span><span class="n">eval_program</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reture-score">
+<h3>7.6 reture score<a class="headerlink" href="#reture-score" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sanas</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">finally_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="full-example">
+<h2>8. full example<a class="headerlink" href="#full-example" title="Permalink to this headline">¶</a></h2>
+<p>The following is a full example about neural architecture search, it uses FLOPs as constraint and includes 3 steps, it means train 3 model architectures which is satisfied constraint, and train 7 epoch for each model architecture.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">eval_progarm</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">avg_cost</span><span class="p">,</span> <span class="n">acc_top1</span><span class="p">,</span> <span class="n">acc_top5</span> <span class="o">=</span> <span class="n">build_program</span><span class="p">(</span><span class="n">archs</span><span class="p">)</span>
+    <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+
+    <span class="n">current_flops</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">train_program</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">current_flops</span> <span class="o">&gt;</span> <span class="mi">321208544</span><span class="p">:</span>
+        <span class="k">continue</span>
+    
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+        <span class="n">start_train</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">)</span>
+
+    <span class="n">finally_reward</span> <span class="o">=</span> <span class="n">start_eval</span><span class="p">(</span><span class="n">eval_program</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span><span class="p">)</span>
+
+    <span class="n">sanas</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">finally_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="quant_aware_tutorial_en.html" class="btn btn-neutral float-right" title="Training-aware Quantization of image classification model - quick start" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pruning_tutorial_en.html" class="btn btn-neutral" title="Channel Pruning for Image Classification" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

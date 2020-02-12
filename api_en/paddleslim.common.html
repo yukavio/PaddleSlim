@@ -1,0 +1,881 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>paddleslim.common package &mdash; PaddleSlim 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index_en.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_en.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install_en.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index_en.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index_en.html">Aadvanced Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index_en.html">API Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo_en.html">Model Zoo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index_en.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index_en.html">Docs</a> &raquo;</li>
+      
+    <li>paddleslim.common package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_en/paddleslim.common.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-paddleslim.common">
+<span id="paddleslim-common-package"></span><h1>paddleslim.common package<a class="headerlink" href="#module-paddleslim.common" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="paddleslim.common.EvolutionaryController">
+<em class="property">class </em><code class="descclassname">paddleslim.common.</code><code class="descname">EvolutionaryController</code><a class="headerlink" href="#paddleslim.common.EvolutionaryController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Abstract controller for all evolutionary searching method.</p>
+<dl class="method">
+<dt id="paddleslim.common.EvolutionaryController.next_tokens">
+<code class="descname">next_tokens</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.EvolutionaryController.next_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate new tokens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The next searched tokens.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;list&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.EvolutionaryController.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>range_table</em>, <em>constrain_func=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.EvolutionaryController.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the controller.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>range_table</strong> (<em>list&lt;int&gt;</em>) &#8211; It is used to define the searching space of controller.
+The tokens[i] generated by controller should be in [0, range_table[i]).</li>
+<li><strong>constrain_func</strong> (<em>function</em>) &#8211; It is used to check whether tokens meet the constraint.
+None means there is no constraint. Default: None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.EvolutionaryController.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>tokens</em>, <em>reward</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.EvolutionaryController.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the status of controller according current tokens and reward.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tokens</strong> (<em>list&lt;int&gt;</em>) &#8211; A solution of searching task.</li>
+<li><strong>reward</strong> (<em>list&lt;int&gt;</em>) &#8211; The reward of tokens.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.common.SAController">
+<em class="property">class </em><code class="descclassname">paddleslim.common.</code><code class="descname">SAController</code><span class="sig-paren">(</span><em>range_table=None</em>, <em>reduce_rate=0.85</em>, <em>init_temperature=None</em>, <em>max_try_times=300</em>, <em>init_tokens=None</em>, <em>reward=-1</em>, <em>max_reward=-1</em>, <em>iters=0</em>, <em>best_tokens=None</em>, <em>constrain_func=None</em>, <em>checkpoints=None</em>, <em>searched=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.SAController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#paddleslim.common.controller.EvolutionaryController" title="paddleslim.common.controller.EvolutionaryController"><code class="xref py py-class docutils literal"><span class="pre">paddleslim.common.controller.EvolutionaryController</span></code></a></p>
+<p>Simulated annealing controller.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>range_table</strong> (<em>list&lt;int&gt;</em>) &#8211; Range table.</li>
+<li><strong>reduce_rate</strong> (<em>float</em>) &#8211; The decay rate of temperature.</li>
+<li><strong>init_temperature</strong> (<em>float</em>) &#8211; Init temperature.</li>
+<li><strong>max_try_times</strong> (<em>int</em>) &#8211; max try times before get legal tokens. Default: 300.</li>
+<li><strong>init_tokens</strong> (<em>list&lt;int&gt;</em>) &#8211; The initial tokens. Default: None.</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; The reward of current tokens. Default: -1.</li>
+<li><strong>max_reward</strong> (<em>float</em>) &#8211; The max reward in the search of sanas, in general, best tokens get max reward. Default: -1.</li>
+<li><strong>iters</strong> (<em>int</em>) &#8211; The iteration of sa controller. Default: 0.</li>
+<li><strong>best_tokens</strong> (<em>list&lt;int&gt;</em>) &#8211; The best tokens in the search of sanas, in general, best tokens get max reward. Default: None.</li>
+<li><strong>constrain_func</strong> (<em>function</em>) &#8211; The callback function used to check whether the tokens meet constraint. None means there is no constraint. Default: None.</li>
+<li><strong>checkpoints</strong> (<em>str</em>) &#8211; if checkpoint is None, donnot save checkpoints, else save scene to checkpoints file.</li>
+<li><strong>searched</strong> (<em>dict&lt;list</em><em>, </em><em>float&gt;</em>) &#8211; remember tokens which are searched.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="paddleslim.common.SAController.best_tokens">
+<code class="descname">best_tokens</code><a class="headerlink" href="#paddleslim.common.SAController.best_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current best tokens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The best tokens.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;int&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="paddleslim.common.SAController.current_tokens">
+<code class="descname">current_tokens</code><a class="headerlink" href="#paddleslim.common.SAController.current_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get tokens generated in current searching step.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The best tokens.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;int&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="paddleslim.common.SAController.max_reward">
+<code class="descname">max_reward</code><a class="headerlink" href="#paddleslim.common.SAController.max_reward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.SAController.next_tokens">
+<code class="descname">next_tokens</code><span class="sig-paren">(</span><em>control_token=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.SAController.next_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get next tokens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>control_token</strong> &#8211; The tokens used to generate next tokens.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The next tokens.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;int&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.SAController.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>tokens</em>, <em>reward</em>, <em>iter</em>, <em>client_num</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.SAController.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the controller according to latest tokens and reward.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tokens</strong> (<em>list&lt;int&gt;</em>) &#8211; The tokens generated in current step.</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; The reward of tokens.</li>
+<li><strong>iter</strong> (<em>int</em>) &#8211; The current step of searching client.</li>
+<li><strong>client_num</strong> (<em>int</em>) &#8211; The total number of searching client.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.common.get_logger">
+<code class="descclassname">paddleslim.common.</code><code class="descname">get_logger</code><span class="sig-paren">(</span><em>name</em>, <em>level</em>, <em>fmt='%(asctime)s-%(levelname)s: %(message)s'</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.get_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get logger from logging with given name, level and format without
+setting logging basicConfig. For setting basicConfig in paddle
+will disable basicConfig setting after import paddle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; The logger name.</li>
+<li><strong>level</strong> (<em>logging.LEVEL</em>) &#8211; The base level of the logger</li>
+<li><strong>fmt</strong> (<em>str</em>) &#8211; Format of logger output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">logging logger with given setttings</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">logging.Logger</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">logger</span> <span class="o">=</span> <span class="n">log_helper</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+                     <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1">-</span><span class="si">%(levelname)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.common.ControllerServer">
+<em class="property">class </em><code class="descclassname">paddleslim.common.</code><code class="descname">ControllerServer</code><span class="sig-paren">(</span><em>controller=None</em>, <em>address=(''</em>, <em>0)</em>, <em>max_client_num=100</em>, <em>search_steps=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.ControllerServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The controller wrapper with a socket server to handle the request of search agent.
+:param controller: The controller used to generate tokens.
+:type controller: slim.searcher.Controller
+:param address: The address of current server binding with format (ip, port). Default: (&#8216;&#8217;, 0).</p>
+<blockquote>
+<div>which means setting ip automatically</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>max_client_num</strong> (<em>int</em>) &#8211; The maximum number of clients connecting to current server simultaneously. Default: 100.</li>
+<li><strong>search_steps</strong> (<em>int|None</em>) &#8211; The total steps of searching. None means never stopping. Default: None</li>
+<li><strong>key</strong> (<em>str|None</em>) &#8211; Config information. Default: None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="paddleslim.common.ControllerServer.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.ControllerServer.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.ControllerServer.ip">
+<code class="descname">ip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.ControllerServer.ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ip.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.ControllerServer.port">
+<code class="descname">port</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.ControllerServer.port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the port.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.ControllerServer.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.ControllerServer.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.ControllerServer.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.ControllerServer.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.common.ControllerClient">
+<em class="property">class </em><code class="descclassname">paddleslim.common.</code><code class="descname">ControllerClient</code><span class="sig-paren">(</span><em>server_ip=None</em>, <em>server_port=None</em>, <em>key=None</em>, <em>client_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.ControllerClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Controller client.
+:param server_ip: The ip that controller server listens on. None means getting the ip automatically. Default: None.
+:type server_ip: str
+:param server_port: The port that controller server listens on. 0 means getting usable port automatically. Default: 0.
+:type server_port: int
+:param key: The key used to identify legal agent for controller server. Default: &#8220;light-nas&#8221;
+:type key: str
+:param client_name: Current client name, random generate for counting client number. Default: None.
+:type client_name: str</p>
+<dl class="method">
+<dt id="paddleslim.common.ControllerClient.next_tokens">
+<code class="descname">next_tokens</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.ControllerClient.next_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get next tokens.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.ControllerClient.request_current_info">
+<code class="descname">request_current_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.ControllerClient.request_current_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request for current information.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.ControllerClient.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>tokens</em>, <em>reward</em>, <em>iter</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.ControllerClient.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the controller according to latest tokens and reward.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tokens</strong> (<em>list&lt;int&gt;</em>) &#8211; The tokens generated in last step.</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; The reward of tokens.</li>
+<li><strong>iter</strong> (<em>int</em>) &#8211; The iteration number of current client.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.common.lock">
+<code class="descclassname">paddleslim.common.</code><code class="descname">lock</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lock the file in local file system.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.common.unlock">
+<code class="descclassname">paddleslim.common.</code><code class="descname">unlock</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.unlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unlock the file in local file system.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.common.cached_reader">
+<code class="descclassname">paddleslim.common.</code><code class="descname">cached_reader</code><span class="sig-paren">(</span><em>reader</em>, <em>sampled_rate</em>, <em>cache_path</em>, <em>cached_id</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.cached_reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample partial data from reader and cache them into local file system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>reader</strong> &#8211; Iterative data source.</li>
+<li><strong>sampled_rate</strong> (<em>float</em>) &#8211; The sampled rate used to sample partial data for evaluation. None means using all data in eval_reader. default: None.</li>
+<li><strong>cache_path</strong> (<em>str</em>) &#8211; The path to cache the sampled data.</li>
+<li><strong>cached_id</strong> (<em>int</em>) &#8211; The id of dataset sampled. Evaluations with same cached_id use the same sampled dataset. default: 0.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-paddleslim.common.cached_reader">
+<span id="paddleslim-common-cached-reader-module"></span><h2>paddleslim.common.cached_reader module<a class="headerlink" href="#module-paddleslim.common.cached_reader" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.common.cached_reader.cached_reader">
+<code class="descclassname">paddleslim.common.cached_reader.</code><code class="descname">cached_reader</code><span class="sig-paren">(</span><em>reader</em>, <em>sampled_rate</em>, <em>cache_path</em>, <em>cached_id</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.cached_reader.cached_reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample partial data from reader and cache them into local file system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>reader</strong> &#8211; Iterative data source.</li>
+<li><strong>sampled_rate</strong> (<em>float</em>) &#8211; The sampled rate used to sample partial data for evaluation. None means using all data in eval_reader. default: None.</li>
+<li><strong>cache_path</strong> (<em>str</em>) &#8211; The path to cache the sampled data.</li>
+<li><strong>cached_id</strong> (<em>int</em>) &#8211; The id of dataset sampled. Evaluations with same cached_id use the same sampled dataset. default: 0.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.common.controller">
+<span id="paddleslim-common-controller-module"></span><h2>paddleslim.common.controller module<a class="headerlink" href="#module-paddleslim.common.controller" title="Permalink to this headline">¶</a></h2>
+<p>The controller used to search hyperparameters or neural architecture</p>
+<dl class="class">
+<dt id="paddleslim.common.controller.EvolutionaryController">
+<em class="property">class </em><code class="descclassname">paddleslim.common.controller.</code><code class="descname">EvolutionaryController</code><a class="headerlink" href="#paddleslim.common.controller.EvolutionaryController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Abstract controller for all evolutionary searching method.</p>
+<dl class="method">
+<dt id="paddleslim.common.controller.EvolutionaryController.next_tokens">
+<code class="descname">next_tokens</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller.EvolutionaryController.next_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate new tokens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The next searched tokens.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;list&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.controller.EvolutionaryController.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>range_table</em>, <em>constrain_func=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller.EvolutionaryController.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the controller.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>range_table</strong> (<em>list&lt;int&gt;</em>) &#8211; It is used to define the searching space of controller.
+The tokens[i] generated by controller should be in [0, range_table[i]).</li>
+<li><strong>constrain_func</strong> (<em>function</em>) &#8211; It is used to check whether tokens meet the constraint.
+None means there is no constraint. Default: None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.controller.EvolutionaryController.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>tokens</em>, <em>reward</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller.EvolutionaryController.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the status of controller according current tokens and reward.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tokens</strong> (<em>list&lt;int&gt;</em>) &#8211; A solution of searching task.</li>
+<li><strong>reward</strong> (<em>list&lt;int&gt;</em>) &#8211; The reward of tokens.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.common.controller_client">
+<span id="paddleslim-common-controller-client-module"></span><h2>paddleslim.common.controller_client module<a class="headerlink" href="#module-paddleslim.common.controller_client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.common.controller_client.ControllerClient">
+<em class="property">class </em><code class="descclassname">paddleslim.common.controller_client.</code><code class="descname">ControllerClient</code><span class="sig-paren">(</span><em>server_ip=None</em>, <em>server_port=None</em>, <em>key=None</em>, <em>client_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller_client.ControllerClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Controller client.
+:param server_ip: The ip that controller server listens on. None means getting the ip automatically. Default: None.
+:type server_ip: str
+:param server_port: The port that controller server listens on. 0 means getting usable port automatically. Default: 0.
+:type server_port: int
+:param key: The key used to identify legal agent for controller server. Default: &#8220;light-nas&#8221;
+:type key: str
+:param client_name: Current client name, random generate for counting client number. Default: None.
+:type client_name: str</p>
+<dl class="method">
+<dt id="paddleslim.common.controller_client.ControllerClient.next_tokens">
+<code class="descname">next_tokens</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller_client.ControllerClient.next_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get next tokens.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.controller_client.ControllerClient.request_current_info">
+<code class="descname">request_current_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller_client.ControllerClient.request_current_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request for current information.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.controller_client.ControllerClient.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>tokens</em>, <em>reward</em>, <em>iter</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller_client.ControllerClient.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the controller according to latest tokens and reward.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tokens</strong> (<em>list&lt;int&gt;</em>) &#8211; The tokens generated in last step.</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; The reward of tokens.</li>
+<li><strong>iter</strong> (<em>int</em>) &#8211; The iteration number of current client.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.common.controller_server">
+<span id="paddleslim-common-controller-server-module"></span><h2>paddleslim.common.controller_server module<a class="headerlink" href="#module-paddleslim.common.controller_server" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.common.controller_server.ControllerServer">
+<em class="property">class </em><code class="descclassname">paddleslim.common.controller_server.</code><code class="descname">ControllerServer</code><span class="sig-paren">(</span><em>controller=None</em>, <em>address=(''</em>, <em>0)</em>, <em>max_client_num=100</em>, <em>search_steps=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller_server.ControllerServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The controller wrapper with a socket server to handle the request of search agent.
+:param controller: The controller used to generate tokens.
+:type controller: slim.searcher.Controller
+:param address: The address of current server binding with format (ip, port). Default: (&#8216;&#8217;, 0).</p>
+<blockquote>
+<div>which means setting ip automatically</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>max_client_num</strong> (<em>int</em>) &#8211; The maximum number of clients connecting to current server simultaneously. Default: 100.</li>
+<li><strong>search_steps</strong> (<em>int|None</em>) &#8211; The total steps of searching. None means never stopping. Default: None</li>
+<li><strong>key</strong> (<em>str|None</em>) &#8211; Config information. Default: None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="paddleslim.common.controller_server.ControllerServer.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller_server.ControllerServer.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.controller_server.ControllerServer.ip">
+<code class="descname">ip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller_server.ControllerServer.ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ip.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.controller_server.ControllerServer.port">
+<code class="descname">port</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller_server.ControllerServer.port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the port.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.controller_server.ControllerServer.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller_server.ControllerServer.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.controller_server.ControllerServer.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.controller_server.ControllerServer.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.common.lock">
+<span id="paddleslim-common-lock-module"></span><h2>paddleslim.common.lock module<a class="headerlink" href="#module-paddleslim.common.lock" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.common.lock.lock">
+<code class="descclassname">paddleslim.common.lock.</code><code class="descname">lock</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.lock.lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lock the file in local file system.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.common.lock.unlock">
+<code class="descclassname">paddleslim.common.lock.</code><code class="descname">unlock</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.lock.unlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unlock the file in local file system.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.common.log_helper">
+<span id="paddleslim-common-log-helper-module"></span><h2>paddleslim.common.log_helper module<a class="headerlink" href="#module-paddleslim.common.log_helper" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.common.log_helper.get_logger">
+<code class="descclassname">paddleslim.common.log_helper.</code><code class="descname">get_logger</code><span class="sig-paren">(</span><em>name</em>, <em>level</em>, <em>fmt='%(asctime)s-%(levelname)s: %(message)s'</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.log_helper.get_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get logger from logging with given name, level and format without
+setting logging basicConfig. For setting basicConfig in paddle
+will disable basicConfig setting after import paddle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; The logger name.</li>
+<li><strong>level</strong> (<em>logging.LEVEL</em>) &#8211; The base level of the logger</li>
+<li><strong>fmt</strong> (<em>str</em>) &#8211; Format of logger output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">logging logger with given setttings</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">logging.Logger</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">logger</span> <span class="o">=</span> <span class="n">log_helper</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+                     <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1">-</span><span class="si">%(levelname)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.common.sa_controller">
+<span id="paddleslim-common-sa-controller-module"></span><h2>paddleslim.common.sa_controller module<a class="headerlink" href="#module-paddleslim.common.sa_controller" title="Permalink to this headline">¶</a></h2>
+<p>The controller used to search hyperparameters or neural architecture</p>
+<dl class="class">
+<dt id="paddleslim.common.sa_controller.SAController">
+<em class="property">class </em><code class="descclassname">paddleslim.common.sa_controller.</code><code class="descname">SAController</code><span class="sig-paren">(</span><em>range_table=None</em>, <em>reduce_rate=0.85</em>, <em>init_temperature=None</em>, <em>max_try_times=300</em>, <em>init_tokens=None</em>, <em>reward=-1</em>, <em>max_reward=-1</em>, <em>iters=0</em>, <em>best_tokens=None</em>, <em>constrain_func=None</em>, <em>checkpoints=None</em>, <em>searched=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.sa_controller.SAController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#paddleslim.common.controller.EvolutionaryController" title="paddleslim.common.controller.EvolutionaryController"><code class="xref py py-class docutils literal"><span class="pre">paddleslim.common.controller.EvolutionaryController</span></code></a></p>
+<p>Simulated annealing controller.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>range_table</strong> (<em>list&lt;int&gt;</em>) &#8211; Range table.</li>
+<li><strong>reduce_rate</strong> (<em>float</em>) &#8211; The decay rate of temperature.</li>
+<li><strong>init_temperature</strong> (<em>float</em>) &#8211; Init temperature.</li>
+<li><strong>max_try_times</strong> (<em>int</em>) &#8211; max try times before get legal tokens. Default: 300.</li>
+<li><strong>init_tokens</strong> (<em>list&lt;int&gt;</em>) &#8211; The initial tokens. Default: None.</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; The reward of current tokens. Default: -1.</li>
+<li><strong>max_reward</strong> (<em>float</em>) &#8211; The max reward in the search of sanas, in general, best tokens get max reward. Default: -1.</li>
+<li><strong>iters</strong> (<em>int</em>) &#8211; The iteration of sa controller. Default: 0.</li>
+<li><strong>best_tokens</strong> (<em>list&lt;int&gt;</em>) &#8211; The best tokens in the search of sanas, in general, best tokens get max reward. Default: None.</li>
+<li><strong>constrain_func</strong> (<em>function</em>) &#8211; The callback function used to check whether the tokens meet constraint. None means there is no constraint. Default: None.</li>
+<li><strong>checkpoints</strong> (<em>str</em>) &#8211; if checkpoint is None, donnot save checkpoints, else save scene to checkpoints file.</li>
+<li><strong>searched</strong> (<em>dict&lt;list</em><em>, </em><em>float&gt;</em>) &#8211; remember tokens which are searched.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="paddleslim.common.sa_controller.SAController.best_tokens">
+<code class="descname">best_tokens</code><a class="headerlink" href="#paddleslim.common.sa_controller.SAController.best_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current best tokens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The best tokens.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;int&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="paddleslim.common.sa_controller.SAController.current_tokens">
+<code class="descname">current_tokens</code><a class="headerlink" href="#paddleslim.common.sa_controller.SAController.current_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get tokens generated in current searching step.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The best tokens.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list&lt;int&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="paddleslim.common.sa_controller.SAController.max_reward">
+<code class="descname">max_reward</code><a class="headerlink" href="#paddleslim.common.sa_controller.SAController.max_reward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.sa_controller.SAController.next_tokens">
+<code class="descname">next_tokens</code><span class="sig-paren">(</span><em>control_token=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.sa_controller.SAController.next_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get next tokens.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>control_token</strong> &#8211; The tokens used to generate next tokens.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The next tokens.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list&lt;int&gt;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.common.sa_controller.SAController.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>tokens</em>, <em>reward</em>, <em>iter</em>, <em>client_num</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.common.sa_controller.SAController.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the controller according to latest tokens and reward.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tokens</strong> (<em>list&lt;int&gt;</em>) &#8211; The tokens generated in current step.</li>
+<li><strong>reward</strong> (<em>float</em>) &#8211; The reward of tokens.</li>
+<li><strong>iter</strong> (<em>int</em>) &#8211; The current step of searching client.</li>
+<li><strong>client_num</strong> (<em>int</em>) &#8211; The total number of searching client.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

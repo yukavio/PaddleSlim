@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>paddleslim.quant package &mdash; PaddleSlim 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="API Documents" href="index_en.html"/>
+        <link rel="next" title="paddleslim.nas package" href="paddleslim.nas.html"/>
+        <link rel="prev" title="paddleslim.dist package" href="paddleslim.dist.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index_en.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_en.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install_en.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index_en.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index_en.html">Aadvanced Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_en.html">API Documents</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.analysis.html">paddleslim.analysis package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.prune.html">paddleslim.prune package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.dist.html">paddleslim.dist package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">paddleslim.quant package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-paddleslim.quant.quant_embedding">paddleslim.quant.quant_embedding module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-paddleslim.quant.quanter">paddleslim.quant.quanter module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.nas.html">paddleslim.nas package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.nas.one_shot.html">paddleslim.nas.one_shot package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.pantheon.html">paddleslim.pantheon package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="search_space_en.html">search space</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo_en.html">Model Zoo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index_en.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index_en.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index_en.html">API Documents</a> &raquo;</li>
+      
+    <li>paddleslim.quant package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_en/paddleslim.quant.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-paddleslim.quant">
+<span id="paddleslim-quant-package"></span><h1>paddleslim.quant package<a class="headerlink" href="#module-paddleslim.quant" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-paddleslim.quant.quant_embedding">
+<span id="paddleslim-quant-quant-embedding-module"></span><h2>paddleslim.quant.quant_embedding module<a class="headerlink" href="#module-paddleslim.quant.quant_embedding" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.quant.quant_embedding.quant_embedding">
+<code class="descclassname">paddleslim.quant.quant_embedding.</code><code class="descname">quant_embedding</code><span class="sig-paren">(</span><em>program</em>, <em>place</em>, <em>config</em>, <em>scope=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.quant.quant_embedding.quant_embedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>quantize lookup_table op parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>program</strong> (<em>fluid.Program</em>) &#8211; infer program</li>
+<li><strong>scope</strong> (<em>fluid.Scope</em>) &#8211; <p>Scope records the mapping between variable names and variables, similar to brackets in programming languages. Usually users can use <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope()</a> . When <code class="docutils literal"><span class="pre">None</span></code> will use <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope()</a>. Default : <code class="docutils literal"><span class="pre">None</span></code>.</p>
+</li>
+<li><strong>place</strong> (<em>fluid.CPUPlace</em><em> or </em><em>fluid.CUDAPlace</em>) &#8211; This parameter represents the executor run on which device.</li>
+<li><strong>config</strong> (<em>dict</em>) &#8211; config to quantize. The keys are &#8216;params_name&#8217;, &#8216;quantize_type&#8217;,                 &#8216;quantize_bits&#8217;, &#8216;dtype&#8217;, &#8216;threshold&#8217;.                 <code class="docutils literal"><span class="pre">params_name</span></code> is parameter name to quantize, must be set.
+<code class="docutils literal"><span class="pre">quantize_type</span></code> is  quantize type, supported types are [&#8216;abs_max&#8217;], default is &#8220;abs_max&#8221;.
+<code class="docutils literal"><span class="pre">quantize_bits</span></code> supported bits are [8] and default is 8.
+<code class="docutils literal"><span class="pre">dtype</span></code> is quantize dtype, supported dtype are [&#8216;int8&#8217;], default is &#8216;int8&#8217;.
+<code class="docutils literal"><span class="pre">threshold</span></code> is threshold to clip tensor before quant. When threshold is not set,                         tensor will not be clipped.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.quant.quanter">
+<span id="paddleslim-quant-quanter-module"></span><h2>paddleslim.quant.quanter module<a class="headerlink" href="#module-paddleslim.quant.quanter" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.quant.quanter.convert">
+<code class="descclassname">paddleslim.quant.quanter.</code><code class="descname">convert</code><span class="sig-paren">(</span><em>program</em>, <em>place</em>, <em>config=None</em>, <em>scope=None</em>, <em>save_int8=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.quant.quanter.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert quantized and well-trained <code class="docutils literal"><span class="pre">program</span></code> to final  quantized <code class="docutils literal"><span class="pre">program</span></code> that can be used to  save <code class="docutils literal"><span class="pre">inference</span> <span class="pre">model</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>program</strong> (<em>fluid.Program</em>) &#8211; quantized and well-trained <code class="docutils literal"><span class="pre">test</span> <span class="pre">program</span></code>.</li>
+<li><strong>place</strong> (<em>fluid.CPUPlace</em><em> or </em><em>fluid.CUDAPlace</em>) &#8211; This parameter represents the executor run on which device.</li>
+<li><strong>config</strong> (<em>dict</em><em>, </em><em>optional</em>) &#8211; configs for convert. if set None, will use default config.
+It must be same with config that used in &#8216;quant_aware&#8217;. Default: None.</li>
+<li><strong>scope</strong> (<em>fluid.Scope</em><em>, </em><em>optional</em>) &#8211; <p>Scope records the mapping between variable names and variables,
+similar to brackets in programming languages. Usually users can use
+<a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope</a>.              When <code class="docutils literal"><span class="pre">None</span></code> will use <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope()</a> . Default: <code class="docutils literal"><span class="pre">None</span></code>.</p>
+</li>
+<li><strong>save_int8</strong> &#8211; Whether to return <code class="docutils literal"><span class="pre">program</span></code> which model parameters&#8217; dtype is <code class="docutils literal"><span class="pre">int8</span></code>.
+This parameter can only be used to get model size. Default: <code class="docutils literal"><span class="pre">False</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">freezed program which can be used for inference.
+when <code class="docutils literal"><span class="pre">save_int8</span></code> is False, return <code class="docutils literal"><span class="pre">freezed_program(fluid.Program)</span></code>.
+when <code class="docutils literal"><span class="pre">save_int8</span></code> is True, return <code class="docutils literal"><span class="pre">freezed_program(fluid.Program)</span></code> and <code class="docutils literal"><span class="pre">freezed_program_int8(fluid.Program)</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.quant.quanter.quant_aware">
+<code class="descclassname">paddleslim.quant.quanter.</code><code class="descname">quant_aware</code><span class="sig-paren">(</span><em>program</em>, <em>place</em>, <em>config=None</em>, <em>scope=None</em>, <em>for_test=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.quant.quanter.quant_aware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add quantization  and dequantization operators to &#8220;program&#8221;
+for quantization training or testing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>program</strong> (<em>fluid.Program</em>) &#8211; training or testing <code class="docutils literal"><span class="pre">program</span></code>.</li>
+<li><strong>place</strong> (<em>fluid.CPUPlace</em><em> or </em><em>fluid.CUDAPlace</em>) &#8211; This parameter represents
+the executor run on which device.</li>
+<li><strong>config</strong> (<em>dict</em><em>, </em><em>optional</em>) &#8211; configs for quantization. if None, will use default config.
+Default: None.</li>
+<li><strong>scope</strong> (<em>fluid.Scope</em>) &#8211; <p>Scope records the mapping between variable names and variables,
+similar to brackets in programming languages. Usually users can use
+<a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope</a>.              When <code class="docutils literal"><span class="pre">None</span></code> will use <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope()</a> . Default: <code class="docutils literal"><span class="pre">None</span></code>.</p>
+</li>
+<li><strong>for_test</strong> (<em>bool</em>) &#8211; If the &#8216;program&#8217; parameter is a test program, this parameter should be set to <code class="docutils literal"><span class="pre">True</span></code>.
+Otherwise, set to <code class="docutils literal"><span class="pre">False</span></code>.Default: False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Program with quantization and dequantization <code class="docutils literal"><span class="pre">operators</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">fluid.CompiledProgram | fluid.Program</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.quant.quanter.quant_post">
+<code class="descclassname">paddleslim.quant.quanter.</code><code class="descname">quant_post</code><span class="sig-paren">(</span><em>executor, model_dir, quantize_model_path, sample_generator, model_filename=None, params_filename=None, batch_size=16, batch_nums=None, scope=None, algo='KL', quantizable_op_type=['conv2d', 'depthwise_conv2d', 'mul'], is_full_quantize=False, weight_bits=8, activation_bits=8, is_use_cache_file=False, cache_dir='./temp_post_training'</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.quant.quanter.quant_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function utilizes post training quantization method to quantize the
+fp32 model. It uses calibrate data to calculate the scale factor of
+quantized variables, and inserts fake quantization and dequantization
+operators to obtain the quantized model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>executor</strong> (<em>fluid.Executor</em>) &#8211; The executor to load, run and save the
+quantized model.</li>
+<li><strong>model_dir</strong> (<em>str</em>) &#8211; The path of fp32 model that will be quantized, and
+the model and params that saved by <code class="docutils literal"><span class="pre">fluid.io.save_inference_model</span></code>
+are under the path.</li>
+<li><strong>quantize_model_path</strong> (<em>str</em>) &#8211; The path to save quantized model using api
+<code class="docutils literal"><span class="pre">fluid.io.save_inference_model</span></code>.</li>
+<li><strong>sample_generator</strong> (<em>Python Generator</em>) &#8211; The sample generator provides
+calibrate data for DataLoader, and it only returns a sample every time.</li>
+<li><strong>model_filename</strong> (<em>str</em><em>, </em><em>optional</em>) &#8211; The name of model file. If parameters
+are saved in separate files, set it as &#8216;None&#8217;. Default: &#8216;None&#8217;.</li>
+<li><strong>params_filename</strong> (<em>str</em><em>, </em><em>optional</em>) &#8211; The name of params file.
+When all parameters are saved in a single file, set it
+as filename. If parameters are saved in separate files,
+set it as &#8216;None&#8217;. Default : &#8216;None&#8217;.</li>
+<li><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) &#8211; The batch size of DataLoader, default is 16.</li>
+<li><strong>batch_nums</strong> (<em>int</em><em>, </em><em>optional</em>) &#8211; If batch_nums is not None, the number of calibrate
+data is &#8216;batch_size*batch_nums&#8217;. If batch_nums is None, use all data
+generated by sample_generator  as calibrate data.</li>
+<li><strong>scope</strong> (<em>fluid.Scope</em><em>, </em><em>optional</em>) &#8211; The scope to run program, use it to load
+and save variables. If scope is None, will use fluid.global_scope().</li>
+<li><strong>algo</strong> (<em>str</em><em>, </em><em>optional</em>) &#8211; If algo=KL, use KL-divergenc method to
+get the more precise scale factor. If algo=&#8217;direct&#8217;, use
+abs_max method to get the scale factor. Default: &#8216;KL&#8217;.</li>
+<li><strong>quantizable_op_type</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) &#8211; The list of op types
+that will be quantized. Default: [&#8220;conv2d&#8221;, &#8220;depthwise_conv2d&#8221;,
+&#8220;mul&#8221;].</li>
+<li><strong>weight_bits</strong> (<em>int</em><em>, </em><em>optional</em>) &#8211; quantization bit number for weights.</li>
+<li><strong>activation_bits</strong> (<em>int</em>) &#8211; quantization bit number for activation.</li>
+<li><strong>is_full_quantize</strong> (<em>bool</em>) &#8211; if True, apply quantization to all supported quantizable op type.
+If False, only apply quantization to the input quantizable_op_type. Default is False.</li>
+<li><strong>is_use_cache_file</strong> (<em>bool</em>) &#8211; If False, all temp data will be saved in memory. If True,
+all temp data will be saved to disk. Defalut: False.</li>
+<li><strong>cache_dir</strong> (<em>str</em>) &#8211; When &#8216;is_use_cache_file&#8217; is True, temp data will be save in &#8216;cache_dir&#8217;. Default is &#8216;./temp_post_training&#8217;.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="paddleslim.nas.html" class="btn btn-neutral float-right" title="paddleslim.nas package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="paddleslim.dist.html" class="btn btn-neutral" title="paddleslim.dist package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

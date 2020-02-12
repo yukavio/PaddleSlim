@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>简单蒸馏 &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="API文档" href="index.html"/>
+        <link rel="next" title="搜索空间" href="search_space.html"/>
+        <link rel="prev" title="量化" href="quantization_api.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API文档</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="analysis_api.html">模型分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nas_api.html">SA-NAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="one_shot_api.html">OneShotNAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">多进程蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prune_api.html">卷积层通道剪裁</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quantization_api.html">量化</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">简单蒸馏</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#merge">merge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fsp-loss">fsp_loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#l2-loss">l2_loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#soft-label-loss">soft_label_loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loss">loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="search_space.html">搜索空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table_latency.html">硬件延时评估表</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">API文档</a> &raquo;</li>
+      
+    <li>简单蒸馏</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_cn/single_distiller_api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>简单蒸馏<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="merge">
+<h2>merge<a class="headerlink" href="#merge" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.dist.merge">
+<code class="descclassname">paddleslim.dist.</code><code class="descname">merge</code><span class="sig-paren">(</span><em>teacher_program</em>, <em>student_program</em>, <em>data_name_map</em>, <em>place</em>, <em>scope=fluid.global_scope()</em>, <em>name_prefix='teacher_'</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.dist.merge" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/dist/single_distiller.py#L19">源代码</a></p>
+<p>merge将teacher_program融合到student_program中。在融合的program中，可以为其中合适的teacher特征图和student特征图添加蒸馏损失函数，从而达到用teacher模型的暗知识（Dark Knowledge）指导student模型学习的目的。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>teacher_program</strong> (Program)-定义了teacher模型的 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/Program_cn.html#program">paddle program</a></li>
+<li><strong>student_program</strong> (Program)-定义了student模型的 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/Program_cn.html#program">paddle program</a></li>
+<li><strong>data_name_map</strong> (dict)-teacher输入接口名与student输入接口名的映射，其中dict的 <em>key</em> 为teacher的输入名，<em>value</em> 为student的输入名</li>
+<li><strong>place</strong> (fluid.CPUPlace()|fluid.CUDAPlace(N))-该参数表示程序运行在何种设备上，这里的N为GPU对应的ID</li>
+<li><strong>scope</strong> (Scope)-该参数表示程序使用的变量作用域，如果不指定将使用默认的全局作用域。默认值： <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/global_scope_cn.html#global-scope">fluid.global_scope()</a></li>
+<li><strong>name_prefix</strong> (str)-merge操作将统一为teacher的 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/1.3/api_guides/low_level/program.html#variable">Variables</a> 添加的名称前缀name_prefix。默认值：&#8217;<a href="#id10"><span class="problematic" id="id11">teacher_</span></a>&#8216;</li>
+</ul>
+<p><strong>返回：</strong> 无</p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last"><em>data_name_map</em> 是 <strong>teacher_var name到student_var name的映射</strong> ，如果写反可能无法正确进行merge</p>
+</div>
+<p><strong>使用示例：</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim.dist</span> <span class="k">as</span> <span class="nn">dist</span>
+<span class="n">student_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">student_program</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">])</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">conv</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">teacher_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">teacher_program</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">])</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">conv</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">conv</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data_name_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="s1">&#39;x&#39;</span><span class="p">}</span>
+<span class="n">USE_GPU</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CUDAPlace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">USE_GPU</span> <span class="k">else</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+<span class="n">dist</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">teacher_program</span><span class="p">,</span> <span class="n">student_program</span><span class="p">,</span>
+                          <span class="n">data_name_map</span><span class="p">,</span> <span class="n">place</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fsp-loss">
+<h2>fsp_loss<a class="headerlink" href="#fsp-loss" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.dist.fsp_loss">
+<code class="descclassname">paddleslim.dist.</code><code class="descname">fsp_loss</code><span class="sig-paren">(</span><em>teacher_var1_name</em>, <em>teacher_var2_name</em>, <em>student_var1_name</em>, <em>student_var2_name</em>, <em>program=fluid.default_main_program()</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.dist.fsp_loss" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/dist/single_distiller.py#L90">源代码</a></p>
+<p>fsp_loss为program内的teacher var和student var添加fsp loss，出自论文 <a class="reference external" href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Yim_A_Gift_From_CVPR_2017_paper.pdf">A Gift from Knowledge Distillation: Fast Optimization, Network Minimization and Transfer Learning</a></p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>teacher_var1_name</strong> (str): teacher_var1的名称. 对应的variable是一个形为`[batch_size, x_channel, height, width]`的4-D特征图Tensor，数据类型为float32或float64</li>
+<li><strong>teacher_var2_name</strong> (str): teacher_var2的名称. 对应的variable是一个形为`[batch_size, y_channel, height, width]`的4-D特征图Tensor，数据类型为float32或float64。只有y_channel可以与teacher_var1的x_channel不同，其他维度必须与teacher_var1相同</li>
+<li><strong>student_var1_name</strong> (str): student_var1的名称. 对应的variable需与teacher_var1尺寸保持一致，是一个形为`[batch_size, x_channel, height, width]`的4-D特征图Tensor，数据类型为float32或float64</li>
+<li><strong>student_var2_name</strong> (str): student_var2的名称. 对应的variable需与teacher_var2尺寸保持一致，是一个形为`[batch_size, y_channel, height, width]`的4-D特征图Tensor，数据类型为float32或float64。只有y_channel可以与student_var1的x_channel不同，其他维度必须与student_var1相同</li>
+<li><strong>program</strong> (Program): 用于蒸馏训练的fluid program。默认值： <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/1.3/api_cn/fluid_cn.html#default-main-program">fluid.default_main_program()</a></li>
+</ul>
+<p><strong>返回：</strong> 由teacher_var1, teacher_var2, student_var1, student_var2组合得到的fsp_loss</p>
+<p><strong>使用示例：</strong></p>
+</div>
+<div class="section" id="l2-loss">
+<h2>l2_loss<a class="headerlink" href="#l2-loss" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.dist.l2_loss">
+<code class="descclassname">paddleslim.dist.</code><code class="descname">l2_loss</code><span class="sig-paren">(</span><em>teacher_var_name</em>, <em>student_var_name</em>, <em>program=fluid.default_main_program())[[源代码]](https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/dist/single_distiller.py#L118</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.dist.l2_loss" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>: l2_loss为program内的teacher var和student var添加l2 loss</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>teacher_var_name</strong> (str): teacher_var的名称.</li>
+<li><strong>student_var_name</strong> (str): student_var的名称.</li>
+<li><strong>program</strong> (Program): 用于蒸馏训练的fluid program。默认值： <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/1.3/api_cn/fluid_cn.html#default-main-program">fluid.default_main_program()</a></li>
+</ul>
+<p><strong>返回：</strong> 由teacher_var, student_var组合得到的l2_loss</p>
+<p><strong>使用示例：</strong></p>
+</div>
+<div class="section" id="soft-label-loss">
+<h2>soft_label_loss<a class="headerlink" href="#soft-label-loss" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.dist.soft_label_loss">
+<code class="descclassname">paddleslim.dist.</code><code class="descname">soft_label_loss</code><span class="sig-paren">(</span><em>teacher_var_name</em>, <em>student_var_name</em>, <em>program=fluid.default_main_program()</em>, <em>teacher_temperature=1.</em>, <em>student_temperature=1.)[[源代码]](https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/dist/single_distiller.py#L136</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.dist.soft_label_loss" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>soft_label_loss为program内的teacher var和student var添加soft label loss，出自论文 <a class="reference external" href="https://arxiv.org/pdf/1503.02531.pdf">Distilling the Knowledge in a Neural Network</a></p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>teacher_var_name</strong> (str): teacher_var的名称.</li>
+<li><strong>student_var_name</strong> (str): student_var的名称.</li>
+<li><strong>program</strong> (Program): 用于蒸馏训练的fluid program。默认值： <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/1.3/api_cn/fluid_cn.html#default-main-program">fluid.default_main_program()</a></li>
+<li><strong>teacher_temperature</strong> (float): 对teacher_var进行soft操作的温度值，温度值越大得到的特征图越平滑</li>
+<li><strong>student_temperature</strong> (float): 对student_var进行soft操作的温度值，温度值越大得到的特征图越平滑</li>
+</ul>
+<p><strong>返回：</strong> 由teacher_var, student_var组合得到的soft_label_loss</p>
+<p><strong>使用示例：</strong></p>
+</div>
+<div class="section" id="loss">
+<h2>loss<a class="headerlink" href="#loss" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.dist.loss">
+<code class="descclassname">paddleslim.dist.</code><code class="descname">loss</code><span class="sig-paren">(</span><em>loss_func</em>, <em>program=fluid.default_main_program()</em>, <em>**kwargs) [[源代码]](https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/dist/single_distiller.py#L165</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.dist.loss" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>: loss函数支持对任意多对teacher_var和student_var使用自定义损失函数</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><a href="#id7"><span class="problematic" id="id8">**</span></a>loss_func**( python function): 自定义的损失函数，输入为teacher var和student var，输出为自定义的loss</li>
+<li><strong>program</strong> (Program): 用于蒸馏训练的fluid program。默认值： <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/1.3/api_cn/fluid_cn.html#default-main-program">fluid.default_main_program()</a></li>
+<li><strong>**kwargs</strong> : loss_func输入名与对应variable名称</li>
+</ul>
+<p><strong>返回</strong> ：自定义的损失函数loss</p>
+<p><strong>使用示例：</strong></p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p>在添加蒸馏loss时会引入新的variable，需要注意新引入的variable不要与student variables命名冲突。这里建议两种用法（两种方法任选其一即可）：</p>
+<ol class="last arabic simple">
+<li>建议与student_program使用同一个命名空间，以避免一些未指定名称的variables(例如tmp_0, tmp_1...)多次定义为同一名称出现命名冲突</li>
+<li>建议在添加蒸馏loss时指定一个命名空间前缀，具体用法请参考Paddle官方文档 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/name_scope_cn.html#name-scope">fluid.name_scope</a></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="search_space.html" class="btn btn-neutral float-right" title="搜索空间" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="quantization_api.html" class="btn btn-neutral" title="量化" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

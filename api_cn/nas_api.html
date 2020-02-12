@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SA-NAS &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="API文档" href="index.html"/>
+        <link rel="next" title="OneShotNAS" href="one_shot_api.html"/>
+        <link rel="prev" title="模型分析" href="analysis_api.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API文档</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="analysis_api.html">模型分析</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SA-NAS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">搜索空间参数的配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sanas">SANAS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="one_shot_api.html">OneShotNAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">多进程蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prune_api.html">卷积层通道剪裁</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quantization_api.html">量化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single_distiller_api.html">简单蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="search_space.html">搜索空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table_latency.html">硬件延时评估表</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">API文档</a> &raquo;</li>
+      
+    <li>SA-NAS</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_cn/nas_api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sa-nas">
+<h1>SA-NAS<a class="headerlink" href="#sa-nas" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>搜索空间参数的配置<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>通过参数配置搜索空间。更多搜索空间的使用可以参考: [search_space](../search_space.md)</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>input_size(int|None)</strong>：- <code class="docutils literal"><span class="pre">input_size</span></code> 表示输入 <code class="docutils literal"><span class="pre">feature</span> <span class="pre">map</span></code> 的大小。 <code class="docutils literal"><span class="pre">input_size</span></code> 和 <code class="docutils literal"><span class="pre">output_size</span></code> 用来计算整个模型结构中下采样次数。</li>
+<li><strong>output_size(int|None)</strong>：- <code class="docutils literal"><span class="pre">output_size</span></code> 表示输出feature map的大小。 <code class="docutils literal"><span class="pre">input_size</span></code> 和 <code class="docutils literal"><span class="pre">output_size</span></code> 用来计算整个模型结构中下采样次数。</li>
+<li><strong>block_num(int|None)</strong>：- <code class="docutils literal"><span class="pre">block_num</span></code> 表示搜索空间中block的数量。</li>
+<li><strong>block_mask(list|None)</strong>：- <code class="docutils literal"><span class="pre">block_mask</span></code> 是一组由0、1组成的列表，0表示当前block是normal block，1表示当前block是reduction block。reduction block表示经过这个block之后的feature map大小下降为之前的一半，normal block表示经过这个block之后feature map大小不变。如果设置了  <code class="docutils literal"><span class="pre">block_mask</span></code> ，则主要以 <code class="docutils literal"><span class="pre">block_mask</span></code> 为主要配置， <code class="docutils literal"><span class="pre">input_size</span></code> ， <code class="docutils literal"><span class="pre">output_size</span></code> 和 <code class="docutils literal"><span class="pre">block_num</span></code> 三种配置是无效的。</li>
+</ul>
+</div>
+<div class="section" id="sanas">
+<h2>SANAS<a class="headerlink" href="#sanas" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.nas.SANAS">
+<em class="property">class </em><code class="descclassname">paddleslim.nas.</code><code class="descname">SANAS</code><span class="sig-paren">(</span><em>configs</em>, <em>server_addr=(&quot;&quot;</em>, <em>8881)</em>, <em>init_temperature=None</em>, <em>reduce_rate=0.85</em>, <em>init_tokens=None</em>, <em>search_steps=300</em>, <em>save_checkpoint='./nas_checkpoint'</em>, <em>load_checkpoint=None</em>, <em>is_server=True</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.nas.SANAS" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/nas/sa_nas.py#L36">源代码</a></p>
+<p>SANAS（Simulated Annealing Neural Architecture Search）是基于模拟退火算法进行模型结构搜索的算法，一般用于离散搜索任务。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>configs(list&lt;tuple&gt;)</strong> - 搜索空间配置列表，格式是 <code class="docutils literal"><span class="pre">[(key,</span> <span class="pre">{input_size,</span> <span class="pre">output_size,</span> <span class="pre">block_num,</span> <span class="pre">block_mask})]</span></code> 或者 <code class="docutils literal"><span class="pre">[(key)]</span></code> （MobileNetV2、MobilenetV1和ResNet的搜索空间使用和原本网络结构相同的搜索空间，所以仅需指定 <code class="docutils literal"><span class="pre">key</span></code> 即可）, <code class="docutils literal"><span class="pre">input_size</span></code> 和 <code class="docutils literal"><span class="pre">output_size</span></code> 表示输入和输出的特征图的大小， <code class="docutils literal"><span class="pre">block_num</span></code> 是指搜索网络中的block数量， <code class="docutils literal"><span class="pre">block_mask</span></code> 是一组由0和1组成的列表，0代表不进行下采样的block，1代表下采样的block。 更多paddleslim提供的搜索空间配置可以参考[Search Space](../search_space.md)。</li>
+<li><strong>server_addr(tuple)</strong> - SANAS的地址，包括server的ip地址和端口号，如果ip地址为None或者为&#8221;&#8220;的话则默认使用本机ip。默认：（&#8221;&#8221;, 8881）。</li>
+<li><strong>init_temperature(float)</strong> - 基于模拟退火进行搜索的初始温度。如果init_template为None而且init_tokens为None，则默认初始温度为10.0，如果init_template为None且init_tokens不为None，则默认初始温度为1.0。详细的温度设置可以参考下面的Note。默认：None。</li>
+<li><strong>reduce_rate(float)</strong> - 基于模拟退火进行搜索的衰减率。详细的退火率设置可以参考下面的Note。默认：0.85。</li>
+<li><strong>init_tokens(list|None)</strong> - 初始化token，若init_tokens为空，则SA算法随机生成初始化tokens。默认：None。</li>
+<li><strong>search_steps(int)</strong> - 搜索过程迭代的次数。默认：300。</li>
+<li><strong>save_checkpoint(str|None)</strong> - 保存checkpoint的文件目录，如果设置为None的话则不保存checkpoint。默认： <code class="docutils literal"><span class="pre">./nas_checkpoint</span></code> 。</li>
+<li><strong>load_checkpoint(str|None)</strong> - 加载checkpoint的文件目录，如果设置为None的话则不加载checkpoint。默认：None。</li>
+<li><strong>is_server(bool)</strong> - 当前实例是否要启动一个server。默认：True。</li>
+</ul>
+<p><strong>返回：</strong>
+一个SANAS类的实例</p>
+<p><strong>示例代码：</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;MobileNetV2Space&#39;</span><span class="p">)]</span>
+<span class="n">sanas</span> <span class="o">=</span> <span class="n">SANAS</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<ul class="last simple">
+<li>初始化温度和退火率的意义:<ul>
+<li>SA算法内部会保存一个基础token（初始化token可以自己传入也可以随机生成）和基础score（初始化score为-1），下一个token会在当前SA算法保存的token的基础上产生。在SA的搜索过程中，如果本轮的token训练得到的score大于SA算法中保存的score，则本轮的token一定会被SA算法接收保存为下一轮token产生的基础token。</li>
+<li>初始温度越高表示SA算法当前处的阶段越不稳定，本轮的token训练得到的score小于SA算法中保存的score的话，本轮的token和score被SA算法接收的可能性越大。</li>
+<li>初始温度越低表示SA算法当前处的阶段越稳定，本轮的token训练得到的score小于SA算法中保存的score的话，本轮的token和score被SA算法接收的可能性越小。</li>
+<li>退火率越大，表示SA算法收敛的越慢，即SA算法越慢到稳定阶段。</li>
+<li>退火率越低，表示SA算法收敛的越快，即SA算法越快到稳定阶段。</li>
+</ul>
+</li>
+<li>初始化温度和退火率的设置:<ul>
+<li>如果原本就有一个较好的初始化token，想要基于这个较好的token来进行搜索的话，SA算法可以处于一个较为稳定的状态进行搜索r这种情况下初始温度可以设置的低一些，例如设置为1.0，退火率设置的大一些，例如设置为0.85。如果想要基于这个较好的token利用贪心算法进行搜索，即只有当本轮token训练得到的score大于SA算法中保存的score，SA算法才接收本轮token，则退火率可设置为一个极小的数字，例如设置为0.85 ** 10。</li>
+<li>初始化token如果是随机生成的话，代表初始化token是一个比较差的token，SA算法可以处于一种不稳定的阶段进行搜索，尽可能的随机探索所有可能得token，从而找到一个较好的token。初始温度可以设置的高一些，例如设置为1000，退火率相对设置的小一些。</li>
+</ul>
+</li>
+</ul>
+</div>
+<blockquote>
+<div><dl class="method">
+<dt id="next_archs">
+<code class="descname">next_archs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#next_archs" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>获取下一组模型结构。</p>
+<p><strong>返回：</strong>
+返回模型结构实例的列表，形式为list。</p>
+<p><strong>示例代码：</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;MobileNetV2Space&#39;</span><span class="p">)]</span>
+<span class="n">sanas</span> <span class="o">=</span> <span class="n">SANAS</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+<span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">arch</span> <span class="ow">in</span> <span class="n">archs</span><span class="p">:</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">arch</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">output</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="reward">
+<code class="descname">reward</code><span class="sig-paren">(</span><em>score</em><span class="sig-paren">)</span><a class="headerlink" href="#reward" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>把当前模型结构的得分情况回传。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>score&lt;float&gt;:</strong> - 当前模型的得分，分数越大越好。</li>
+</ul>
+<p><strong>返回：</strong>
+模型结构更新成功或者失败，成功则返回 <code class="docutils literal"><span class="pre">True</span></code> ，失败则返回 <code class="docutils literal"><span class="pre">False</span></code> 。</p>
+<p><strong>示例代码：</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;MobileNetV2Space&#39;</span><span class="p">)]</span>
+<span class="n">sanas</span> <span class="o">=</span> <span class="n">SANAS</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()</span>
+
+<span class="c1">### 假设网络计算出来的score是1，实际代码中使用时需要返回真实score。</span>
+<span class="n">score</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">sanas</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>通过一组tokens得到实际的模型结构，一般用来把搜索到最优的token转换为模型结构用来做最后的训练。tokens的形式是一个列表，tokens映射到搜索空间转换成相应的网络结构，一组tokens对应唯一的一个网络结构。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>tokens(list):</strong> - 一组tokens。tokens的长度和范围取决于搜索空间。</li>
+</ul>
+<p><strong>返回：</strong>
+根据传入的token得到一个模型结构实例。</p>
+<p><strong>示例代码：</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;MobileNetV2Space&#39;</span><span class="p">)]</span>
+<span class="n">sanas</span> <span class="o">=</span> <span class="n">SANAS</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">tokens2arch</span><span class="p">(</span><span class="n">tokens</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">archs</span><span class="p">(</span><span class="nb">input</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="current_info">
+<code class="descname">current_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#current_info" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>返回当前token和搜索过程中最好的token和reward。</p>
+<p><strong>返回：</strong>
+搜索过程中最好的token，reward和当前训练的token，形式为dict。</p>
+<p><strong>示例代码：</strong></p>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="one_shot_api.html" class="btn btn-neutral float-right" title="OneShotNAS" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="analysis_api.html" class="btn btn-neutral" title="模型分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>搜索空间 &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="API文档" href="index.html"/>
+        <link rel="next" title="硬件延时评估表" href="table_latency.html"/>
+        <link rel="prev" title="简单蒸馏" href="single_distiller_api.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API文档</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="analysis_api.html">模型分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nas_api.html">SA-NAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="one_shot_api.html">OneShotNAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">多进程蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prune_api.html">卷积层通道剪裁</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quantization_api.html">量化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single_distiller_api.html">简单蒸馏</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">搜索空间</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#paddleslim-nas">paddleslim.nas 提供的搜索空间</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">搜索空间使用示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#search-space">自定义搜索空间(search space)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="table_latency.html">硬件延时评估表</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">API文档</a> &raquo;</li>
+      
+    <li>搜索空间</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_cn/search_space.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>搜索空间<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>搜索空间是神经网络搜索中的一个概念。搜索空间是一系列模型结构的汇集, SANAS主要是利用模拟退火的思想在搜索空间中搜索到一个比较小的模型结构或者一个精度比较高的模型结构。</p>
+<div class="section" id="paddleslim-nas">
+<h2>paddleslim.nas 提供的搜索空间<a class="headerlink" href="#paddleslim-nas" title="永久链接至标题">¶</a></h2>
+<p>根据初始模型结构构造搜索空间:</p>
+<p>1. MobileNetV2Space&lt;br&gt;
+&amp;emsp; MobileNetV2的网络结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v2.py#L29">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v2.py#L29</a>)，[论文](<a class="reference external" href="https://arxiv.org/abs/1801.04381">https://arxiv.org/abs/1801.04381</a>)</p>
+<p>2. MobileNetV1Space&lt;br&gt;
+&amp;emsp; MobilNetV1的网络结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v1.py#L29">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v1.py#L29</a>)，[论文](<a class="reference external" href="https://arxiv.org/abs/1704.04861">https://arxiv.org/abs/1704.04861</a>)</p>
+<p>3. ResNetSpace&lt;br&gt;
+&amp;emsp; ResNetSpace的网络结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/resnet.py#L30">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/resnet.py#L30</a>)，[论文](<a class="reference external" href="https://arxiv.org/pdf/1512.03385.pdf">https://arxiv.org/pdf/1512.03385.pdf</a>)</p>
+<p>根据相应模型的block构造搜索空间:
+1. MobileNetV1BlockSpace&lt;br&gt;
+&amp;emsp; MobileNetV1Block的结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v1.py#L173">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v1.py#L173</a>)</p>
+<p>2. MobileNetV2BlockSpace&lt;br&gt;
+&amp;emsp; MobileNetV2Block的结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v2.py#L174">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v2.py#L174</a>)</p>
+<p>3. ResNetBlockSpace&lt;br&gt;
+&amp;emsp; ResNetBlock的结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/resnet.py#L148">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/resnet.py#L148</a>)</p>
+<p>4. InceptionABlockSpace&lt;br&gt;
+&amp;emsp; InceptionABlock的结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/inception_v4.py#L140">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/inception_v4.py#L140</a>)</p>
+<p>5. InceptionCBlockSpace&lt;br&gt;
+&amp;emsp; InceptionCBlock结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/inception_v4.py#L291">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/inception_v4.py#L291</a>)</p>
+</div>
+<div class="section" id="id2">
+<h2>搜索空间使用示例<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ol class="arabic simple">
+<li>使用paddleslim中提供用初始的模型结构来构造搜索空间的话，仅需要指定搜索空间名字即可。例如：如果使用原本的MobileNetV2的搜索空间进行搜索的话，传入SANAS中的configs直接指定为[(&#8216;MobileNetV2Space&#8217;)]。</li>
+<li>使用paddleslim中提供的block搜索空间构造搜索空间：&lt;br&gt;</li>
+</ol>
+<blockquote>
+<div>2.1 使用`input_size`, <a href="#id3"><span class="problematic" id="id4">`</span></a>output_size`和`block_num`来构造搜索空间。例如：传入SANAS的configs可以指定为[(&#8216;MobileNetV2BlockSpace&#8217;, {&#8216;input_size&#8217;: 224, &#8216;output_size&#8217;: 32, &#8216;block_num&#8217;: 10})]。&lt;br&gt;
+2.2 使用`block_mask`构造搜索空间。例如：传入SANAS的configs可以指定为[(&#8216;MobileNetV2BlockSpace&#8217;, {&#8216;block_mask&#8217;: [0, 1, 1, 1, 1, 0, 1, 0]})]。</div></blockquote>
+</div>
+<div class="section" id="search-space">
+<h2>自定义搜索空间(search space)<a class="headerlink" href="#search-space" title="永久链接至标题">¶</a></h2>
+<p>自定义搜索空间类需要继承搜索空间基类并重写以下几部分：&lt;br&gt;
+&amp;emsp; 1. 初始化的tokens(<a href="#id5"><span class="problematic" id="id6">`</span></a>init_tokens`函数)，可以设置为自己想要的tokens列表, tokens列表中的每个数字指的是当前数字在相应的搜索列表中的索引。例如本示例中若tokens=[0, 3, 5]，则代表当前模型结构搜索到的通道数为[8, 40, 128]。&lt;br&gt;
+&amp;emsp; 2. tokens中每个数字的搜索列表长度(<a href="#id7"><span class="problematic" id="id8">`</span></a>range_table`函数)，tokens中每个token的索引范围。&lt;br&gt;
+&amp;emsp; 3. 根据tokens产生模型结构(<a href="#id9"><span class="problematic" id="id10">`</span></a>token2arch`函数)，根据搜索到的tokens列表产生模型结构。 &lt;br&gt;</p>
+<p>以新增reset block为例说明如何构造自己的search space。自定义的search space不能和已有的search space同名。</p>
+<p><a href="#id11"><span class="problematic" id="id12">``</span></a><a href="#id13"><span class="problematic" id="id14">`</span></a>python
+### 引入搜索空间基类函数和search space的注册类函数
+from .search_space_base import SearchSpaceBase
+from .search_space_registry import SEARCHSPACE
+import numpy as np</p>
+<p>### 需要调用注册函数把自定义搜索空间注册到space space中
+&#64;SEARCHSPACE.register
+### 定义一个继承SearchSpaceBase基类的搜索空间的类函数
+class ResNetBlockSpace2(SearchSpaceBase):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def __init__(self, input_size, output_size, block_num, block_mask):</dt>
+<dd>### 定义一些实际想要搜索的内容，例如：通道数、每个卷积的重复次数、卷积核大小等等
+### self.filter_num 代表通道数的搜索列表
+self.filter_num = np.array([8, 16, 32, 40, 64, 128, 256, 512])</dd>
+</dl>
+<p>### 定义初始化token，初始化token的长度根据传入的block_num或者block_mask的长度来得到的
+def init_tokens(self):</p>
+<blockquote>
+<div>return [0] * 3 * len(self.block_mask)</div></blockquote>
+<p>### 定义token的index的取值范围
+def range_table(self):</p>
+<blockquote>
+<div>return [len(self.filter_num)] * 3 * len(self.block_mask)</div></blockquote>
+<p>### 把token转换成模型结构
+def token2arch(self, tokens=None):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if tokens == None:</dt>
+<dd>tokens = self.init_tokens()</dd>
+</dl>
+<p>self.bottleneck_params_list = []
+for i in range(len(self.block_mask)):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>self.bottleneck_params_list.append(self.filter_num[tokens[i * 3 + 0]],</dt>
+<dd>self.filter_num[tokens[i * 3 + 1]],
+self.filter_num[tokens[i * 3 + 2]],
+2 if self.block_mask[i] == 1 else 1)</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>def net_arch(input):</dt>
+<dd><dl class="first docutils">
+<dt>for i, layer_setting in enumerate(self.bottleneck_params_list):</dt>
+<dd>channel_num, stride = layer_setting[:-1], layer_setting[-1]
+input = self._resnet_block(input, channel_num, stride, name=&#8217;resnet_layer{}&#8217;.format(i+1))</dd>
+</dl>
+<p class="last">return input</p>
+</dd>
+</dl>
+<p>return net_arch</p>
+</div></blockquote>
+<p>### 构造具体block的操作
+def _resnet_block(self, input, channel_num, stride, name=None):</p>
+<blockquote>
+<div>shortcut_conv = self._shortcut(input, channel_num[2], stride, name=name)
+input = self._conv_bn_layer(input=input, num_filters=channel_num[0], filter_size=1, act=&#8217;relu&#8217;, name=name + &#8216;_conv0&#8217;)
+input = self._conv_bn_layer(input=input, num_filters=channel_num[1], filter_size=3, stride=stride, act=&#8217;relu&#8217;, name=name + &#8216;_conv1&#8217;)
+input = self._conv_bn_layer(input=input, num_filters=channel_num[2], filter_size=1, name=name + &#8216;_conv2&#8217;)
+return fluid.layers.elementwise_add(x=shortcut_conv, y=input, axis=0, name=name+&#8217;_elementwise_add&#8217;)</div></blockquote>
+<dl class="docutils">
+<dt>def _shortcut(self, input, channel_num, stride, name=None):</dt>
+<dd><p class="first">channel_in = input.shape[1]
+if channel_in != channel_num or stride != 1:</p>
+<blockquote>
+<div>return self.conv_bn_layer(input, num_filters=channel_num, filter_size=1, stride=stride, name=name+&#8217;_shortcut&#8217;)</div></blockquote>
+<dl class="last docutils">
+<dt>else:</dt>
+<dd>return input</dd>
+</dl>
+</dd>
+<dt>def _conv_bn_layer(self, input, num_filters, filter_size, stride=1, padding=&#8217;SAME&#8217;, act=None, name=None):</dt>
+<dd>conv = fluid.layers.conv2d(input, num_filters, filter_size, stride, name=name+&#8217;_conv&#8217;)
+bn = fluid.layers.batch_norm(conv, act=act, name=name+&#8217;_bn&#8217;)
+return bn</dd>
+</dl>
+</div></blockquote>
+<p><a href="#id15"><span class="problematic" id="id16">``</span></a><a href="#id17"><span class="problematic" id="id18">`</span></a></p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="table_latency.html" class="btn btn-neutral float-right" title="硬件延时评估表" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="single_distiller_api.html" class="btn btn-neutral" title="简单蒸馏" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

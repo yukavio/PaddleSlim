@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>模型分析 &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="API文档" href="index.html"/>
+        <link rel="next" title="SA-NAS" href="nas_api.html"/>
+        <link rel="prev" title="API文档" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API文档</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">模型分析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#flops">FLOPs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-size">model_size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tablelatencyevaluator">TableLatencyEvaluator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nas_api.html">SA-NAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="one_shot_api.html">OneShotNAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">多进程蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prune_api.html">卷积层通道剪裁</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quantization_api.html">量化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single_distiller_api.html">简单蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="search_space.html">搜索空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table_latency.html">硬件延时评估表</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">API文档</a> &raquo;</li>
+      
+    <li>模型分析</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_cn/analysis_api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>模型分析<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="flops">
+<h2>FLOPs<a class="headerlink" href="#flops" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.analysis.flops">
+<code class="descclassname">paddleslim.analysis.</code><code class="descname">flops</code><span class="sig-paren">(</span><em>program</em>, <em>detail=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.analysis.flops" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/analysis/flops.py">源代码</a></p>
+<p>获得指定网络的浮点运算次数(FLOPs)。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>program(paddle.fluid.Program)</strong> - 待分析的目标网络。更多关于Program的介绍请参考：<a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/Program_cn.html#program">Program概念介绍</a>。</li>
+<li><strong>detail(bool)</strong> - 是否返回每个卷积层的FLOPs。默认为False。</li>
+<li><strong>only_conv(bool)</strong> - 如果设置为True，则仅计算卷积层和全连接层的FLOPs，即浮点数的乘加（multiplication-adds）操作次数。如果设置为False，则也会计算卷积和全连接层之外的操作的FLOPs。</li>
+</ul>
+<p><strong>返回值：</strong></p>
+<ul class="simple">
+<li><strong>flops(float)</strong> - 整个网络的FLOPs。</li>
+<li><strong>params2flops(dict)</strong> - 每层卷积对应的FLOPs，其中key为卷积层参数名称，value为FLOPs值。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddle.fluid.param_attr</span> <span class="kn">import</span> <span class="n">ParamAttr</span>
+<span class="kn">from</span> <span class="nn">paddleslim.analysis</span> <span class="kn">import</span> <span class="n">flops</span>
+
+<span class="k">def</span> <span class="nf">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span>
+                  <span class="n">num_filters</span><span class="p">,</span>
+                  <span class="n">filter_size</span><span class="p">,</span>
+                  <span class="n">name</span><span class="p">,</span>
+                  <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">groups</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+        <span class="n">num_filters</span><span class="o">=</span><span class="n">num_filters</span><span class="p">,</span>
+        <span class="n">filter_size</span><span class="o">=</span><span class="n">filter_size</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">=</span><span class="p">(</span><span class="n">filter_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_weights&quot;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_out&quot;</span><span class="p">)</span>
+    <span class="n">bn_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_bn&quot;</span>
+    <span class="k">return</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">batch_norm</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">conv</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="n">act</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_output&#39;</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_scale&#39;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_offset&#39;</span><span class="p">),</span>
+        <span class="n">moving_mean_name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_mean&#39;</span><span class="p">,</span>
+        <span class="n">moving_variance_name</span><span class="o">=</span><span class="n">bn_name</span> <span class="o">+</span> <span class="s1">&#39;_variance&#39;</span><span class="p">,</span> <span class="p">)</span>
+
+<span class="n">main_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">startup_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="c1">#   X       X              O       X              O</span>
+<span class="c1"># conv1--&gt;conv2--&gt;sum1--&gt;conv3--&gt;conv4--&gt;sum2--&gt;conv5--&gt;conv6</span>
+<span class="c1">#     |            ^ |                    ^</span>
+<span class="c1">#     |____________| |____________________|</span>
+<span class="c1">#</span>
+<span class="c1"># X: prune output channels</span>
+<span class="c1"># O: prune input channels</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
+    <span class="n">conv1</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv1&quot;</span><span class="p">)</span>
+    <span class="n">conv2</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv2&quot;</span><span class="p">)</span>
+    <span class="n">sum1</span> <span class="o">=</span> <span class="n">conv1</span> <span class="o">+</span> <span class="n">conv2</span>
+    <span class="n">conv3</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">sum1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv3&quot;</span><span class="p">)</span>
+    <span class="n">conv4</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv4&quot;</span><span class="p">)</span>
+    <span class="n">sum2</span> <span class="o">=</span> <span class="n">conv4</span> <span class="o">+</span> <span class="n">sum1</span>
+    <span class="n">conv5</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">sum2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv5&quot;</span><span class="p">)</span>
+    <span class="n">conv6</span> <span class="o">=</span> <span class="n">conv_bn_layer</span><span class="p">(</span><span class="n">conv5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv6&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flops</span><span class="p">(</span><span class="n">main_program</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="model-size">
+<h2>model_size<a class="headerlink" href="#model-size" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.analysis.model_size">
+<code class="descclassname">paddleslim.analysis.</code><code class="descname">model_size</code><span class="sig-paren">(</span><em>program</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.analysis.model_size" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/analysis/model_size.py">源代码</a></p>
+<p>获得指定网络的参数数量。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>program(paddle.fluid.Program)</strong> - 待分析的目标网络。更多关于Program的介绍请参考：<a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/Program_cn.html#program">Program概念介绍</a>。</li>
+</ul>
+<p><strong>返回值：</strong></p>
+<ul class="simple">
+<li><strong>model_size(int)</strong> - 整个网络的参数数量。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddle.fluid.param_attr</span> <span class="kn">import</span> <span class="n">ParamAttr</span>
+<span class="kn">from</span> <span class="nn">paddleslim.analysis</span> <span class="kn">import</span> <span class="n">model_size</span>
+
+<span class="k">def</span> <span class="nf">conv_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span>
+                  <span class="n">num_filters</span><span class="p">,</span>
+                  <span class="n">filter_size</span><span class="p">,</span>
+                  <span class="n">name</span><span class="p">,</span>
+                  <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">groups</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+        <span class="n">num_filters</span><span class="o">=</span><span class="n">num_filters</span><span class="p">,</span>
+        <span class="n">filter_size</span><span class="o">=</span><span class="n">filter_size</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">=</span><span class="p">(</span><span class="n">filter_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
+        <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_weights&quot;</span><span class="p">),</span>
+        <span class="n">bias_attr</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_out&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">conv</span>
+
+<span class="n">main_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">startup_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="c1">#   X       X              O       X              O</span>
+<span class="c1"># conv1--&gt;conv2--&gt;sum1--&gt;conv3--&gt;conv4--&gt;sum2--&gt;conv5--&gt;conv6</span>
+<span class="c1">#     |            ^ |                    ^</span>
+<span class="c1">#     |____________| |____________________|</span>
+<span class="c1">#</span>
+<span class="c1"># X: prune output channels</span>
+<span class="c1"># O: prune input channels</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
+    <span class="n">conv1</span> <span class="o">=</span> <span class="n">conv_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv1&quot;</span><span class="p">)</span>
+    <span class="n">conv2</span> <span class="o">=</span> <span class="n">conv_layer</span><span class="p">(</span><span class="n">conv1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv2&quot;</span><span class="p">)</span>
+    <span class="n">sum1</span> <span class="o">=</span> <span class="n">conv1</span> <span class="o">+</span> <span class="n">conv2</span>
+    <span class="n">conv3</span> <span class="o">=</span> <span class="n">conv_layer</span><span class="p">(</span><span class="n">sum1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv3&quot;</span><span class="p">)</span>
+    <span class="n">conv4</span> <span class="o">=</span> <span class="n">conv_layer</span><span class="p">(</span><span class="n">conv3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv4&quot;</span><span class="p">)</span>
+    <span class="n">sum2</span> <span class="o">=</span> <span class="n">conv4</span> <span class="o">+</span> <span class="n">sum1</span>
+    <span class="n">conv5</span> <span class="o">=</span> <span class="n">conv_layer</span><span class="p">(</span><span class="n">sum2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv5&quot;</span><span class="p">)</span>
+    <span class="n">conv6</span> <span class="o">=</span> <span class="n">conv_layer</span><span class="p">(</span><span class="n">conv5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;conv6&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_size</span><span class="p">(</span><span class="n">main_program</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tablelatencyevaluator">
+<h2>TableLatencyEvaluator<a class="headerlink" href="#tablelatencyevaluator" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.analysis.TableLatencyEvaluator">
+<em class="property">class </em><code class="descclassname">paddleslim.analysis.</code><code class="descname">TableLatencyEvaluator</code><span class="sig-paren">(</span><em>table_file</em>, <em>delimiter=&quot;</em>, <em>&quot;</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.analysis.TableLatencyEvaluator" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/analysis/latency.py">源代码</a></p>
+<p>基于硬件延时表的模型延时评估器。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>table_file(str)</strong> - 所使用的延时评估表的绝对路径。关于演示评估表格式请参考：PaddleSlim硬件延时评估表格式</li>
+<li><strong>delimiter(str)</strong> - 在硬件延时评估表中，操作信息之前所使用的分割符，默认为英文字符逗号。</li>
+</ul>
+<p><strong>返回值：</strong></p>
+<ul>
+<li><p class="first"><strong>Evaluator</strong> - 硬件延时评估器的实例。</p>
+<blockquote>
+<div><dl class="method">
+<dt id="latency">
+<code class="descname">latency</code><span class="sig-paren">(</span><em>graph</em><span class="sig-paren">)</span><a class="headerlink" href="#latency" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>获得指定网络的预估延时。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>graph(Program)</strong> - 待预估的目标网络。</li>
+</ul>
+<p><strong>返回值：</strong></p>
+<ul class="simple">
+<li><strong>latency</strong> - 目标网络的预估延时。</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nas_api.html" class="btn btn-neutral float-right" title="SA-NAS" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="API文档" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

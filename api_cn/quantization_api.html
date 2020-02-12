@@ -1,0 +1,511 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>量化 &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="API文档" href="index.html"/>
+        <link rel="next" title="简单蒸馏" href="single_distiller_api.html"/>
+        <link rel="prev" title="卷积层通道剪裁" href="prune_api.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API文档</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="analysis_api.html">模型分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nas_api.html">SA-NAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="one_shot_api.html">OneShotNAS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">多进程蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prune_api.html">卷积层通道剪裁</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">量化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">量化配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quant-aware">quant_aware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#convert">convert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quant-post">quant_post</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quant-embedding">quant_embedding</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="single_distiller_api.html">简单蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="search_space.html">搜索空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table_latency.html">硬件延时评估表</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">API文档</a> &raquo;</li>
+      
+    <li>量化</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_cn/quantization_api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>量化<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>量化配置<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>通过字典配置量化参数</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">TENSORRT_OP_TYPES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="s1">&#39;conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;pool2d&#39;</span><span class="p">,</span> <span class="s1">&#39;depthwise_conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;elementwise_add&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;leaky_relu&#39;</span>
+<span class="p">]</span>
+<span class="n">TRANSFORM_PASS_OP_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;depthwise_conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">]</span>
+
+<span class="n">QUANT_DEQUANT_PASS_OP_TYPES</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;pool2d&quot;</span><span class="p">,</span> <span class="s2">&quot;elementwise_add&quot;</span><span class="p">,</span> <span class="s2">&quot;concat&quot;</span><span class="p">,</span> <span class="s2">&quot;softmax&quot;</span><span class="p">,</span> <span class="s2">&quot;argmax&quot;</span><span class="p">,</span> <span class="s2">&quot;transpose&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;gather&quot;</span><span class="p">,</span> <span class="s2">&quot;greater_equal&quot;</span><span class="p">,</span> <span class="s2">&quot;greater_than&quot;</span><span class="p">,</span> <span class="s2">&quot;less_equal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;less_than&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;not_equal&quot;</span><span class="p">,</span> <span class="s2">&quot;reshape&quot;</span><span class="p">,</span> <span class="s2">&quot;reshape2&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bilinear_interp&quot;</span><span class="p">,</span> <span class="s2">&quot;nearest_interp&quot;</span><span class="p">,</span> <span class="s2">&quot;trilinear_interp&quot;</span><span class="p">,</span> <span class="s2">&quot;slice&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;squeeze&quot;</span><span class="p">,</span> <span class="s2">&quot;elementwise_sub&quot;</span><span class="p">,</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;relu6&quot;</span><span class="p">,</span> <span class="s2">&quot;leaky_relu&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;swish&quot;</span>
+    <span class="p">]</span>
+
+<span class="n">_quant_config_default</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># weight quantize type, default is &#39;channel_wise_abs_max&#39;</span>
+    <span class="s1">&#39;weight_quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;channel_wise_abs_max&#39;</span><span class="p">,</span>
+    <span class="c1"># activation quantize type, default is &#39;moving_average_abs_max&#39;</span>
+    <span class="s1">&#39;activation_quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;moving_average_abs_max&#39;</span><span class="p">,</span>
+    <span class="c1"># weight quantize bit num, default is 8</span>
+    <span class="s1">&#39;weight_bits&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="c1"># activation quantize bit num, default is 8</span>
+    <span class="s1">&#39;activation_bits&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="c1"># ops of name_scope in not_quant_pattern list, will not be quantized</span>
+    <span class="s1">&#39;not_quant_pattern&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;skip_quant&#39;</span><span class="p">],</span>
+    <span class="c1"># ops of type in quantize_op_types, will be quantized</span>
+    <span class="s1">&#39;quantize_op_types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;depthwise_conv2d&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">],</span>
+    <span class="c1"># data type after quantization, such as &#39;uint8&#39;, &#39;int8&#39;, etc. default is &#39;int8&#39;</span>
+    <span class="s1">&#39;dtype&#39;</span><span class="p">:</span> <span class="s1">&#39;int8&#39;</span><span class="p">,</span>
+    <span class="c1"># window size for &#39;range_abs_max&#39; quantization. defaulf is 10000</span>
+    <span class="s1">&#39;window_size&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="c1"># The decay coefficient of moving average, default is 0.9</span>
+    <span class="s1">&#39;moving_rate&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="c1"># if True, &#39;quantize_op_types&#39; will be TENSORRT_OP_TYPES</span>
+    <span class="s1">&#39;for_tensorrt&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="c1"># if True, &#39;quantoze_op_types&#39; will be TRANSFORM_PASS_OP_TYPES + QUANT_DEQUANT_PASS_OP_TYPES</span>
+    <span class="s1">&#39;is_full_quantize&#39;</span><span class="p">:</span> <span class="kc">False</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>weight_quantize_type(str)</strong> - 参数量化方式。可选 <code class="docutils literal"><span class="pre">'abs_max'</span></code> ,  <code class="docutils literal"><span class="pre">'channel_wise_abs_max'</span></code> , <code class="docutils literal"><span class="pre">'range_abs_max'</span></code> , <code class="docutils literal"><span class="pre">'moving_average_abs_max'</span></code> 。如果使用 <code class="docutils literal"><span class="pre">TensorRT</span></code> 加载量化后的模型来预测，请使用 <code class="docutils literal"><span class="pre">'channel_wise_abs_max'</span></code> 。 默认 <code class="docutils literal"><span class="pre">'channel_wise_abs_max'</span></code> 。</li>
+<li><strong>activation_quantize_type(str)</strong> - 激活量化方式，可选 <code class="docutils literal"><span class="pre">'abs_max'</span></code> ,  <code class="docutils literal"><span class="pre">'range_abs_max'</span></code> ,  <code class="docutils literal"><span class="pre">'moving_average_abs_max'</span></code> 。如果使用 <code class="docutils literal"><span class="pre">TensorRT</span></code> 加载量化后的模型来预测，请使用 <code class="docutils literal"><span class="pre">'range_abs_max',</span> <span class="pre">'moving_average_abs_max'</span></code> 。，默认 <code class="docutils literal"><span class="pre">'moving_average_abs_max'</span></code> 。</li>
+<li><strong>weight_bits(int)</strong> - 参数量化bit数，默认8, 推荐设为8。</li>
+<li><strong>activation_bits(int)</strong> -  激活量化bit数，默认8， 推荐设为8。</li>
+<li><strong>not_quant_pattern(str | list[str])</strong> - 所有 <code class="docutils literal"><span class="pre">name_scope</span></code> 包含 <code class="docutils literal"><span class="pre">'not_quant_pattern'</span></code> 字符串的 <code class="docutils literal"><span class="pre">op</span></code> ，都不量化, 设置方式请参考 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/api_cn/fluid_cn/name_scope_cn.html#name-scope">fluid.name_scope</a> 。</li>
+<li><strong>quantize_op_types(list[str])</strong> -  需要进行量化的 <code class="docutils literal"><span class="pre">op</span></code> 类型，目前支持 <code class="docutils literal"><span class="pre">'conv2d',</span> <span class="pre">'depthwise_conv2d',</span> <span class="pre">'mul'</span></code>  。</li>
+<li><strong>dtype(int8)</strong> - 量化后的参数类型，默认 <code class="docutils literal"><span class="pre">int8</span></code> , 目前仅支持 <code class="docutils literal"><span class="pre">int8</span></code> 。</li>
+<li><strong>window_size(int)</strong> -  <code class="docutils literal"><span class="pre">'range_abs_max'</span></code> 量化方式的 <code class="docutils literal"><span class="pre">window</span> <span class="pre">size</span></code> ，默认10000。</li>
+<li><strong>moving_rate(int)</strong> - <code class="docutils literal"><span class="pre">'moving_average_abs_max'</span></code> 量化方式的衰减系数，默认 0.9。</li>
+<li><strong>for_tensorrt(bool)</strong> - 量化后的模型是否使用 <code class="docutils literal"><span class="pre">TensorRT</span></code> 进行预测。如果是的话，量化op类型为： <code class="docutils literal"><span class="pre">TENSORRT_OP_TYPES</span></code> 。默认值为False.</li>
+<li><strong>is_full_quantize(bool)</strong> - 是否量化所有可支持op类型。默认值为False.</li>
+</ul>
+</div>
+<div class="section" id="quant-aware">
+<h2>quant_aware<a class="headerlink" href="#quant-aware" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.quant.quant_aware">
+<code class="descclassname">paddleslim.quant.</code><code class="descname">quant_aware</code><span class="sig-paren">(</span><em>program</em>, <em>place</em>, <em>config</em>, <em>scope=None</em>, <em>for_test=False)[[源代码]](https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/quant/quanter.py</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.quant.quant_aware" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>在 <code class="docutils literal"><span class="pre">program</span></code> 中加入量化和反量化 <code class="docutils literal"><span class="pre">op</span></code>, 用于量化训练。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>program (fluid.Program)</strong> -  传入训练或测试 <code class="docutils literal"><span class="pre">program</span></code> 。</li>
+<li><strong>place(fluid.CPUPlace | fluid.CUDAPlace)</strong> -  该参数表示 <code class="docutils literal"><span class="pre">Executor</span></code> 执行所在的设备。</li>
+<li><strong>config(dict)</strong> -  量化配置表。</li>
+<li><strong>scope(fluid.Scope, optional)</strong> -  传入用于存储 <code class="docutils literal"><span class="pre">Variable</span></code> 的 <code class="docutils literal"><span class="pre">scope</span></code> ，需要传入 <code class="docutils literal"><span class="pre">program</span></code> 所使用的 <code class="docutils literal"><span class="pre">scope</span></code> ，一般情况下，是 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope()</a> 。设置为 <code class="docutils literal"><span class="pre">None</span></code> 时将使用 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope()</a> ，默认值为 <code class="docutils literal"><span class="pre">None</span></code> 。</li>
+<li><strong>for_test(bool)</strong> -  如果 <code class="docutils literal"><span class="pre">program</span></code> 参数是一个测试 <code class="docutils literal"><span class="pre">program</span></code> ， <code class="docutils literal"><span class="pre">for_test</span></code> 应设为 <code class="docutils literal"><span class="pre">True</span></code> ，否则设为 <code class="docutils literal"><span class="pre">False</span></code> 。</li>
+</ul>
+<p><strong>返回</strong></p>
+<p>含有量化和反量化 <code class="docutils literal"><span class="pre">operator</span></code> 的 <code class="docutils literal"><span class="pre">program</span></code> 。</p>
+<p><strong>返回类型</strong></p>
+<ul class="simple">
+<li>当 <code class="docutils literal"><span class="pre">for_test=False</span></code> ，返回类型为 <code class="docutils literal"><span class="pre">fluid.CompiledProgram</span></code> ， <strong>注意，此返回值不能用于保存参数</strong> 。</li>
+<li>当 <code class="docutils literal"><span class="pre">for_test=True</span></code> ，返回类型为 <code class="docutils literal"><span class="pre">fluid.Program</span></code> 。</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<ul class="last simple">
+<li>此接口会改变 <code class="docutils literal"><span class="pre">program</span></code> 结构，并且可能增加一些``persistable``的变量，所以加载模型参数时请注意和相应的``program``对应。</li>
+<li>此接口底层经历了``fluid.Program``-&gt; <code class="docutils literal"><span class="pre">fluid.framework.IrGraph</span></code>-&gt;``fluid.Program``的转变，在``fluid.framework.IrGraph``中没有``Parameter``的概念，<a href="#id4"><span class="problematic" id="id5">``</span></a>Variable``只有``persistable``和``not persistable``的区别，所以在保存和加载参数时，请使用``fluid.io.save_persistables``和``fluid.io.load_persistables``接口。</li>
+<li>由于此接口会根据``program``的结构和量化配置来对``program``添加op，所以``Paddle``中一些通过``fuse op``来加速训练的策略不能使用。已知以下策略在使用量化时必须设为``False``： <code class="docutils literal"><span class="pre">fuse_all_reduce_ops,</span> <span class="pre">sync_batch_norm</span></code>。</li>
+<li>如果传入的 <code class="docutils literal"><span class="pre">program</span></code> 中存在和任何op都没有连接的 <code class="docutils literal"><span class="pre">Variable</span></code> ，则会在量化的过程中被优化掉。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="convert">
+<h2>convert<a class="headerlink" href="#convert" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.quant.convert">
+<code class="descclassname">paddleslim.quant.</code><code class="descname">convert</code><span class="sig-paren">(</span><em>program</em>, <em>place</em>, <em>config</em>, <em>scope=None</em>, <em>save_int8=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.quant.convert" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/quant/quanter.py">源代码</a></p>
+<p>把训练好的量化 <code class="docutils literal"><span class="pre">program</span></code> ，转换为可用于保存 <code class="docutils literal"><span class="pre">inference</span> <span class="pre">model</span></code> 的 <code class="docutils literal"><span class="pre">program</span></code> 。</p>
+<p><strong>参数：</strong></p>
+<ul class="simple">
+<li><strong>program (fluid.Program)</strong> -  传入测试``program``。</li>
+<li><strong>place(fluid.CPUPlace | fluid.CUDAPlace)</strong> - 该参数表示``Executor``执行所在的设备。</li>
+<li><strong>config(dict)</strong> -  量化配置表。</li>
+<li><strong>scope(fluid.Scope)</strong> - 传入用于存储``Variable``的``scope``，需要传入``program``所使用的``scope``，一般情况下，是 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope()</a> 。设置为 <code class="docutils literal"><span class="pre">None</span></code> 时将使用 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope()</a> ，默认值为 <code class="docutils literal"><span class="pre">None</span></code> 。</li>
+<li><strong>save_int8（bool)</strong> -  是否需要返回参数为 <code class="docutils literal"><span class="pre">int8</span></code> 的 <code class="docutils literal"><span class="pre">program</span></code> 。该功能目前只能用于确认模型大小。默认值为 <code class="docutils literal"><span class="pre">False</span></code> 。</li>
+</ul>
+<p><strong>返回</strong></p>
+<ul class="simple">
+<li><strong>program (fluid.Program)</strong> - freezed program，可用于保存inference model，参数为``float32``类型，但其数值范围可用int8表示。</li>
+<li><strong>int8_program (fluid.Program)</strong> - freezed program，可用于保存inference model，参数为``int8``类型。当``save_int8``为``False``时，不返回该值。</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">因为该接口会对``op``和``Variable``做相应的删除和修改，所以此接口只能在训练完成之后调用。如果想转化训练的中间模型，可加载相应的参数之后再使用此接口。</p>
+</div>
+<p><strong>代码示例</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1">#encoding=utf8</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim.quant</span> <span class="k">as</span> <span class="nn">quant</span>
+
+
+<span class="n">train_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">train_program</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">])</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+    <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">feat</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">conv</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">feat</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">avg_cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">cost</span><span class="p">)</span>
+
+<span class="n">use_gpu</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CUDAPlace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">use_gpu</span> <span class="k">else</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+<span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+<span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">fluid</span><span class="o">.</span><span class="n">default_startup_program</span><span class="p">())</span>
+<span class="n">eval_program</span> <span class="o">=</span> <span class="n">train_program</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#配置</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;weight_quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;abs_max&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;activation_quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;moving_average_abs_max&#39;</span><span class="p">}</span>
+<span class="n">build_strategy</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">BuildStrategy</span><span class="p">()</span>
+<span class="n">exec_strategy</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">ExecutionStrategy</span><span class="p">()</span>
+<span class="c1">#调用api</span>
+<span class="n">quant_train_program</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_aware</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">quant_eval_program</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_aware</span><span class="p">(</span><span class="n">eval_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#关闭策略</span>
+<span class="n">build_strategy</span><span class="o">.</span><span class="n">fuse_all_reduce_ops</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">build_strategy</span><span class="o">.</span><span class="n">sync_batch_norm</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">quant_train_program</span> <span class="o">=</span> <span class="n">quant_train_program</span><span class="o">.</span><span class="n">with_data_parallel</span><span class="p">(</span>
+    <span class="n">loss_name</span><span class="o">=</span><span class="n">avg_cost</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+    <span class="n">build_strategy</span><span class="o">=</span><span class="n">build_strategy</span><span class="p">,</span>
+    <span class="n">exec_strategy</span><span class="o">=</span><span class="n">exec_strategy</span><span class="p">)</span>
+
+<span class="n">inference_prog</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">quant_eval_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>更详细的用法请参考 <a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/quant/quant_aware">量化训练demo</a> 。</p>
+</div>
+<div class="section" id="quant-post">
+<h2>quant_post<a class="headerlink" href="#quant-post" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.quant.quant_post">
+<code class="descclassname">paddleslim.quant.</code><code class="descname">quant_post</code><span class="sig-paren">(</span><em>executor, model_dir, quantize_model_path,sample_generator, model_filename=None, params_filename=None, batch_size=16,batch_nums=None, scope=None, algo='KL', quantizable_op_type=[&quot;conv2d&quot;, &quot;depthwise_conv2d&quot;, &quot;mul&quot;], is_full_quantize=False, weight_bits=8, activation_bits=8, is_use_cache_file=False, cache_dir=&quot;./temp_post_training&quot;</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.quant.quant_post" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/quant/quanter.py">源代码</a></p>
+<p>对保存在 <code class="docutils literal"><span class="pre">${model_dir}</span></code> 下的模型进行量化，使用 <code class="docutils literal"><span class="pre">sample_generator</span></code> 的数据进行参数校正。</p>
+<p><strong>参数:</strong></p>
+<ul class="simple">
+<li><strong>executor (fluid.Executor)</strong> - 执行模型的executor，可以在cpu或者gpu上执行。</li>
+<li><strong>model_dir（str)</strong> - 需要量化的模型所在的文件夹。</li>
+<li><strong>quantize_model_path(str)</strong> - 保存量化后的模型的路径</li>
+<li><strong>sample_generator(python generator)</strong> - 读取数据样本，每次返回一个样本。</li>
+<li><strong>model_filename(str, optional)</strong> - 模型文件名，如果需要量化的模型的参数存在一个文件中，则需要设置``model_filename``为模型文件的名称，否则设置为``None``即可。默认值是``None``。</li>
+<li><strong>params_filename(str)</strong> - 参数文件名，如果需要量化的模型的参数存在一个文件中，则需要设置``params_filename``为参数文件的名称，否则设置为``None``即可。默认值是``None``。</li>
+<li><strong>batch_size(int)</strong> - 每个batch的图片数量。默认值为16 。</li>
+<li><strong>batch_nums(int, optional)</strong> - 迭代次数。如果设置为``None``，则会一直运行到``sample_generator`` 迭代结束， 否则，迭代次数为``batch_nums``, 也就是说参与对 <code class="docutils literal"><span class="pre">Scale</span></code> 进行校正的样本个数为 <code class="docutils literal"><span class="pre">'batch_nums'</span> <span class="pre">*</span> <span class="pre">'batch_size'</span></code> .</li>
+<li><strong>scope(fluid.Scope, optional)</strong> - 用来获取和写入 <code class="docutils literal"><span class="pre">Variable</span></code> , 如果设置为 <code class="docutils literal"><span class="pre">None</span></code> ,则使用 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope()</a> . 默认值是``None``.</li>
+<li><strong>algo(str)</strong> - 量化时使用的算法名称，可为 <code class="docutils literal"><span class="pre">'KL'</span></code> 或者 <code class="docutils literal"><span class="pre">'direct'</span></code> 。该参数仅针对激活值的量化，因为参数值的量化使用的方式为 <code class="docutils literal"><span class="pre">'channel_wise_abs_max'</span></code> . 当 <code class="docutils literal"><span class="pre">algo</span></code> 设置为 <code class="docutils literal"><span class="pre">'direct'</span></code> 时，使用校正数据的激活值的绝对值的最大值当作 <code class="docutils literal"><span class="pre">Scale</span></code> 值，当设置为 <code class="docutils literal"><span class="pre">'KL'</span></code> 时，则使用KL散度的方法来计算 <code class="docutils literal"><span class="pre">Scale</span></code> 值。默认值为 <code class="docutils literal"><span class="pre">'KL'</span></code> 。</li>
+<li><strong>quantizable_op_type(list[str])</strong> -  需要量化的 <code class="docutils literal"><span class="pre">op</span></code> 类型列表。默认值为 <code class="docutils literal"><span class="pre">[&quot;conv2d&quot;,</span> <span class="pre">&quot;depthwise_conv2d&quot;,</span> <span class="pre">&quot;mul&quot;]</span></code> 。</li>
+<li><strong>is_full_quantize(bool)</strong> - 是否量化所有可支持的op类型。如果设置为False, 则按照 <code class="docutils literal"><span class="pre">'quantizable_op_type'</span></code> 的设置进行量化。</li>
+<li><strong>weight_bits(int)</strong> - weight的量化比特位数。</li>
+<li><strong>activation_bits(int)</strong> - 激活值的量化比特位数。</li>
+<li><strong>is_use_cache_file(bool)</strong> - 是否使用硬盘对中间结果进行存储。如果为False, 则将中间结果存储在内存中。</li>
+<li><strong>cache_dir(str)</strong> - 如果 <code class="docutils literal"><span class="pre">'is_use_cache_file'</span></code> 为True, 则将中间结果存储在此参数设置的路径下。</li>
+</ul>
+<p><strong>返回</strong></p>
+<p>无。</p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<ul class="last simple">
+<li>因为该接口会收集校正数据的所有的激活值，当校正图片比较多时，请设置``&#8217;is_use_cache_file&#8217;<code class="docutils literal"><span class="pre">为True,</span> <span class="pre">将中间结果存储在硬盘中。另外，</span></code>&#8216;KL&#8217;<a href="#id11"><span class="problematic" id="id12">``</span></a>散度的计算比较耗时。</li>
+<li>目前``Paddle-Lite``有int8 kernel来加速的op只有 <code class="docutils literal"><span class="pre">['conv2d',</span> <span class="pre">'depthwise_conv2d',</span> <span class="pre">'mul']</span></code>, 其他op的int8 kernel将陆续支持。</li>
+</ul>
+</div>
+<p><strong>代码示例</strong></p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">此示例不能直接运行，因为需要加载``${model_dir}``下的模型，所以不能直接运行。</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
+<span class="kn">from</span> <span class="nn">paddleslim.quant</span> <span class="kn">import</span> <span class="n">quant_post</span>
+<span class="n">val_reader</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="n">use_gpu</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CUDAPlace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">use_gpu</span> <span class="k">else</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+
+<span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+<span class="n">quant_post</span><span class="p">(</span>
+        <span class="n">executor</span><span class="o">=</span><span class="n">exe</span><span class="p">,</span>
+        <span class="n">model_dir</span><span class="o">=</span><span class="s1">&#39;./model_path&#39;</span><span class="p">,</span>
+        <span class="n">quantize_model_path</span><span class="o">=</span><span class="s1">&#39;./save_path&#39;</span><span class="p">,</span>
+        <span class="n">sample_generator</span><span class="o">=</span><span class="n">val_reader</span><span class="p">,</span>
+        <span class="n">model_filename</span><span class="o">=</span><span class="s1">&#39;__model__&#39;</span><span class="p">,</span>
+        <span class="n">params_filename</span><span class="o">=</span><span class="s1">&#39;__params__&#39;</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+        <span class="n">batch_nums</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>更详细的用法请参考 <a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/quant/quant_post">离线量化demo</a> 。</p>
+</div>
+<div class="section" id="quant-embedding">
+<h2>quant_embedding<a class="headerlink" href="#quant-embedding" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="paddleslim.quant.quant_embedding">
+<code class="descclassname">paddleslim.quant.</code><code class="descname">quant_embedding</code><span class="sig-paren">(</span><em>program</em>, <em>place</em>, <em>config</em>, <em>scope=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.quant.quant_embedding" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/paddleslim/quant/quant_embedding.py">源代码</a></p>
+<p>对 <code class="docutils literal"><span class="pre">Embedding</span></code> 参数进行量化。</p>
+<p><strong>参数:</strong></p>
+<ul class="simple">
+<li><strong>program(fluid.Program)</strong> - 需要量化的program</li>
+<li><strong>scope(fluid.Scope, optional)</strong> - 用来获取和写入``Variable``, 如果设置为``None``,则使用 <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/executor_cn/global_scope_cn.html">fluid.global_scope()</a> .</li>
+<li><strong>place(fluid.CPUPlace | fluid.CUDAPlace)</strong> - 运行program的设备</li>
+<li><dl class="first docutils">
+<dt><strong>config(dict)</strong> - 定义量化的配置。可以配置的参数有：</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">'params_name'</span></code> (str, required): 需要进行量化的参数名称，此参数必须设置。</li>
+<li><code class="docutils literal"><span class="pre">'quantize_type'</span></code> (str, optional): 量化的类型，目前支持的类型是 <code class="docutils literal"><span class="pre">'abs_max'</span></code>, 待支持的类型有 <code class="docutils literal"><span class="pre">'log',</span> <span class="pre">'product_quantization'</span></code> 。 默认值是``&#8217;abs_max&#8217;`` .</li>
+<li><code class="docutils literal"><span class="pre">'quantize_bits'</span></code> （int, optional): 量化的 <code class="docutils literal"><span class="pre">bit</span></code> 数，目前支持的 <code class="docutils literal"><span class="pre">bit</span></code> 数为8。默认值是8.</li>
+<li><code class="docutils literal"><span class="pre">'dtype'</span></code> (str, optional): 量化之后的数据类型， 目前支持的是 <code class="docutils literal"><span class="pre">'int8'</span></code>. 默认值是 <code class="docutils literal"><span class="pre">int8</span></code> 。</li>
+<li><code class="docutils literal"><span class="pre">'threshold'</span></code> (float, optional): 量化之前将根据此阈值对需要量化的参数值进行 <code class="docutils literal"><span class="pre">clip</span></code>. 如果不设置，则跳过 <code class="docutils literal"><span class="pre">clip</span></code> 过程直接量化。</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>返回</strong></p>
+<p>量化之后的program</p>
+<p><strong>返回类型</strong></p>
+<p>fluid.Program</p>
+<p><strong>代码示例</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim.quant</span> <span class="k">as</span> <span class="nn">quant</span>
+
+<span class="n">train_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">train_program</span><span class="p">):</span>
+    <span class="n">input_word</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;input_word&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+    <span class="n">input_emb</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span>
+        <span class="nb">input</span><span class="o">=</span><span class="n">input_word</span><span class="p">,</span>
+        <span class="n">is_sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span>
+        <span class="n">param_attr</span><span class="o">=</span><span class="n">fluid</span><span class="o">.</span><span class="n">ParamAttr</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;emb&#39;</span><span class="p">,</span>
+        <span class="n">initializer</span><span class="o">=</span><span class="n">fluid</span><span class="o">.</span><span class="n">initializer</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">)))</span>
+
+<span class="n">infer_program</span> <span class="o">=</span> <span class="n">train_program</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">use_gpu</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CUDAPlace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">use_gpu</span> <span class="k">else</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+<span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+<span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">fluid</span><span class="o">.</span><span class="n">default_startup_program</span><span class="p">())</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;params_name&#39;</span><span class="p">:</span> <span class="s1">&#39;emb&#39;</span><span class="p">,</span> <span class="s1">&#39;quantize_type&#39;</span><span class="p">:</span> <span class="s1">&#39;abs_max&#39;</span><span class="p">}</span>
+<span class="n">quant_program</span> <span class="o">=</span> <span class="n">quant</span><span class="o">.</span><span class="n">quant_embedding</span><span class="p">(</span><span class="n">infer_program</span><span class="p">,</span> <span class="n">place</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>更详细的用法请参考 <a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/quant/quant_embedding'">Embedding量化demo</a></p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="single_distiller_api.html" class="btn btn-neutral float-right" title="简单蒸馏" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="prune_api.html" class="btn btn-neutral" title="卷积层通道剪裁" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

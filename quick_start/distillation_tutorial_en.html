@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Knowledge Distillation for Image Classification &mdash; PaddleSlim 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index_en.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_en.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install_en.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index_en.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index_en.html">Aadvanced Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_en/index_en.html">API Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo_en.html">Model Zoo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index_en.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index_en.html">Docs</a> &raquo;</li>
+      
+    <li>Knowledge Distillation for Image Classification</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/quick_start/distillation_tutorial_en.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="knowledge-distillation-for-image-classification">
+<h1>Knowledge Distillation for Image Classification<a class="headerlink" href="#knowledge-distillation-for-image-classification" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, you will learn how to use knowledge distillation API of PaddleSlim
+by a demo of MobileNetV1 model on MNIST dataset. This tutorial following workflow:</p>
+<ol class="simple">
+<li>Import dependency</li>
+<li>Define student_program and teacher_program</li>
+<li>Select feature maps</li>
+<li>Merge program and add distillation loss</li>
+<li>Train distillation model</li>
+</ol>
+<div class="section" id="import-dependency">
+<h2>1. Import dependency<a class="headerlink" href="#import-dependency" title="Permalink to this headline">¶</a></h2>
+<p>PaddleSlim dependents on Paddle1.7. Please ensure that you have installed paddle correctly. Import Paddle and PaddleSlim as below:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="k">as</span> <span class="nn">slim</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-student-program-and-teacher-program">
+<h2>2. Define student_program and teacher_program<a class="headerlink" href="#define-student-program-and-teacher-program" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial trains and verifies distillation model on the MNIST dataset. The input image shape is <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span> </code>and the number of output categories is 10.
+Select <code class="docutils literal"><span class="pre">ResNet50</span></code> as the teacher to perform distillation training on the students of the<code class="docutils literal"> <span class="pre">MobileNet</span></code> architecture.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;MobileNet&#39;</span><span class="p">]()</span>
+<span class="n">student_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">student_startup</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">student_program</span><span class="p">,</span> <span class="n">student_startup</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">image</span><span class="p">,</span> <span class="n">class_dim</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">avg_cost</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">cost</span><span class="p">)</span>
+    <span class="n">acc_top1</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">acc_top5</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">teacher_model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;ResNet50&#39;</span><span class="p">]()</span>
+<span class="n">teacher_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">teacher_startup</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">teacher_program</span><span class="p">,</span> <span class="n">teacher_startup</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">unique_name</span><span class="o">.</span><span class="n">guard</span><span class="p">():</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+        <span class="n">predict</span> <span class="o">=</span> <span class="n">teacher_model</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">class_dim</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>
+<span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">teacher_startup</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="select-feature-maps">
+<h2>3. Select feature maps<a class="headerlink" href="#select-feature-maps" title="Permalink to this headline">¶</a></h2>
+<p>We can use the student_program&#8216;s list_vars method to observe all the Variables, and select one or more variables from it to fit the corresponding variables of the teacher.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># get all student variables</span>
+<span class="n">student_vars</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">student_program</span><span class="o">.</span><span class="n">list_vars</span><span class="p">():</span>
+    <span class="n">student_vars</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="c1">#uncomment the following lines to observe student&#39;s variables for distillation</span>
+<span class="c1">#print(&quot;=&quot;*50+&quot;student_model_vars&quot;+&quot;=&quot;*50)</span>
+<span class="c1">#print(student_vars)</span>
+
+<span class="c1"># get all teacher variables</span>
+<span class="n">teacher_vars</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">teacher_program</span><span class="o">.</span><span class="n">list_vars</span><span class="p">():</span>
+    <span class="n">teacher_vars</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="c1">#uncomment the following lines to observe teacher&#39;s variables for distillation</span>
+<span class="c1">#print(&quot;=&quot;*50+&quot;teacher_model_vars&quot;+&quot;=&quot;*50)</span>
+<span class="c1">#print(teacher_vars)</span>
+</pre></div>
+</div>
+<p>we can see that the shape of &#8216;bn5c_branch2b.output.1.tmp_3&#8216; in the teacher_program and the &#8216;depthwise_conv2d_11.tmp_0&#8216; of the student are the same and can form the distillation loss function.</p>
+</div>
+<div class="section" id="merge-program-and-add-distillation-loss">
+<h2>4. Merge program and add distillation loss<a class="headerlink" href="#merge-program-and-add-distillation-loss" title="Permalink to this headline">¶</a></h2>
+<p>The merge operation adds all Variables and Ops in teacher_program to student_Program. At the same time, in order to avoid naming conflicts caused by variables with the same name in two programs, merge will also add a unified naming prefix <strong>name_prefix</strong> for Variables in teacher_program, which The default value is &#8216;teacher_&#8216;_.</p>
+<p>In order to ensure that the data of the teacher network and the student network are the same, the merge operation also merges the input data layers of the two programs, so you need to specify a data layer name mapping <em><strong>data_name_map</strong></em>, where key is the input data name of the teacher, and value Is student&#8216;s.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">data_name_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;image&#39;</span><span class="p">}</span>
+<span class="n">main</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">teacher_program</span><span class="p">,</span> <span class="n">student_program</span><span class="p">,</span> <span class="n">data_name_map</span><span class="p">,</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>
+<span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">student_program</span><span class="p">,</span> <span class="n">student_startup</span><span class="p">):</span>
+    <span class="n">l2_loss</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">l2_loss</span><span class="p">(</span><span class="s1">&#39;teacher_bn5c_branch2b.output.1.tmp_3&#39;</span><span class="p">,</span> <span class="s1">&#39;depthwise_conv2d_11.tmp_0&#39;</span><span class="p">,</span> <span class="n">student_program</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">l2_loss</span> <span class="o">+</span> <span class="n">avg_cost</span>
+    <span class="n">opt</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">Momentum</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+<span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">student_startup</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="train-distillation-model">
+<h2>5. Train distillation model<a class="headerlink" href="#train-distillation-model" title="Permalink to this headline">¶</a></h2>
+<p>The package <code class="docutils literal"><span class="pre">paddle.dataset.mnist</span></code> of Paddle define the downloading and reading of MNIST dataset.
+Define training data reader and test data reader as below：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+    <span class="n">paddle</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">([</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">],</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">(),</span> <span class="n">student_program</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Excute following code to run an <code class="docutils literal"><span class="pre">epoch</span></code> training:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_reader</span><span class="p">():</span>
+    <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss_np</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">student_program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">train_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span><span class="o">=</span><span class="p">[</span><span class="n">acc_top1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top5</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Acc1: </span><span class="si">{:.6f}</span><span class="s2">, Acc5: </span><span class="si">{:.6f}</span><span class="s2">, Loss: </span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">acc1</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">acc5</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">loss_np</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

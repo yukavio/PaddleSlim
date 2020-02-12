@@ -1,0 +1,810 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>paddleslim.pantheon package &mdash; PaddleSlim 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="API Documents" href="index_en.html"/>
+        <link rel="next" title="search space" href="search_space_en.html"/>
+        <link rel="prev" title="paddleslim.nas.one_shot package" href="paddleslim.nas.one_shot.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index_en.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_en.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install_en.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index_en.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index_en.html">Aadvanced Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_en.html">API Documents</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.analysis.html">paddleslim.analysis package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.prune.html">paddleslim.prune package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.dist.html">paddleslim.dist package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.quant.html">paddleslim.quant package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.nas.html">paddleslim.nas package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddleslim.nas.one_shot.html">paddleslim.nas.one_shot package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">paddleslim.pantheon package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-paddleslim.pantheon.student">paddleslim.pantheon.student module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-paddleslim.pantheon.teacher">paddleslim.pantheon.teacher module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-paddleslim.pantheon.utils">paddleslim.pantheon.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="search_space_en.html">search space</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo_en.html">Model Zoo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index_en.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index_en.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index_en.html">API Documents</a> &raquo;</li>
+      
+    <li>paddleslim.pantheon package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api_en/paddleslim.pantheon.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-paddleslim.pantheon">
+<span id="paddleslim-pantheon-package"></span><h1>paddleslim.pantheon package<a class="headerlink" href="#module-paddleslim.pantheon" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="paddleslim.pantheon.Teacher">
+<em class="property">class </em><code class="descclassname">paddleslim.pantheon.</code><code class="descname">Teacher</code><span class="sig-paren">(</span><em>out_path=None</em>, <em>out_port=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Teacher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The class defined for the teacher model. Generate knowledge data and
+transfer them to the student model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>out_path</strong> (<em>str|None</em>) &#8211; The path to dump knowledge for offline mode.</li>
+<li><strong>out_port</strong> (<em>int|None</em>) &#8211; The IP port number to send out knowledge for
+online mode, should be unique when launching multiple teachers in
+the same node.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="paddleslim.pantheon.Teacher.dump">
+<code class="descname">dump</code><span class="sig-paren">(</span><em>knowledge</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Teacher.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dump one batch knowledge data into output file, only used in the
+offline mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>knowledge</strong> (<em>dict</em>) &#8211; The knowledge data to be dumped.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.Teacher.recv">
+<code class="descname">recv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Teacher.recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recieve one data object from student.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The received data, can be any type of Python data object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.Teacher.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Teacher.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send one data object to student.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>Python data</em>) &#8211; The data to be sent, can be any type of Python data object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.Teacher.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Teacher.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start teacher service, sychronize with student and launch the thread
+to monitor commands from student.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.Teacher.start_knowledge_service">
+<code class="descname">start_knowledge_service</code><span class="sig-paren">(</span><em>feed_list</em>, <em>schema</em>, <em>program</em>, <em>reader_config</em>, <em>exe</em>, <em>buf_size=10</em>, <em>times=1</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Teacher.start_knowledge_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the knowledge service to generate and transfer knowledge data.
+In GPU mode, the devices to execute knowledge prediction will be
+determined by environment variable <strong>FLAGS_selected_gpus</strong>, or by
+<strong>CUDA_VISIBLE_DEVICES</strong> if it is not set, and by <strong>CPU_NUM</strong> (default
+1) in CPU mode. Only supported in static graph.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>feed_list</strong> (<em>list</em>) &#8211; A list of feed Variables or their names for the
+input program.</li>
+<li><strong>schema</strong> (<em>dict</em>) &#8211; A dictionary to specify names and fetched
+Variables of knowledge.</li>
+<li><strong>program</strong> (<em>fluid.Program</em>) &#8211; Inference program for the teacher model.</li>
+<li><strong>reader_config</strong> (<em>dict</em>) &#8211; <p>The config for data reader. Support all the
+three types of generators used by <cite>fluid.io.PyReader</cite> and
+<cite>fluid.io.DataLoader</cite>, and their configs contain the key-value
+pair of the generator type and a generator object, plus
+other necessary argument pairs. See the following:</p>
+<blockquote>
+<div><ol class="arabic">
+<li>sample generator:
+reader_config={&#8220;sample_generator&#8221;: #some_sample_generator,<blockquote>
+<div>&#8220;batch_size&#8221;: #batch_size, &#8220;drop_last&#8221;: #drop_last},</div></blockquote>
+<p>&#8216;drop_last&#8217; set to True by default,</p>
+</li>
+<li>sample list generator:
+reader_config={&#8220;sample_list_generator&#8221;:<blockquote>
+<div>#some_sample_list_generator},</div></blockquote>
+</li>
+<li>batch generator:
+reader_config={&#8220;batch_generator&#8221;: #some_batch_genrator}.</li>
+</ol>
+</div></blockquote>
+<p>The trial to parse config will be in the order of 1) -&gt; 3), and
+any other unrelated keys in these configs will be ignored.</p>
+</li>
+<li><strong>exe</strong> (<em>fluid.Executor</em>) &#8211; The executor to run the input program.</li>
+<li><strong>buf_size</strong> (<em>int</em>) &#8211; The size of buffers for data reader and knowledge
+writer on each device.</li>
+<li><strong>times</strong> (<em>int</em>) &#8211; The maximum repeated serving times. Default 1. Whenever
+the public method &#8216;get_knowledge_generator()&#8217; in Student
+object called once, the serving times will be added one,
+until reaching the maximum and ending the service.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.pantheon.Student">
+<em class="property">class </em><code class="descclassname">paddleslim.pantheon.</code><code class="descname">Student</code><span class="sig-paren">(</span><em>merge_strategy=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Student" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The class defined for the student model. Receive knowledge data from
+teacher model and carry out knowledge merging.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge_strategy</strong> (<em>dict|None</em>) &#8211; A dictionary whose keys are common
+schemas shared by different teachers, and each corresponding
+value specifies the merging strategy for different schemas
+respectively, supporting &#8216;sum&#8217; and &#8216;mean&#8217; now.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="paddleslim.pantheon.Student.get_knowledge_desc">
+<code class="descname">get_knowledge_desc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Student.get_knowledge_desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get description for knowledge, including shape, data type and lod
+level for each schema.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Knowledge description.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.Student.get_knowledge_generator">
+<code class="descname">get_knowledge_generator</code><span class="sig-paren">(</span><em>batch_size</em>, <em>drop_last=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Student.get_knowledge_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the generator for knowledge data, return None if last generator
+doesn&#8217;t finish yet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>batch_size</strong> (<em>int</em>) &#8211; The batch size of returned knowledge data.</li>
+<li><strong>drop_last</strong> (<em>bool</em>) &#8211; Whether to drop the last batch if its size is less
+than batch size.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The wrapper of knowledge data generator.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">func</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.Student.get_knowledge_qsize">
+<code class="descname">get_knowledge_qsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Student.get_knowledge_qsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the real-time size of knowledge queue. If this size is denoted as
+<strong>qsize</strong>, it means that there are <strong>qsize</strong> batch knowledge data
+already pushed into knowledge queue and waiting for the knowledge
+generator to pop out. It&#8217;s dynamic and limited up to 100, the capacity
+of the knowledge queue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The real-time size of knowledge queue.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.Student.recv">
+<code class="descname">recv</code><span class="sig-paren">(</span><em>teacher_id</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Student.recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive data from one teacher.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>teacher_id</strong> (<em>int</em>) &#8211; The id of teacher that receives data from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The received data object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.Student.register_teacher">
+<code class="descname">register_teacher</code><span class="sig-paren">(</span><em>in_path=None</em>, <em>in_address=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Student.register_teacher" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Register one teacher model and assign the order number to it as</dt>
+<dd>its id, with the file path (offline mode) or IP address (online
+mode) that the teacher model wrote knowledge data to.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>in_path</strong> (<em>str|None</em>) &#8211; The input file path. Default None.</li>
+<li><strong>in_address</strong> (<em>str|None</em>) &#8211; The input IP address, in the format
+&#8220;&lt;IP address&gt;:&lt;IP port&gt;&#8221; (e.g. &#8220;127.0.0.1:8080&#8221;). Default None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.Student.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>data</em>, <em>teacher_ids=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Student.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send data to teachers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; A Python data object.</li>
+<li><strong>teacher_ids</strong> (<em>list|None</em>) &#8211; A list of teacher ids to send data. If
+set to None, send the data to all teachers. Default None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.Student.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.Student.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>End teachers&#8217; registration and synchronize with all of them.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-paddleslim.pantheon.student">
+<span id="paddleslim-pantheon-student-module"></span><h2>paddleslim.pantheon.student module<a class="headerlink" href="#module-paddleslim.pantheon.student" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.pantheon.student.Student">
+<em class="property">class </em><code class="descclassname">paddleslim.pantheon.student.</code><code class="descname">Student</code><span class="sig-paren">(</span><em>merge_strategy=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.student.Student" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The class defined for the student model. Receive knowledge data from
+teacher model and carry out knowledge merging.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>merge_strategy</strong> (<em>dict|None</em>) &#8211; A dictionary whose keys are common
+schemas shared by different teachers, and each corresponding
+value specifies the merging strategy for different schemas
+respectively, supporting &#8216;sum&#8217; and &#8216;mean&#8217; now.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="paddleslim.pantheon.student.Student.get_knowledge_desc">
+<code class="descname">get_knowledge_desc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.student.Student.get_knowledge_desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get description for knowledge, including shape, data type and lod
+level for each schema.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Knowledge description.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.student.Student.get_knowledge_generator">
+<code class="descname">get_knowledge_generator</code><span class="sig-paren">(</span><em>batch_size</em>, <em>drop_last=False</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.student.Student.get_knowledge_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the generator for knowledge data, return None if last generator
+doesn&#8217;t finish yet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>batch_size</strong> (<em>int</em>) &#8211; The batch size of returned knowledge data.</li>
+<li><strong>drop_last</strong> (<em>bool</em>) &#8211; Whether to drop the last batch if its size is less
+than batch size.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The wrapper of knowledge data generator.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">func</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.student.Student.get_knowledge_qsize">
+<code class="descname">get_knowledge_qsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.student.Student.get_knowledge_qsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the real-time size of knowledge queue. If this size is denoted as
+<strong>qsize</strong>, it means that there are <strong>qsize</strong> batch knowledge data
+already pushed into knowledge queue and waiting for the knowledge
+generator to pop out. It&#8217;s dynamic and limited up to 100, the capacity
+of the knowledge queue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The real-time size of knowledge queue.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.student.Student.recv">
+<code class="descname">recv</code><span class="sig-paren">(</span><em>teacher_id</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.student.Student.recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive data from one teacher.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>teacher_id</strong> (<em>int</em>) &#8211; The id of teacher that receives data from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The received data object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.student.Student.register_teacher">
+<code class="descname">register_teacher</code><span class="sig-paren">(</span><em>in_path=None</em>, <em>in_address=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.student.Student.register_teacher" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Register one teacher model and assign the order number to it as</dt>
+<dd>its id, with the file path (offline mode) or IP address (online
+mode) that the teacher model wrote knowledge data to.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>in_path</strong> (<em>str|None</em>) &#8211; The input file path. Default None.</li>
+<li><strong>in_address</strong> (<em>str|None</em>) &#8211; The input IP address, in the format
+&#8220;&lt;IP address&gt;:&lt;IP port&gt;&#8221; (e.g. &#8220;127.0.0.1:8080&#8221;). Default None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.student.Student.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>data</em>, <em>teacher_ids=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.student.Student.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send data to teachers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; A Python data object.</li>
+<li><strong>teacher_ids</strong> (<em>list|None</em>) &#8211; A list of teacher ids to send data. If
+set to None, send the data to all teachers. Default None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.student.Student.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.student.Student.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>End teachers&#8217; registration and synchronize with all of them.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.pantheon.teacher">
+<span id="paddleslim-pantheon-teacher-module"></span><h2>paddleslim.pantheon.teacher module<a class="headerlink" href="#module-paddleslim.pantheon.teacher" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.pantheon.teacher.Teacher">
+<em class="property">class </em><code class="descclassname">paddleslim.pantheon.teacher.</code><code class="descname">Teacher</code><span class="sig-paren">(</span><em>out_path=None</em>, <em>out_port=None</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.teacher.Teacher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The class defined for the teacher model. Generate knowledge data and
+transfer them to the student model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>out_path</strong> (<em>str|None</em>) &#8211; The path to dump knowledge for offline mode.</li>
+<li><strong>out_port</strong> (<em>int|None</em>) &#8211; The IP port number to send out knowledge for
+online mode, should be unique when launching multiple teachers in
+the same node.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="paddleslim.pantheon.teacher.Teacher.dump">
+<code class="descname">dump</code><span class="sig-paren">(</span><em>knowledge</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.teacher.Teacher.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dump one batch knowledge data into output file, only used in the
+offline mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>knowledge</strong> (<em>dict</em>) &#8211; The knowledge data to be dumped.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.teacher.Teacher.recv">
+<code class="descname">recv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.teacher.Teacher.recv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recieve one data object from student.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The received data, can be any type of Python data object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.teacher.Teacher.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.teacher.Teacher.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send one data object to student.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>Python data</em>) &#8211; The data to be sent, can be any type of Python data object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.teacher.Teacher.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.teacher.Teacher.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start teacher service, sychronize with student and launch the thread
+to monitor commands from student.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="paddleslim.pantheon.teacher.Teacher.start_knowledge_service">
+<code class="descname">start_knowledge_service</code><span class="sig-paren">(</span><em>feed_list</em>, <em>schema</em>, <em>program</em>, <em>reader_config</em>, <em>exe</em>, <em>buf_size=10</em>, <em>times=1</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.teacher.Teacher.start_knowledge_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the knowledge service to generate and transfer knowledge data.
+In GPU mode, the devices to execute knowledge prediction will be
+determined by environment variable <strong>FLAGS_selected_gpus</strong>, or by
+<strong>CUDA_VISIBLE_DEVICES</strong> if it is not set, and by <strong>CPU_NUM</strong> (default
+1) in CPU mode. Only supported in static graph.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>feed_list</strong> (<em>list</em>) &#8211; A list of feed Variables or their names for the
+input program.</li>
+<li><strong>schema</strong> (<em>dict</em>) &#8211; A dictionary to specify names and fetched
+Variables of knowledge.</li>
+<li><strong>program</strong> (<em>fluid.Program</em>) &#8211; Inference program for the teacher model.</li>
+<li><strong>reader_config</strong> (<em>dict</em>) &#8211; <p>The config for data reader. Support all the
+three types of generators used by <cite>fluid.io.PyReader</cite> and
+<cite>fluid.io.DataLoader</cite>, and their configs contain the key-value
+pair of the generator type and a generator object, plus
+other necessary argument pairs. See the following:</p>
+<blockquote>
+<div><ol class="arabic">
+<li>sample generator:
+reader_config={&#8220;sample_generator&#8221;: #some_sample_generator,<blockquote>
+<div>&#8220;batch_size&#8221;: #batch_size, &#8220;drop_last&#8221;: #drop_last},</div></blockquote>
+<p>&#8216;drop_last&#8217; set to True by default,</p>
+</li>
+<li>sample list generator:
+reader_config={&#8220;sample_list_generator&#8221;:<blockquote>
+<div>#some_sample_list_generator},</div></blockquote>
+</li>
+<li>batch generator:
+reader_config={&#8220;batch_generator&#8221;: #some_batch_genrator}.</li>
+</ol>
+</div></blockquote>
+<p>The trial to parse config will be in the order of 1) -&gt; 3), and
+any other unrelated keys in these configs will be ignored.</p>
+</li>
+<li><strong>exe</strong> (<em>fluid.Executor</em>) &#8211; The executor to run the input program.</li>
+<li><strong>buf_size</strong> (<em>int</em>) &#8211; The size of buffers for data reader and knowledge
+writer on each device.</li>
+<li><strong>times</strong> (<em>int</em>) &#8211; The maximum repeated serving times. Default 1. Whenever
+the public method &#8216;get_knowledge_generator()&#8217; in Student
+object called once, the serving times will be added one,
+until reaching the maximum and ending the service.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-paddleslim.pantheon.utils">
+<span id="paddleslim-pantheon-utils-module"></span><h2>paddleslim.pantheon.utils module<a class="headerlink" href="#module-paddleslim.pantheon.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="paddleslim.pantheon.utils.EndSignal">
+<em class="property">class </em><code class="descclassname">paddleslim.pantheon.utils.</code><code class="descname">EndSignal</code><a class="headerlink" href="#paddleslim.pantheon.utils.EndSignal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.pantheon.utils.StartSignal">
+<em class="property">class </em><code class="descclassname">paddleslim.pantheon.utils.</code><code class="descname">StartSignal</code><a class="headerlink" href="#paddleslim.pantheon.utils.StartSignal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="paddleslim.pantheon.utils.SyncSignal">
+<em class="property">class </em><code class="descclassname">paddleslim.pantheon.utils.</code><code class="descname">SyncSignal</code><a class="headerlink" href="#paddleslim.pantheon.utils.SyncSignal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.pantheon.utils.check_ip">
+<code class="descclassname">paddleslim.pantheon.utils.</code><code class="descname">check_ip</code><span class="sig-paren">(</span><em>address</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.utils.check_ip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="paddleslim.pantheon.utils.convert_dtype">
+<code class="descclassname">paddleslim.pantheon.utils.</code><code class="descname">convert_dtype</code><span class="sig-paren">(</span><em>dtype</em><span class="sig-paren">)</span><a class="headerlink" href="#paddleslim.pantheon.utils.convert_dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="search_space_en.html" class="btn btn-neutral float-right" title="search space" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="paddleslim.nas.one_shot.html" class="btn btn-neutral" title="paddleslim.nas.one_shot package" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

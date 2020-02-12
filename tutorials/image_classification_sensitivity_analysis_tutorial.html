@@ -1,0 +1,464 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>图像分类模型通道剪裁-敏感度分析 &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="进阶教程" href="index.html"/>
+        <link rel="next" title="API文档" href="../api_cn/index.html"/>
+        <link rel="prev" title="进阶教程" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">进阶教程</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">图像分类模型通道剪裁-敏感度分析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1. 导入依赖</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2. 构建网络</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3 定义输入数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">4. 定义模型评估方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">5. 训练模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">6. 获取待分析卷积参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">7. 分析敏感度</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">7.1 简单计算敏感度</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">7.2 扩展敏感度信息</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">7.3 多进程加速计算敏感度信息</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">8. 剪裁模型</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id16">8.1 计算剪裁率</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">8.2 剪裁训练网络</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">8.3 剪裁测试网络</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">8.4 训练剪裁后的模型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_cn/index.html">API文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">进阶教程</a> &raquo;</li>
+      
+    <li>图像分类模型通道剪裁-敏感度分析</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/tutorials/image_classification_sensitivity_analysis_tutorial.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>图像分类模型通道剪裁-敏感度分析<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>该教程以图像分类模型MobileNetV1为例，说明如何快速使用<a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/prune_api/#sensitivity">PaddleSlim的敏感度分析接口</a>。
+该示例包含以下步骤：</p>
+<ol class="simple">
+<li>导入依赖</li>
+<li>构建模型</li>
+<li>定义输入数据</li>
+<li>定义模型评估方法</li>
+<li>训练模型</li>
+<li>获取待分析卷积参数名称</li>
+<li>分析敏感度</li>
+<li>剪裁模型</li>
+</ol>
+<p>以下章节依次介绍每个步骤的内容。</p>
+<div class="section" id="id2">
+<h2>1. 导入依赖<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>PaddleSlim依赖Paddle1.7版本，请确认已正确安装Paddle，然后按以下方式导入Paddle和PaddleSlim:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="k">as</span> <span class="nn">slim</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>2. 构建网络<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>该章节构造一个用于对MNIST数据进行分类的分类模型，选用<code class="docutils literal"><span class="pre">MobileNetV1</span></code>，并将输入大小设置为<code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span></code>，输出类别数为10。
+为了方便展示示例，我们在<code class="docutils literal"><span class="pre">paddleslim.models</span></code>下预定义了用于构建分类模型的方法，执行以下代码构建分类模型：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">val_program</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">image_classification</span><span class="p">(</span><span class="s2">&quot;MobileNet&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CUDAPlace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>3 定义输入数据<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>为了快速执行该示例，我们选取简单的MNIST数据，Paddle框架的<code class="docutils literal"><span class="pre">paddle.dataset.mnist</span></code>包定义了MNIST数据的下载和读取。
+代码如下：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
+<span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+        <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+        <span class="n">reader</span><span class="o">.</span><span class="n">test</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data_feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">place</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>4. 定义模型评估方法<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>在计算敏感度时，需要裁剪单个卷积层后的模型在测试数据上的效果，我们定义以下方法实现该功能：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">program</span><span class="p">):</span>
+    <span class="n">acc_top1_ns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">acc_top5_ns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">test_reader</span><span class="p">():</span>
+        <span class="n">acc_top1_n</span><span class="p">,</span> <span class="n">acc_top5_n</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="n">program</span><span class="p">,</span>
+            <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="n">acc_top1_ns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc_top1_n</span><span class="p">))</span>
+        <span class="n">acc_top5_ns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc_top5_n</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final eva - acc_top1: </span><span class="si">{}</span><span class="s2">; acc_top5: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">acc_top1_ns</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">acc_top5_ns</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">acc_top1_ns</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>5. 训练模型<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>只有训练好的模型才能做敏感度分析，因为该示例任务相对简单，我这里用训练一个<code class="docutils literal"><span class="pre">epoch</span></code>产出的模型做敏感度分析。对于其它训练比较耗时的模型，您可以加载训练好的模型权重。</p>
+<p>以下为模型训练代码：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_reader</span><span class="p">():</span>
+    <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>用上节定义的模型评估方法，评估当前模型在测试集上的精度：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">val_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>6. 获取待分析卷积参数<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">train_program</span><span class="o">.</span><span class="n">global_block</span><span class="p">()</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;_sep_weights&quot;</span> <span class="ow">in</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>7. 分析敏感度<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id9">
+<h3>7.1 简单计算敏感度<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>调用<a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/prune_api/#sensitivity">sensitivity接口</a>对训练好的模型进行敏感度分析。</p>
+<p>在计算过程中，敏感度信息会不断追加保存到选项<code class="docutils literal"><span class="pre">sensitivities_file</span></code>指定的文件中，该文件中已有的敏感度信息不会被重复计算。</p>
+<p>先用以下命令删除当前路径下可能已有的<code class="docutils literal"><span class="pre">sensitivities_0.data</span></code>文件:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>!rm -rf sensitivities_0.data
+</pre></div>
+</div>
+<p>除了指定待分析的卷积层参数，我们还可以指定敏感度分析的粒度和范围，即单个卷积层参数分别被剪裁掉的比例。</p>
+<p>如果待分析的模型比较敏感，剪掉单个卷积层的40%的通道，模型在测试集上的精度损失就达90%，那么<code class="docutils literal"><span class="pre">pruned_ratios</span></code>最大设置到0.4即可，比如：
+<code class="docutils literal"><span class="pre">[0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3,</span> <span class="pre">0.4]</span></code></p>
+<p>为了得到更精确的敏感度信息，我可以适当调小<code class="docutils literal"><span class="pre">pruned_ratios</span></code>的粒度，比如：<code class="docutils literal"><span class="pre">[0.1,</span> <span class="pre">0.15,</span> <span class="pre">0.2,</span> <span class="pre">0.25,</span> <span class="pre">0.3,</span> <span class="pre">0.35,</span> <span class="pre">0.4]</span></code></p>
+<p><code class="docutils literal"><span class="pre">pruned_ratios</span></code>的粒度越小，计算敏感度的速度越慢。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sens_0</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">sensitivity</span><span class="p">(</span>
+        <span class="n">val_program</span><span class="p">,</span>
+        <span class="n">place</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">,</span>
+        <span class="n">test</span><span class="p">,</span>
+        <span class="n">sensitivities_file</span><span class="o">=</span><span class="s2">&quot;sensitivities_0.data&quot;</span><span class="p">,</span>
+        <span class="n">pruned_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sens_0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>7.2 扩展敏感度信息<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>第7.1节计算敏感度用的是<code class="docutils literal"><span class="pre">pruned_ratios=[0.1,</span> <span class="pre">0.2]</span></code>, 我们可以在此基础上将其扩展到<code class="docutils literal"><span class="pre">[0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3]</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sens_0</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">sensitivity</span><span class="p">(</span>
+        <span class="n">val_program</span><span class="p">,</span>
+        <span class="n">place</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">,</span>
+        <span class="n">test</span><span class="p">,</span>
+        <span class="n">sensitivities_file</span><span class="o">=</span><span class="s2">&quot;sensitivities_0.data&quot;</span><span class="p">,</span>
+        <span class="n">pruned_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sens_0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h3>7.3 多进程加速计算敏感度信息<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>敏感度分析所用时间取决于待分析的卷积层数量和模型评估的速度，我们可以通过多进程的方式加速敏感度计算。</p>
+<p>在不同的进程设置不同<code class="docutils literal"><span class="pre">pruned_ratios</span></code>, 然后将结果合并。</p>
+<div class="section" id="id12">
+<h4>7.3.1 多进程计算敏感度<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h4>
+<p>在以上章节，我们计算了<code class="docutils literal"><span class="pre">pruned_ratios=[0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3]</span></code>的敏感度，并将其保存到了文件<code class="docutils literal"><span class="pre">sensitivities_0.data</span></code>中。</p>
+<p>在另一个进程中，我们可以设置<code class="docutils literal"><span class="pre">pruned_ratios=[0.4]</span></code>，并将结果保存在文件<code class="docutils literal"><span class="pre">sensitivities_1.data</span></code>中。代码如下：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sens_1</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">sensitivity</span><span class="p">(</span>
+        <span class="n">val_program</span><span class="p">,</span>
+        <span class="n">place</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">,</span>
+        <span class="n">test</span><span class="p">,</span>
+        <span class="n">sensitivities_file</span><span class="o">=</span><span class="s2">&quot;sensitivities_1.data&quot;</span><span class="p">,</span>
+        <span class="n">pruned_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sens_1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h4>7.3.2 加载多个进程产出的敏感度文件<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">s_0</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">load_sensitivities</span><span class="p">(</span><span class="s2">&quot;sensitivities_0.data&quot;</span><span class="p">)</span>
+<span class="n">s_1</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">load_sensitivities</span><span class="p">(</span><span class="s2">&quot;sensitivities_1.data&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s_0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s_1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h4>7.3.3 合并敏感度信息<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">merge_sensitive</span><span class="p">([</span><span class="n">s_0</span><span class="p">,</span> <span class="n">s_1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id15">
+<h2>8. 剪裁模型<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h2>
+<p>根据以上章节产出的敏感度信息，对模型进行剪裁。</p>
+<div class="section" id="id16">
+<h3>8.1 计算剪裁率<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
+<p>首先，调用PaddleSlim提供的<a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/prune_api/#get_ratios_by_loss">get_ratios_by_loss</a>方法根据敏感度计算剪裁率，通过调整参数<code class="docutils literal"><span class="pre">loss</span></code>大小获得合适的一组剪裁率：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">ratios</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">get_ratios_by_loss</span><span class="p">(</span><span class="n">s_0</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ratios</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id17">
+<h3>8.2 剪裁训练网络<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pruner</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">Pruner</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs before pruning: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">train_program</span><span class="p">)))</span>
+<span class="n">pruned_program</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pruner</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span>
+        <span class="n">train_program</span><span class="p">,</span>
+        <span class="n">fluid</span><span class="o">.</span><span class="n">global_scope</span><span class="p">(),</span>
+        <span class="n">params</span><span class="o">=</span><span class="n">ratios</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+        <span class="n">ratios</span><span class="o">=</span><span class="n">ratios</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+        <span class="n">place</span><span class="o">=</span><span class="n">place</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs after pruning: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">pruned_program</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id18">
+<h3>8.3 剪裁测试网络<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
+<blockquote>
+<div>注意：对测试网络进行剪裁时，需要将<code class="docutils literal"><span class="pre">only_graph</span></code>设置为True，具体原因请参考<a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/prune_api/#pruner">Pruner API文档</a></div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pruner</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">Pruner</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs before pruning: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">val_program</span><span class="p">)))</span>
+<span class="n">pruned_val_program</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pruner</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span>
+        <span class="n">val_program</span><span class="p">,</span>
+        <span class="n">fluid</span><span class="o">.</span><span class="n">global_scope</span><span class="p">(),</span>
+        <span class="n">params</span><span class="o">=</span><span class="n">ratios</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+        <span class="n">ratios</span><span class="o">=</span><span class="n">ratios</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+        <span class="n">place</span><span class="o">=</span><span class="n">place</span><span class="p">,</span>
+        <span class="n">only_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs after pruning: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">pruned_val_program</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>测试一下剪裁后的模型在测试集上的精度：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">pruned_val_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h3>8.4 训练剪裁后的模型<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h3>
+<p>对剪裁后的模型在训练集上训练一个<code class="docutils literal"><span class="pre">epoch</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_reader</span><span class="p">():</span>
+    <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">pruned_program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>测试训练后模型的精度：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">pruned_val_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api_cn/index.html" class="btn btn-neutral float-right" title="API文档" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="进阶教程" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

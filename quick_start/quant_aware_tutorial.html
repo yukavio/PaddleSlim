@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>图像分类模型量化训练-快速开始 &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="快速开始" href="index.html"/>
+        <link rel="next" title="图像分类模型离线量化-快速开始" href="quant_post_tutorial.html"/>
+        <link rel="prev" title="图像分类模型知识蒸馏-快速开始" href="distillation_tutorial.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">快速开始</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pruning_tutorial.html">图像分类模型通道剪裁-快速开始</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distillation_tutorial.html">图像分类模型知识蒸馏-快速开始</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">图像分类模型量化训练-快速开始</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1. 导入依赖</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2. 构建网络</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3. 训练模型</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">3.1 定义输入数据</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">3.2 训练和测试</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">4. 量化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">5. 训练和测试量化后的模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">6. 保存量化后的模型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quant_post_tutorial.html">图像分类模型离线量化-快速开始</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nas_tutorial.html">图像分类网络结构搜索-快速开始</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_cn/index.html">API文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">快速开始</a> &raquo;</li>
+      
+    <li>图像分类模型量化训练-快速开始</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/quick_start/quant_aware_tutorial.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>图像分类模型量化训练-快速开始<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>该教程以图像分类模型MobileNetV1为例，说明如何快速使用PaddleSlim的<a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/docs/docs/api/quantization_api">量化训练接口</a>。 该示例包含以下步骤：</p>
+<ol class="simple">
+<li>导入依赖</li>
+<li>构建模型</li>
+<li>训练模型</li>
+<li>量化</li>
+<li>训练和测试量化后的模型</li>
+<li>保存量化后的模型</li>
+</ol>
+<div class="section" id="id2">
+<h2>1. 导入依赖<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>PaddleSlim依赖Paddle1.7版本，请确认已正确安装Paddle，然后按以下方式导入Paddle和PaddleSlim:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="k">as</span> <span class="nn">slim</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>2. 构建网络<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>该章节构造一个用于对MNIST数据进行分类的分类模型，选用<code class="docutils literal"><span class="pre">MobileNetV1</span></code>，并将输入大小设置为<code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span></code>，输出类别数为10。               为了方便展示示例，我们在<code class="docutils literal"><span class="pre">paddleslim.models</span></code>下预定义了用于构建分类模型的方法，执行以下代码构建分类模型：</p>
+<blockquote>
+<div>注意：paddleslim.models下的API并非PaddleSlim常规API，是为了简化示例而封装预定义的一系列方法，比如：模型结构的定义、Program的构建等。</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">val_program</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> \
+    <span class="n">slim</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">image_classification</span><span class="p">(</span><span class="s2">&quot;MobileNet&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>3. 训练模型<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>该章节介绍了如何定义输入数据和如何训练和测试分类模型。先训练分类模型的原因是量化训练过程是在训练好的模型上进行的，也就是说是在训练好的模型的基础上加入量化反量化op之后，用小学习率进行参数微调。</p>
+<div class="section" id="id5">
+<h3>3.1 定义输入数据<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>为了快速执行该示例，我们选取简单的MNIST数据，Paddle框架的<code class="docutils literal"><span class="pre">paddle.dataset.mnist</span></code>包定义了MNIST数据的下载和读取。
+代码如下：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
+<span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+        <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+        <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>3.2 训练和测试<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>先定义训练和测试函数，正常训练和量化训练时只需要调用函数即可。在训练函数中执行了一个epoch的训练，因为MNIST数据集数据较少，一个epoch就可将top1精度训练到95%以上。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">prog</span><span class="p">):</span>
+    <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_reader</span><span class="p">():</span>
+        <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">train_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">iter</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;train iter=</span><span class="si">{}</span><span class="s1">, top1=</span><span class="si">{}</span><span class="s1">, top5=</span><span class="si">{}</span><span class="s1">, loss=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">,</span> <span class="n">acc1</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">acc5</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+        <span class="nb">iter</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">prog</span><span class="p">):</span>
+    <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[[],</span> <span class="p">[]]</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_reader</span><span class="p">():</span>
+        <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">train_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">iter</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;test iter=</span><span class="si">{}</span><span class="s1">, top1=</span><span class="si">{}</span><span class="s1">, top5=</span><span class="si">{}</span><span class="s1">, loss=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">,</span> <span class="n">acc1</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">acc5</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+        <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc1</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+        <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc5</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+        <span class="nb">iter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;final test result top1=</span><span class="si">{}</span><span class="s1">, top5=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>调用<code class="docutils literal"><span class="pre">train</span></code>函数训练分类网络，<code class="docutils literal"><span class="pre">train_program</span></code>是在第2步：构建网络中定义的。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">train</span><span class="p">(</span><span class="n">train_program</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>调用<code class="docutils literal"><span class="pre">test</span></code>函数测试分类网络，<code class="docutils literal"><span class="pre">val_program</span></code>是在第2步：构建网络中定义的。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">val_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>4. 量化<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>按照<a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/quantization_api/#_1">默认配置</a>在<code class="docutils literal"><span class="pre">train_program</span></code>和<code class="docutils literal"><span class="pre">val_program</span></code>中加入量化和反量化op.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">quant_program</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">quant</span><span class="o">.</span><span class="n">quant_aware</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">exe</span><span class="o">.</span><span class="n">place</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">val_quant_program</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">quant</span><span class="o">.</span><span class="n">quant_aware</span><span class="p">(</span><span class="n">val_program</span><span class="p">,</span> <span class="n">exe</span><span class="o">.</span><span class="n">place</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>5. 训练和测试量化后的模型<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>微调量化后的模型，训练一个epoch后测试。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">train</span><span class="p">(</span><span class="n">quant_program</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>测试量化后的模型，和<code class="docutils literal"><span class="pre">3.2</span> <span class="pre">训练和测试</span></code>中得到的测试结果相比，精度相近，达到了无损量化。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">val_quant_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>6. 保存量化后的模型<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>在<code class="docutils literal"><span class="pre">4.</span> <span class="pre">量化</span></code>中使用接口<code class="docutils literal"><span class="pre">slim.quant.quant_aware</span></code>接口得到的模型只适合训练时使用，为了得到最终使用时的模型，需要使用<a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/quantization_api/#convert">slim.quant.convert</a>接口，然后使用<a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/io_cn/save_inference_model_cn.html#save-inference-model">fluid.io.save_inference_model</a>保存模型。<code class="docutils literal"><span class="pre">float_prog</span></code>的参数数据类型是float32，但是数据范围是int8, 保存之后可使用fluid或者paddle-lite加载使用，paddle-lite在使用时，会先将类型转换为int8。<code class="docutils literal"><span class="pre">int8_prog</span></code>的参数数据类型是int8, 保存后可看到量化后模型大小，不可加载使用。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">float_prog</span><span class="p">,</span> <span class="n">int8_prog</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">quant</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">val_quant_program</span><span class="p">,</span> <span class="n">exe</span><span class="o">.</span><span class="n">place</span><span class="p">,</span> <span class="n">save_int8</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">target_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">float_prog</span><span class="o">.</span><span class="n">global_block</span><span class="p">()</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">]</span>
+<span class="n">fluid</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">save_inference_model</span><span class="p">(</span><span class="n">dirname</span><span class="o">=</span><span class="s1">&#39;./inference_model/float&#39;</span><span class="p">,</span>
+        <span class="n">feeded_var_names</span><span class="o">=</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">],</span>
+        <span class="n">target_vars</span><span class="o">=</span><span class="n">target_vars</span><span class="p">,</span>
+        <span class="n">executor</span><span class="o">=</span><span class="n">exe</span><span class="p">,</span>
+        <span class="n">main_program</span><span class="o">=</span><span class="n">float_prog</span><span class="p">)</span>
+<span class="n">fluid</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">save_inference_model</span><span class="p">(</span><span class="n">dirname</span><span class="o">=</span><span class="s1">&#39;./inference_model/int8&#39;</span><span class="p">,</span>
+        <span class="n">feeded_var_names</span><span class="o">=</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">],</span>
+        <span class="n">target_vars</span><span class="o">=</span><span class="n">target_vars</span><span class="p">,</span>
+        <span class="n">executor</span><span class="o">=</span><span class="n">exe</span><span class="p">,</span>
+        <span class="n">main_program</span><span class="o">=</span><span class="n">int8_prog</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="quant_post_tutorial.html" class="btn btn-neutral float-right" title="图像分类模型离线量化-快速开始" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="distillation_tutorial.html" class="btn btn-neutral" title="图像分类模型知识蒸馏-快速开始" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

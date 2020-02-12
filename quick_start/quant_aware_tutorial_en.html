@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Training-aware Quantization of image classification model - quick start &mdash; PaddleSlim 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Quick Start" href="index_en.html"/>
+        <link rel="next" title="Post-training Quantization of image classification model - quick start" href="quant_post_tutorial_en.html"/>
+        <link rel="prev" title="Nerual Architecture Search for Image Classification" href="nas_tutorial_en.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index_en.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_en.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install_en.html">Install</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_en.html">Quick Start</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pruning_tutorial_en.html">Channel Pruning for Image Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nas_tutorial_en.html">Nerual Architecture Search for Image Classification</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Training-aware Quantization of image classification model - quick start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#necessary-imports">1. Necessary imports</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-architecture">2. Model architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#train-normal-model">3. Train normal model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#input-data-definition">3.1 input data definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#training-model-and-testing">3.2 training model and testing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#quantization">4. Quantization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#train-model-after-quantization">5. Train model after quantization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#save-model-after-quantization">6. Save model after quantization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quant_post_tutorial_en.html">Post-training Quantization of image classification model - quick start</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index_en.html">Aadvanced Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_en/index_en.html">API Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo_en.html">Model Zoo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index_en.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index_en.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index_en.html">Quick Start</a> &raquo;</li>
+      
+    <li>Training-aware Quantization of image classification model - quick start</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/quick_start/quant_aware_tutorial_en.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="training-aware-quantization-of-image-classification-model-quick-start">
+<h1>Training-aware Quantization of image classification model - quick start<a class="headerlink" href="#training-aware-quantization-of-image-classification-model-quick-start" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial shows how to do training-aware quantization using <a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/docs/docs/api/quantization_api">API</a> in PaddleSlim. We use MobileNetV1 to train image classification model as example. The tutorial contains follow sections:</p>
+<ol class="simple">
+<li>Necessary imports</li>
+<li>Model architecture</li>
+<li>Train normal model</li>
+<li>Quantization</li>
+<li>Train model after quantization</li>
+<li>Save model after quantization</li>
+</ol>
+<div class="section" id="necessary-imports">
+<h2>1. Necessary imports<a class="headerlink" href="#necessary-imports" title="Permalink to this headline">¶</a></h2>
+<p>PaddleSlim depends on Paddle1.7. Please make true that you have installed Paddle correctly. Then do the necessary imports:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="k">as</span> <span class="nn">slim</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="model-architecture">
+<h2>2. Model architecture<a class="headerlink" href="#model-architecture" title="Permalink to this headline">¶</a></h2>
+<p>The section constructs a classification model, which use <code class="docutils literal"><span class="pre">MobileNetV1</span></code> and MNIST dataset. The model&#8216;s input size is <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span></code> and output size is 10. In order to show tutorial conveniently, we pre-defined a method to get image classification model in <code class="docutils literal"><span class="pre">paddleslim.models</span></code>.</p>
+<blockquote>
+<div>note: The APIs in <code class="docutils literal"><span class="pre">paddleslim.models</span></code> are not formal inferface in PaddleSlim. They are defined to simplify the tutorial such as the definition of model structure and the construction of Program.</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">val_program</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> \
+    <span class="n">slim</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">image_classification</span><span class="p">(</span><span class="s2">&quot;MobileNet&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="train-normal-model">
+<h2>3. Train normal model<a class="headerlink" href="#train-normal-model" title="Permalink to this headline">¶</a></h2>
+<p>The section shows how to define model inputs, train and test model. The reason for training the normal image classification model first is that the quantization model&#8216;s training process is performed on the well-trained model. We add quantization and dequantization operators in well-trained model and finetune using smaller learning rate.</p>
+<div class="section" id="input-data-definition">
+<h3>3.1 input data definition<a class="headerlink" href="#input-data-definition" title="Permalink to this headline">¶</a></h3>
+<p>To speed up training process, we select MNIST dataset to train image classification model. The API <code class="docutils literal"><span class="pre">paddle.dataset.mnist</span></code> in Paddle framework contains downloading and reading the images in dataset.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
+<span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+        <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+        <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="training-model-and-testing">
+<h3>3.2 training model and testing<a class="headerlink" href="#training-model-and-testing" title="Permalink to this headline">¶</a></h3>
+<p>Define functions to train and test model. We only need call the functions when formal model training and quantization model training. The function does one epoch training because that MNIST dataset is small and top1 accuracy will reach 95% after one epoch.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">prog</span><span class="p">):</span>
+    <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_reader</span><span class="p">():</span>
+        <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">train_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">iter</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;train iter=</span><span class="si">{}</span><span class="s1">, top1=</span><span class="si">{}</span><span class="s1">, top5=</span><span class="si">{}</span><span class="s1">, loss=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">,</span> <span class="n">acc1</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">acc5</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+        <span class="nb">iter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">prog</span><span class="p">):</span>
+    <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[[],</span> <span class="p">[]]</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_reader</span><span class="p">():</span>
+        <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">train_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">iter</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;test iter=</span><span class="si">{}</span><span class="s1">, top1=</span><span class="si">{}</span><span class="s1">, top5=</span><span class="si">{}</span><span class="s1">, loss=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">,</span> <span class="n">acc1</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">acc5</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+        <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc1</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+        <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc5</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+        <span class="nb">iter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;final test result top1=</span><span class="si">{}</span><span class="s1">, top5=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>Call <code class="docutils literal"><span class="pre">train</span></code> function to train normal classification model. <code class="docutils literal"><span class="pre">train_program</span></code> is defined in 2. Model architecture.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">train</span><span class="p">(</span><span class="n">train_program</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Call <code class="docutils literal"><span class="pre">test</span></code> function to test normal classification model. <code class="docutils literal"><span class="pre">val_program</span></code> is defined in 2. Model architecture.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">val_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="quantization">
+<h2>4. Quantization<a class="headerlink" href="#quantization" title="Permalink to this headline">¶</a></h2>
+<p>We call <code class="docutils literal"><span class="pre">quant_aware</span></code> API to add quantization and dequantization operators in <code class="docutils literal"><span class="pre">train_program</span></code> and <code class="docutils literal"><span class="pre">val_program</span></code> according to <a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/quantization_api/#_1">default configuration</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">quant_program</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">quant</span><span class="o">.</span><span class="n">quant_aware</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">exe</span><span class="o">.</span><span class="n">place</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">val_quant_program</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">quant</span><span class="o">.</span><span class="n">quant_aware</span><span class="p">(</span><span class="n">val_program</span><span class="p">,</span> <span class="n">exe</span><span class="o">.</span><span class="n">place</span><span class="p">,</span> <span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="train-model-after-quantization">
+<h2>5. Train model after quantization<a class="headerlink" href="#train-model-after-quantization" title="Permalink to this headline">¶</a></h2>
+<p>Finetune the model after quantization. Test model after one epoch training.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">train</span><span class="p">(</span><span class="n">quant_program</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Test model after quantization. The top1 and top5 accuracy are close to result in <code class="docutils literal"><span class="pre">3.2</span> <span class="pre">training</span> <span class="pre">model</span> <span class="pre">and</span> <span class="pre">testing</span></code>. We preform the training-aware quantization without loss on this image classification model.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">val_quant_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="save-model-after-quantization">
+<h2>6. Save model after quantization<a class="headerlink" href="#save-model-after-quantization" title="Permalink to this headline">¶</a></h2>
+<p>The model in <code class="docutils literal"><span class="pre">4.</span> <span class="pre">Quantization</span></code> after calling <code class="docutils literal"><span class="pre">slim.quant.quant_aware</span></code> API is only suitable to train. To get the inference model, we should use <a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/quantization_api/#convert">slim.quant.convert</a> API to change model architecture and use <a class="reference external" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/api_cn/io_cn/save_inference_model_cn.html#save-inference-model">fluid.io.save_inference_model</a> to save model. <code class="docutils literal"><span class="pre">float_prog</span></code>&#8216;s parameters are float32 dtype but in int8&#8216;s range which can be used in <code class="docutils literal"><span class="pre">fluid</span></code> or <code class="docutils literal"><span class="pre">paddle-lite</span></code>. <code class="docutils literal"><span class="pre">paddle-lite</span></code> will change the parameters&#8216; dtype from float32 to int8 first when loading the inference model. <code class="docutils literal"><span class="pre">int8_prog</span></code>&#8216;s parameters are int8 dtype and we can get model size after quantization by saving it. <code class="docutils literal"><span class="pre">int8_prog</span></code> cannot be used in <code class="docutils literal"><span class="pre">fluid</span></code> or <code class="docutils literal"><span class="pre">paddle-lite</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">float_prog</span><span class="p">,</span> <span class="n">int8_prog</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">quant</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">val_quant_program</span><span class="p">,</span> <span class="n">exe</span><span class="o">.</span><span class="n">place</span><span class="p">,</span> <span class="n">save_int8</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">target_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">float_prog</span><span class="o">.</span><span class="n">global_block</span><span class="p">()</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">]</span>
+<span class="n">fluid</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">save_inference_model</span><span class="p">(</span><span class="n">dirname</span><span class="o">=</span><span class="s1">&#39;./inference_model/float&#39;</span><span class="p">,</span>
+        <span class="n">feeded_var_names</span><span class="o">=</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">],</span>
+        <span class="n">target_vars</span><span class="o">=</span><span class="n">target_vars</span><span class="p">,</span>
+        <span class="n">executor</span><span class="o">=</span><span class="n">exe</span><span class="p">,</span>
+        <span class="n">main_program</span><span class="o">=</span><span class="n">float_prog</span><span class="p">)</span>
+<span class="n">fluid</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">save_inference_model</span><span class="p">(</span><span class="n">dirname</span><span class="o">=</span><span class="s1">&#39;./inference_model/int8&#39;</span><span class="p">,</span>
+        <span class="n">feeded_var_names</span><span class="o">=</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">],</span>
+        <span class="n">target_vars</span><span class="o">=</span><span class="n">target_vars</span><span class="p">,</span>
+        <span class="n">executor</span><span class="o">=</span><span class="n">exe</span><span class="p">,</span>
+        <span class="n">main_program</span><span class="o">=</span><span class="n">int8_prog</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="quant_post_tutorial_en.html" class="btn btn-neutral float-right" title="Post-training Quantization of image classification model - quick start" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nas_tutorial_en.html" class="btn btn-neutral" title="Nerual Architecture Search for Image Classification" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
