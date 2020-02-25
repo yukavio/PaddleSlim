@@ -1,0 +1,531 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SANAS进阶版实验教程-压缩DARTS产出模型 &mdash; PaddleSlim 1.0 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
+        <link rel="up" title="进阶教程" href="index.html"/>
+        <link rel="next" title="目标检测模型蒸馏教程" href="paddledetection_slim_distillation_tutorial.html"/>
+        <link rel="prev" title="图像分类模型通道剪裁-敏感度分析" href="image_classification_sensitivity_analysis_tutorial.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">进阶教程</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="image_classification_sensitivity_analysis_tutorial.html">图像分类模型通道剪裁-敏感度分析</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SANAS进阶版实验教程-压缩DARTS产出模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">收益情况</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">搜索教程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1. 构造搜索空间</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2. 引入依赖包并定义全局变量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sanas">3. 初始化SANAS实例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">4. 定义计算模型参数量的函数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">5. 定义网络输入数据的函数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#program">6. 定义构造program的函数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">7. 定义训练函数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">8. 定义预测函数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">9. 启动搜索实验</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#demo">10. 利用demo下的脚本启动搜索</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">11. 利用demo下的脚本启动最终实验</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="paddledetection_slim_distillation_tutorial.html">目标检测模型蒸馏教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddledetection_slim_nas_tutorial.html">人脸检测模型小模型结构搜索教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddledetection_slim_pruing_tutorial.html">目标检测模型卷积通道剪裁教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddledetection_slim_prune_dist_tutorial.html">目标检测模型蒸馏剪裁教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddledetection_slim_quantization_tutorial.html">目标检测模型定点量化教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paddledetection_slim_sensitivy_tutorial.html">目标检测模型敏感度分析教程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_cn/index.html">API文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo.html">模型库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo/algo.html">算法原理</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">进阶教程</a> &raquo;</li>
+      
+    <li>SANAS进阶版实验教程-压缩DARTS产出模型</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/tutorials/darts_nas_turorial.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sanas-darts">
+<h1>SANAS进阶版实验教程-压缩DARTS产出模型<a class="headerlink" href="#sanas-darts" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>收益情况<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>利用DARTS搜索出来的最终模型结构（以下简称为DARTS_model）构造相应的搜索空间，根据PaddleSlim提供的SANAS搜索方法进行搜索实验，最终得到的模型结构（以下简称为DARTS_SA）相比DARTS_model的精度提升<span class="raw-html-m2r"><font color=green>0.141%</font></span>，模型大小下降<span class="raw-html-m2r"><font color=green>11.2%</font></span>。</p>
+</div>
+<div class="section" id="id2">
+<h2>搜索教程<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>本教程展示了如何在DARTS_model基础上利用SANAS进行搜索实验，并得到DARTS_SA的结果。</p>
+<p>本教程包含以下步骤：</p>
+<ol class="arabic simple">
+<li>构造搜索空间</li>
+<li>导入依赖包并定义全局变量</li>
+<li>初始化SANAS实例</li>
+<li>定义计算模型参数量的函数</li>
+<li>定义网络输入数据的函数</li>
+<li>定义造program的函数</li>
+<li>定义训练函数</li>
+<li>定义预测函数</li>
+<li>启动搜索
+9.1 获取下一个模型结构
+9.2 构造相应的训练和预测program
+9.3 添加搜索限制
+9.4 定义环境
+9.5 定义输入数据
+9.6 启动训练和评估
+9.7 回传当前模型的得分reward</li>
+<li>利用demo下的脚本启动搜索</li>
+<li>利用demo下的脚本启动最终实验</li>
+</ol>
+<div class="section" id="id3">
+<h3>1. 构造搜索空间<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>进行搜索实验之前，首先需要根据DARTS_model的模型特点构造相应的搜索空间，本次实验仅会对DARTS_model的通道数进行搜索，搜索的目的是得到一个精度更高并且模型参数更少的模型。
+定义如下搜索空间：</p>
+<ul class="simple">
+<li>通道数<code class="docutils literal"><span class="pre">filter_num</span></code>: 定义了每个卷积操作的通道数变化区间。取值区间为：<code class="docutils literal"><span class="pre">[4,</span> <span class="pre">8,</span> <span class="pre">12,</span> <span class="pre">16,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">54,</span> <span class="pre">72,</span> <span class="pre">90,</span> <span class="pre">108,</span> <span class="pre">144,</span> <span class="pre">180,</span> <span class="pre">216,</span> <span class="pre">252]</span></code></li>
+</ul>
+<p>按照通道数来区分DARTS_model中block的话，则DARTS_model中共有3个block，第一个block仅包含6个normal cell，之后的两个block每个block都包含和一个reduction cell和6个normal cell，共有20个cell。在构造搜索空间的时候我们定义每个cell中的所有卷积操作都使用相同的通道数，共有20位token。</p>
+<p>完整的搜索空间可以参考<a class="reference external" href="../../../paddleslim/nas/search_space/darts_space.py">基于DARTS_model的搜索空间</a></p>
+</div>
+<div class="section" id="id4">
+<h3>2. 引入依赖包并定义全局变量<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
+
+<span class="n">BATCH_SIZE</span><span class="o">=</span><span class="mi">96</span>
+<span class="n">SERVER_ADDRESS</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">8377</span>
+<span class="n">SEARCH_STEPS</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">RETAIN_EPOCH</span><span class="o">=</span><span class="mi">30</span>
+<span class="n">MAX_PARAMS</span><span class="o">=</span><span class="mf">3.77</span>
+<span class="n">IMAGE_SHAPE</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">]</span>
+<span class="n">AUXILIARY</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">AUXILIARY_WEIGHT</span><span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">TRAINSET_NUM</span> <span class="o">=</span> <span class="mi">50000</span>
+<span class="n">LR</span> <span class="o">=</span> <span class="mf">0.025</span>
+<span class="n">MOMENTUM</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="n">WEIGHT_DECAY</span> <span class="o">=</span> <span class="mf">0.0003</span>
+<span class="n">DROP_PATH_PROBILITY</span> <span class="o">=</span> <span class="mf">0.2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sanas">
+<h3>3. 初始化SANAS实例<a class="headerlink" href="#sanas" title="永久链接至标题">¶</a></h3>
+<p>首先需要初始化SANAS示例。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;DartsSpace&#39;</span><span class="p">)]</span>
+<span class="n">sa_nas</span> <span class="o">=</span> <span class="n">SANAS</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">server_addr</span><span class="o">=</span><span class="p">(</span><span class="n">SERVER_ADDRESS</span><span class="p">,</span> <span class="n">PORT</span><span class="p">),</span> <span class="n">search_steps</span><span class="o">=</span><span class="n">SEARCH_STEPS</span><span class="p">,</span> <span class="n">is_server</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>4. 定义计算模型参数量的函数<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>根据输入的program计算当前模型中的参数量。本教程使用模型参数量作为搜索的限制条件。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_parameters_in_MB</span><span class="p">(</span><span class="n">all_params</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">):</span>
+    <span class="n">parameters_number</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">all_params</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
+                <span class="n">prefix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">param</span><span class="o">.</span><span class="n">trainable</span> <span class="ow">and</span> <span class="s1">&#39;aux&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">parameters_number</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parameters_number</span> <span class="o">/</span> <span class="mf">1e6</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>5. 定义网络输入数据的函数<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>根据输入图片的尺寸定义网络中的输入，其中包括图片输入、标签输入和在训练过程中需要随机丢弃单元的比例和掩膜。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_data_loader</span><span class="p">(</span><span class="n">IMAGE_SHAPE</span><span class="p">,</span> <span class="n">is_train</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">IMAGE_SHAPE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+    <span class="n">data_loader</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">DataLoader</span><span class="o">.</span><span class="n">from_generator</span><span class="p">(</span>
+        <span class="n">feed_list</span><span class="o">=</span><span class="p">[</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">],</span>
+        <span class="n">capacity</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+        <span class="n">use_double_buffer</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">iterable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">drop_path_prob</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">drop_path_mask</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">is_train</span><span class="p">:</span>
+        <span class="n">drop_path_prob</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;drop_path_prob&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+        <span class="n">drop_path_mask</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;drop_path_mask&quot;</span><span class="p">,</span>
+            <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data_loader</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">drop_path_prob</span><span class="p">,</span> <span class="n">drop_path_mask</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="program">
+<h3>6. 定义构造program的函数<a class="headerlink" href="#program" title="永久链接至标题">¶</a></h3>
+<p>根据输入的模型结构、输入图片尺寸和当前program是否是训练模式构造program。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_program</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">,</span> <span class="n">IMAGE_SHAPE</span><span class="p">,</span> <span class="n">archs</span><span class="p">,</span> <span class="n">is_train</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">fluid</span><span class="o">.</span><span class="n">program_guard</span><span class="p">(</span><span class="n">main_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">):</span>
+        <span class="n">data_loader</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">drop_path_prob</span><span class="p">,</span> <span class="n">drop_path_mask</span> <span class="o">=</span> <span class="n">create_data_loader</span><span class="p">(</span>
+            <span class="n">IMAGE_SHAPE</span><span class="p">,</span> <span class="n">is_train</span><span class="p">)</span>
+        <span class="n">logits</span><span class="p">,</span> <span class="n">logits_aux</span> <span class="o">=</span> <span class="n">archs</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">drop_path_prob</span><span class="p">,</span> <span class="n">drop_path_mask</span><span class="p">,</span>
+                                   <span class="n">is_train</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">top1</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">logits</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">top5</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">logits</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+            <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">softmax_with_cross_entropy</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">is_train</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">AUXILIARY</span><span class="p">:</span>
+                <span class="n">loss_aux</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+                    <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">softmax_with_cross_entropy</span><span class="p">(</span><span class="n">logits_aux</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">+</span> <span class="n">AUXILIARY_WEIGHT</span> <span class="o">*</span> <span class="n">loss_aux</span>
+            <span class="n">step_per_epoch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">TRAINSET_NUM</span> <span class="o">/</span> <span class="n">BATCH_SIZE</span><span class="p">)</span>
+            <span class="n">learning_rate</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">cosine_decay</span><span class="p">(</span><span class="n">LR</span><span class="p">,</span> <span class="n">step_per_epoch</span><span class="p">,</span> <span class="n">RETAIN_EPOCH</span><span class="p">)</span>
+            <span class="n">fluid</span><span class="o">.</span><span class="n">clip</span><span class="o">.</span><span class="n">set_gradient_clip</span><span class="p">(</span>
+                <span class="n">clip</span><span class="o">=</span><span class="n">fluid</span><span class="o">.</span><span class="n">clip</span><span class="o">.</span><span class="n">GradientClipByGlobalNorm</span><span class="p">(</span><span class="n">clip_norm</span><span class="o">=</span><span class="mf">5.0</span><span class="p">))</span>
+            <span class="n">optimizer</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">MomentumOptimizer</span><span class="p">(</span>
+                <span class="n">learning_rate</span><span class="p">,</span>
+                <span class="n">MOMENTUM</span><span class="p">,</span>
+                <span class="n">regularization</span><span class="o">=</span><span class="n">fluid</span><span class="o">.</span><span class="n">regularizer</span><span class="o">.</span><span class="n">L2DecayRegularizer</span><span class="p">(</span>
+                    <span class="n">WEIGHT_DECAY</span><span class="p">))</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+            <span class="n">outs</span> <span class="o">=</span> <span class="p">[</span><span class="n">loss</span><span class="p">,</span> <span class="n">top1</span><span class="p">,</span> <span class="n">top5</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">outs</span> <span class="o">=</span> <span class="p">[</span><span class="n">loss</span><span class="p">,</span> <span class="n">top1</span><span class="p">,</span> <span class="n">top5</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">outs</span><span class="p">,</span> <span class="n">data_loader</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>7. 定义训练函数<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">main_prog</span><span class="p">,</span> <span class="n">exe</span><span class="p">,</span> <span class="n">epoch_id</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">fetch_list</span><span class="p">):</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">top1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">top5</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">step_id</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">()):</span>
+        <span class="n">devices_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">DROP_PATH_PROBILITY</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">feed</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">device_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">devices_num</span><span class="p">):</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">device_id</span><span class="p">][</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">device_id</span><span class="p">][</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+                <span class="n">drop_path_prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                    <span class="p">[[</span><span class="n">DROP_PATH_PROBILITY</span> <span class="o">*</span> <span class="n">epoch_id</span> <span class="o">/</span> <span class="n">RETAIN_EPOCH</span><span class="p">]</span>
+                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="n">drop_path_mask</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span>
+                    <span class="mi">1</span><span class="p">,</span> <span class="n">drop_path_prob</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="n">feed</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">image</span><span class="p">,</span>
+                    <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span>
+                    <span class="s2">&quot;drop_path_prob&quot;</span><span class="p">:</span> <span class="n">drop_path_prob</span><span class="p">,</span>
+                    <span class="s2">&quot;drop_path_mask&quot;</span><span class="p">:</span> <span class="n">drop_path_mask</span>
+                <span class="p">})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">feed</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">loss_v</span><span class="p">,</span> <span class="n">top1_v</span><span class="p">,</span> <span class="n">top5_v</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="n">main_prog</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">feed</span><span class="p">,</span> <span class="n">fetch_list</span><span class="o">=</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">fetch_list</span><span class="p">])</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_v</span><span class="p">)</span>
+        <span class="n">top1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">top1_v</span><span class="p">)</span>
+        <span class="n">top5</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">top5_v</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">step_id</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Train Epoch </span><span class="si">{}</span><span class="s2">, Step </span><span class="si">{}</span><span class="s2">, Lr </span><span class="si">{:.8f}</span><span class="s2">, loss </span><span class="si">{:.6f}</span><span class="s2">, acc_1 </span><span class="si">{:.6f}</span><span class="s2">, acc_5 </span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span>
+                <span class="nb">format</span><span class="p">(</span><span class="n">epoch_id</span><span class="p">,</span> <span class="n">step_id</span><span class="p">,</span> <span class="n">lr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">top1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">top5</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">top1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>8. 定义预测函数<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">valid</span><span class="p">(</span><span class="n">main_prog</span><span class="p">,</span> <span class="n">exe</span><span class="p">,</span> <span class="n">epoch_id</span><span class="p">,</span> <span class="n">valid_loader</span><span class="p">,</span> <span class="n">fetch_list</span><span class="p">):</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">top1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">top5</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">step_id</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid_loader</span><span class="p">()):</span>
+        <span class="n">loss_v</span><span class="p">,</span> <span class="n">top1_v</span><span class="p">,</span> <span class="n">top5_v</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="n">main_prog</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">fetch_list</span><span class="o">=</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">fetch_list</span><span class="p">])</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_v</span><span class="p">)</span>
+        <span class="n">top1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">top1_v</span><span class="p">)</span>
+        <span class="n">top5</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">top5_v</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">step_id</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Valid Epoch </span><span class="si">{}</span><span class="s2">, Step </span><span class="si">{}</span><span class="s2">, loss </span><span class="si">{:.6f}</span><span class="s2">, acc_1 </span><span class="si">{:.6f}</span><span class="s2">, acc_5 </span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span>
+                <span class="nb">format</span><span class="p">(</span><span class="n">epoch_id</span><span class="p">,</span> <span class="n">step_id</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">top1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">top5</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">top1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>9. 启动搜索实验<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>以下步骤拆解说明了如何获得当前模型结构以及获得当前模型结构之后应该有的步骤。</p>
+<div class="section" id="id10">
+<h4>9.1 获取下一个模型结构<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h4>
+<p>根据上面的SANAS实例中的函数获取下一个模型结构。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">archs</span> <span class="o">=</span> <span class="n">sa_nas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h4>9.2 构造训练和预测program<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h4>
+<p>根据上一步中获得的模型结构分别构造训练program和预测program。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">train_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">test_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">startup_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+<span class="n">train_fetch_list</span><span class="p">,</span> <span class="n">train_loader</span> <span class="o">=</span> <span class="n">build_program</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">,</span> <span class="n">IMAGE_SHAPE</span><span class="p">,</span> <span class="n">archs</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_fetch_list</span><span class="p">,</span> <span class="n">test_loader</span> <span class="o">=</span> <span class="n">build_program</span><span class="p">(</span><span class="n">test_program</span><span class="p">,</span> <span class="n">startup_program</span><span class="p">,</span> <span class="n">IMAGE_SHAPE</span><span class="p">,</span> <span class="n">archs</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">test_program</span> <span class="o">=</span> <span class="n">test_program</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h4>9.3 添加搜索限制<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h4>
+<p>本教程以模型参数量为限制条件。首先计算一下当前program的参数量，如果超出限制条件，则终止本次模型结构的训练，获取下一个模型结构。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">current_params</span> <span class="o">=</span> <span class="n">count_parameters_in_MB</span><span class="p">(</span>
+    <span class="n">train_program</span><span class="o">.</span><span class="n">global_block</span><span class="p">()</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">(),</span> <span class="s1">&#39;cifar10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h4>9.4 定义环境<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h4>
+<p>定义数据和模型的环境并初始化参数。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">()</span>
+<span class="n">exe</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Executor</span><span class="p">(</span><span class="n">place</span><span class="p">)</span>
+<span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">startup_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h4>9.5 定义输入数据<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h4>
+<p>由于本示例中对cifar10中的图片进行了一些额外的预处理操作，和<a class="reference external" href="../quick_start/nas_tutorial.md">快速开始</a>示例中的reader不同，所以需要自定义cifar10的reader，不能直接调用paddle中封装好的<code class="docutils literal"><span class="pre">paddle.dataset.cifar10</span></code>的reader。自定义cifar10的reader文件位于<a class="reference external" href="../../../demo/nas/darts_cifar10_reader.py">demo/nas</a>中。</p>
+<p><strong>注意：</strong>本示例为了简化代码直接调用<code class="docutils literal"><span class="pre">paddle.dataset.cifar10</span></code>定义训练数据和预测数据，实际训练需要使用自定义cifar10的reader。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">cifar</span><span class="o">.</span><span class="n">train10</span><span class="p">(</span><span class="n">cycle</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">buf_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">cifar</span><span class="o">.</span><span class="n">test10</span><span class="p">(</span><span class="n">cycle</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">train_loader</span><span class="o">.</span><span class="n">set_sample_list_generator</span><span class="p">(</span><span class="n">train_reader</span><span class="p">,</span> <span class="n">places</span><span class="o">=</span><span class="n">place</span><span class="p">)</span>
+<span class="n">test_loader</span><span class="o">.</span><span class="n">set_sample_list_generator</span><span class="p">(</span><span class="n">test_reader</span><span class="p">,</span> <span class="n">places</span><span class="o">=</span><span class="n">place</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h4>9.6 启动训练和评估<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">RETAIN_EPOCH</span><span class="p">):</span>
+    <span class="n">train_top1</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">exe</span><span class="p">,</span> <span class="n">epoch_id</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">train_fetch_list</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TRAIN: Epoch </span><span class="si">{}</span><span class="s2">, train_acc </span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch_id</span><span class="p">,</span> <span class="n">train_top1</span><span class="p">))</span>
+    <span class="n">valid_top1</span> <span class="o">=</span> <span class="n">valid</span><span class="p">(</span><span class="n">test_program</span><span class="p">,</span> <span class="n">exe</span><span class="p">,</span> <span class="n">epoch_id</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="n">test_fetch_list</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TEST: Epoch </span><span class="si">{}</span><span class="s2">, valid_acc </span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch_id</span><span class="p">,</span> <span class="n">valid_top1</span><span class="p">))</span>
+    <span class="n">valid_top1_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">valid_top1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reward">
+<h4>9.7 回传当前模型的得分reward<a class="headerlink" href="#reward" title="永久链接至标题">¶</a></h4>
+<p>本教程利用最后两个epoch的准确率均值作为最终的得分回传给SANAS。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sa_nas</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">valid_top1_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">valid_top1_list</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="demo">
+<h3>10. 利用demo下的脚本启动搜索<a class="headerlink" href="#demo" title="永久链接至标题">¶</a></h3>
+<p>搜索文件位于: <a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/nas/darts_nas.py">darts_sanas_demo</a>，搜索过程中限制模型参数量为不大于3.77M。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">demo</span><span class="o">/</span><span class="n">nas</span><span class="o">/</span>
+<span class="n">python</span> <span class="n">darts_nas</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id17">
+<h3>11. 利用demo下的脚本启动最终实验<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h3>
+<p>最终实验文件位于: <a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/tree/develop/demo/nas/darts_nas.py">darts_sanas_demo</a>，最终实验需要训练600epoch。以下示例输入token为<code class="docutils literal"><span class="pre">[5,</span> <span class="pre">5,</span> <span class="pre">0,</span> <span class="pre">5,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">7,</span> <span class="pre">7,</span> <span class="pre">5,</span> <span class="pre">7,</span> <span class="pre">7,</span> <span class="pre">11,</span> <span class="pre">10,</span> <span class="pre">12,</span> <span class="pre">10,</span> <span class="pre">0,</span> <span class="pre">5,</span> <span class="pre">3,</span> <span class="pre">10,</span> <span class="pre">8]</span></code>。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">demo</span><span class="o">/</span><span class="n">nas</span><span class="o">/</span>
+<span class="n">python</span> <span class="n">darts_nas</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">token</span> <span class="mi">5</span> <span class="mi">5</span> <span class="mi">0</span> <span class="mi">5</span> <span class="mi">5</span> <span class="mi">10</span> <span class="mi">7</span> <span class="mi">7</span> <span class="mi">5</span> <span class="mi">7</span> <span class="mi">7</span> <span class="mi">11</span> <span class="mi">10</span> <span class="mi">12</span> <span class="mi">10</span> <span class="mi">0</span> <span class="mi">5</span> <span class="mi">3</span> <span class="mi">10</span> <span class="mi">8</span> <span class="o">--</span><span class="n">retain_epoch</span> <span class="mi">600</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="paddledetection_slim_distillation_tutorial.html" class="btn btn-neutral float-right" title="目标检测模型蒸馏教程" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="image_classification_sensitivity_analysis_tutorial.html" class="btn btn-neutral" title="图像分类模型通道剪裁-敏感度分析" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

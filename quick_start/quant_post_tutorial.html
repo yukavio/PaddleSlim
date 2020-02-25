@@ -83,21 +83,21 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">快速开始</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="pruning_tutorial.html">图像分类模型通道剪裁-快速开始</a></li>
 <li class="toctree-l2"><a class="reference internal" href="distillation_tutorial.html">图像分类模型知识蒸馏-快速开始</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quant_aware_tutorial.html">图像分类模型量化训练-快速开始</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">图像分类模型离线量化-快速开始</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">1. 导入依赖</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">2. 构建网络</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">3. 训练模型</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id5">3.1 定义输入数据</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">3.2 训练和测试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1. 导入依赖</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2. 构建网络</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3. 训练模型</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">3.1 定义输入数据</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">3.2 训练和测试</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">4. 离线量化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">4. 离线量化</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nas_tutorial.html">图像分类网络结构搜索-快速开始</a></li>
@@ -155,15 +155,15 @@
             
   <div class="section" id="id1">
 <h1>图像分类模型离线量化-快速开始<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>该教程以图像分类模型MobileNetV1为例，说明如何快速使用PaddleSlim的<a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/docs/docs/api/quantization_api">离线量化接口</a>。 该示例包含以下步骤：</p>
-<ol class="simple">
+<p>该教程以图像分类模型MobileNetV1为例，说明如何快速使用PaddleSlim的<a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/docs/docs/api/quantization_api.md">离线量化接口</a>。 该示例包含以下步骤：</p>
+<ol class="arabic simple">
 <li>导入依赖</li>
 <li>构建模型</li>
 <li>训练模型</li>
 <li>离线量化</li>
 </ol>
-<div class="section" id="id2">
-<h2>1. 导入依赖<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h2>1. 导入依赖<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>PaddleSlim依赖Paddle1.7版本，请确认已正确安装Paddle，然后按以下方式导入Paddle和PaddleSlim:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
 <span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
@@ -172,8 +172,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>2. 构建网络<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id4">
+<h2>2. 构建网络<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <p>该章节构造一个用于对MNIST数据进行分类的分类模型，选用<code class="docutils literal"><span class="pre">MobileNetV1</span></code>，并将输入大小设置为<code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span></code>，输出类别数为10。               为了方便展示示例，我们在<code class="docutils literal"><span class="pre">paddleslim.models</span></code>下预定义了用于构建分类模型的方法，执行以下代码构建分类模型：</p>
 <blockquote>
 <div>注意：paddleslim.models下的API并非PaddleSlim常规API，是为了简化示例而封装预定义的一系列方法，比如：模型结构的定义、Program的构建等。</div></blockquote>
@@ -182,11 +182,11 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id4">
-<h2>3. 训练模型<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
-<p>该章节介绍了如何定义输入数据和如何训练和测试分类模型。先训练分类模型的原因是离线量化需要一个训练好的模型。</p>
 <div class="section" id="id5">
-<h3>3.1 定义输入数据<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<h2>3. 训练模型<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>该章节介绍了如何定义输入数据和如何训练和测试分类模型。先训练分类模型的原因是离线量化需要一个训练好的模型。</p>
+<div class="section" id="id6">
+<h3>3.1 定义输入数据<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
 <p>为了快速执行该示例，我们选取简单的MNIST数据，Paddle框架的<code class="docutils literal"><span class="pre">paddle.dataset.mnist</span></code>包定义了MNIST数据的下载和读取。
 代码如下：</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
@@ -198,8 +198,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id6">
-<h3>3.2 训练和测试<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id7">
+<h3>3.2 训练和测试<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
 <p>先定义训练和测试函数。在训练函数中执行了一个epoch的训练，因为MNIST数据集数据较少，一个epoch就可将top1精度训练到95%以上。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">prog</span><span class="p">):</span>
     <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
@@ -208,7 +208,7 @@
         <span class="k">if</span> <span class="nb">iter</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">acc1</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">acc5</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
         <span class="nb">iter</span> <span class="o">+=</span> <span class="mi">1</span>
-        
+
 <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">):</span>
     <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">res</span> <span class="o">=</span> <span class="p">[[],</span> <span class="p">[]]</span>
@@ -241,8 +241,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>4. 离线量化<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id8">
+<h2>4. 离线量化<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
 <p>调用离线量化接口，加载文件夹<code class="docutils literal"><span class="pre">'./inference_model'</span></code>训练好的分类模型，并使用10个batch的数据进行参数校正。此过程无需训练，只需跑前向过程来计算量化所需参数。离线量化后的模型保存在文件夹<code class="docutils literal"><span class="pre">'./quant_post_model'</span></code>下。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">slim</span><span class="o">.</span><span class="n">quant</span><span class="o">.</span><span class="n">quant_post</span><span class="p">(</span>
         <span class="n">executor</span><span class="o">=</span><span class="n">exe</span><span class="p">,</span>

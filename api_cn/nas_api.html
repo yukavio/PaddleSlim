@@ -83,7 +83,7 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
@@ -95,7 +95,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="one_shot_api.html">OneShotNAS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">多进程蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">大规模可扩展知识蒸馏框架 Pantheon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="prune_api.html">卷积层通道剪裁</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quantization_api.html">量化</a></li>
 <li class="toctree-l2"><a class="reference internal" href="single_distiller_api.html">简单蒸馏</a></li>
@@ -263,7 +263,7 @@
 <li><strong>tokens(list):</strong> - 一组tokens。tokens的长度和范围取决于搜索空间。</li>
 </ul>
 <p><strong>返回：</strong>
-根据传入的token得到一个模型结构实例。</p>
+根据传入的token得到一个模型结构实例列表。</p>
 <p><strong>示例代码：</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
 <span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
@@ -284,6 +284,13 @@
 <p><strong>返回：</strong>
 搜索过程中最好的token，reward和当前训练的token，形式为dict。</p>
 <p><strong>示例代码：</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">from</span> <span class="nn">paddleslim.nas</span> <span class="kn">import</span> <span class="n">SANAS</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;MobileNetV2Space&#39;</span><span class="p">)]</span>
+<span class="n">sanas</span> <span class="o">=</span> <span class="n">SANAS</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sanas</span><span class="o">.</span><span class="n">current_info</span><span class="p">())</span>
+</pre></div>
+</div>
 </div></blockquote>
 </div>
 </div>

@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pruning of image classification model - sensitivity &mdash; PaddleSlim 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="PaddleSlim 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Aadvanced Tutorials" href="index_en.html"/>
+        <link rel="next" title="API Documents" href="../api_en/index_en.html"/>
+        <link rel="prev" title="Aadvanced Tutorials" href="index_en.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index_en.html" class="icon icon-home"> PaddleSlim
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro_en.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install_en.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start/index_en.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_en.html">Aadvanced Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Pruning of image classification model - sensitivity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#import-dependency">1. Import dependency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-model">2. Build model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-data-reader">3 Define data reader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-test-function">4. Define test function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#training-model">5. Training model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-names-of-parameters">6. Get names of parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compute-sensitivities">7. Compute sensitivities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#compute-in-single-process">7.1 Compute in single process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expand-sensitivities">7.2 Expand sensitivities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#computing-sensitivity-in-multi-process">7.3 Computing sensitivity in multi-process</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pruning-model">8. Pruning model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#get-pruning-ratios">8.1 Get pruning ratios</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pruning-training-network">8.2 Pruning training network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pruning-test-network">8.3 Pruning test network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#training-pruned-model">8.4 Training pruned model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_en/index_en.html">API Documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model_zoo_en.html">Model Zoo</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index_en.html">PaddleSlim</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index_en.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index_en.html">Aadvanced Tutorials</a> &raquo;</li>
+      
+    <li>Pruning of image classification model - sensitivity</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/tutorials/image_classification_sensitivity_analysis_tutorial_en.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pruning-of-image-classification-model-sensitivity">
+<h1>Pruning of image classification model - sensitivity<a class="headerlink" href="#pruning-of-image-classification-model-sensitivity" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, you will learn how to use <a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/prune_api/#sensitivity">sensitivity API of PaddleSlim</a> by a demo of MobileNetV1 model on MNIST dataset。
+This tutorial following workflow:</p>
+<ol class="arabic simple">
+<li>Import dependency</li>
+<li>Build model</li>
+<li>Define data reader</li>
+<li>Define function for test</li>
+<li>Training model</li>
+<li>Get names of parameter</li>
+<li>Compute sensitivities</li>
+<li>Pruning model</li>
+</ol>
+<div class="section" id="import-dependency">
+<h2>1. Import dependency<a class="headerlink" href="#import-dependency" title="Permalink to this headline">¶</a></h2>
+<p>PaddleSlim dependents on Paddle1.7. Please ensure that you have installed paddle correctly. Import Paddle and PaddleSlim as below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="k">as</span> <span class="nn">slim</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-model">
+<h2>2. Build model<a class="headerlink" href="#build-model" title="Permalink to this headline">¶</a></h2>
+<p>This section will build a classsification model based <code class="docutils literal"><span class="pre">MobileNetV1</span></code> for MNIST task. The shape of the input is <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span></code> and the output number is 10.</p>
+<p>To make the code simple, we define a function in package <code class="docutils literal"><span class="pre">paddleslim.models</span></code> to build classification model.
+Excute following code to build a model,</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">val_program</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">image_classification</span><span class="p">(</span><span class="s2">&quot;MobileNet&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">place</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CUDAPlace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div>Note：The functions in paddleslim.models is just used in tutorials or demos.</div></blockquote>
+</div>
+<div class="section" id="define-data-reader">
+<h2>3 Define data reader<a class="headerlink" href="#define-data-reader" title="Permalink to this headline">¶</a></h2>
+<p>MNIST dataset is used for making the demo can be executed quickly. It defines some functions for downloading and reading MNIST dataset in package <code class="docutils literal"><span class="pre">paddle.dataset.mnist</span></code>.
+Show as below：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
+<span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+        <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+        <span class="n">reader</span><span class="o">.</span><span class="n">test</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data_feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">place</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="define-test-function">
+<h2>4. Define test function<a class="headerlink" href="#define-test-function" title="Permalink to this headline">¶</a></h2>
+<p>To get the performance of model on test dataset after pruning a convolution layer, we define a test function as below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">program</span><span class="p">):</span>
+    <span class="n">acc_top1_ns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">acc_top5_ns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">test_reader</span><span class="p">():</span>
+        <span class="n">acc_top1_n</span><span class="p">,</span> <span class="n">acc_top5_n</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="n">program</span><span class="p">,</span>
+            <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="n">acc_top1_ns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc_top1_n</span><span class="p">))</span>
+        <span class="n">acc_top5_ns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc_top5_n</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final eva - acc_top1: </span><span class="si">{}</span><span class="s2">; acc_top5: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">acc_top1_ns</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">acc_top5_ns</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">acc_top1_ns</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="training-model">
+<h2>5. Training model<a class="headerlink" href="#training-model" title="Permalink to this headline">¶</a></h2>
+<p>Sensitivity analysis is dependent on pretrained model. So we should train the model defined in section 2 for some epochs. One epoch training is enough for this simple demo while more epochs may be necessary for other model. Or you can load pretrained model from filesystem.</p>
+<p>Training model as below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_reader</span><span class="p">():</span>
+    <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Get the performance using the test function defined in section 4:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">val_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-names-of-parameters">
+<h2>6. Get names of parameters<a class="headerlink" href="#get-names-of-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">train_program</span><span class="o">.</span><span class="n">global_block</span><span class="p">()</span><span class="o">.</span><span class="n">all_parameters</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s2">&quot;_sep_weights&quot;</span> <span class="ow">in</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="compute-sensitivities">
+<h2>7. Compute sensitivities<a class="headerlink" href="#compute-sensitivities" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="compute-in-single-process">
+<h3>7.1 Compute in single process<a class="headerlink" href="#compute-in-single-process" title="Permalink to this headline">¶</a></h3>
+<p>Apply sensitivity analysis on pretrained model by calling <a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/prune_api/#sensitivity">sensitivity API</a>.</p>
+<p>The sensitivities will be appended into the file given by option <code class="docutils literal"><span class="pre">sensitivities_file</span></code> during computing.
+The information in this file won`t be computed repeatedly.</p>
+<p>Remove the file <code class="docutils literal"><span class="pre">sensitivities_0.data</span></code> in current directory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>!rm -rf sensitivities_0.data
+</pre></div>
+</div>
+<p>Apart from the parameters to be analyzed, it also support for setting the ratios that each convolutoin will be pruned.</p>
+<p>If one model losses 90% accuracy on test dataset when its single convolution layer is pruned by 40%, then we can set <code class="docutils literal"><span class="pre">pruned_ratios</span></code> to <code class="docutils literal"><span class="pre">[0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3,</span> <span class="pre">0.4]</span></code>.</p>
+<p>The granularity of <code class="docutils literal"><span class="pre">pruned_ratios</span></code> should be small to get more reasonable sensitivities. But small granularity of <code class="docutils literal"><span class="pre">pruned_ratios</span></code> will slow down the computing.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sens_0</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">sensitivity</span><span class="p">(</span>
+        <span class="n">val_program</span><span class="p">,</span>
+        <span class="n">place</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">,</span>
+        <span class="n">test</span><span class="p">,</span>
+        <span class="n">sensitivities_file</span><span class="o">=</span><span class="s2">&quot;sensitivities_0.data&quot;</span><span class="p">,</span>
+        <span class="n">pruned_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sens_0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="expand-sensitivities">
+<h3>7.2 Expand sensitivities<a class="headerlink" href="#expand-sensitivities" title="Permalink to this headline">¶</a></h3>
+<p>We can expand <code class="docutils literal"><span class="pre">pruned_ratios</span></code> to <code class="docutils literal"><span class="pre">[0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3]</span></code> based the sensitivities generated in section 7.1.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sens_0</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">sensitivity</span><span class="p">(</span>
+        <span class="n">val_program</span><span class="p">,</span>
+        <span class="n">place</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">,</span>
+        <span class="n">test</span><span class="p">,</span>
+        <span class="n">sensitivities_file</span><span class="o">=</span><span class="s2">&quot;sensitivities_0.data&quot;</span><span class="p">,</span>
+        <span class="n">pruned_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sens_0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="computing-sensitivity-in-multi-process">
+<h3>7.3 Computing sensitivity in multi-process<a class="headerlink" href="#computing-sensitivity-in-multi-process" title="Permalink to this headline">¶</a></h3>
+<p>The time cost of computing sensitivities is dependent on the count of parameters and the speed of model evaluation on test dataset. We can speed up computing by multi-process.</p>
+<p>Split <code class="docutils literal"><span class="pre">pruned_ratios</span></code> into multi-process, and merge the sensitivities from multi-process.</p>
+<div class="section" id="computing-in-each-process">
+<h4>7.3.1 Computing in each process<a class="headerlink" href="#computing-in-each-process" title="Permalink to this headline">¶</a></h4>
+<p>We have compute the sensitivities when <code class="docutils literal"><span class="pre">pruned_ratios=[0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3]</span></code> and saved the sensitivities into file named <code class="docutils literal"><span class="pre">sensitivities_0.data</span></code>.</p>
+<p>在另一个进程中，The we start a task by setting <code class="docutils literal"><span class="pre">pruned_ratios=[0.4]</span></code> in another process and save result into file named <code class="docutils literal"><span class="pre">sensitivities_1.data</span></code>. Show as below：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sens_1</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">sensitivity</span><span class="p">(</span>
+        <span class="n">val_program</span><span class="p">,</span>
+        <span class="n">place</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">,</span>
+        <span class="n">test</span><span class="p">,</span>
+        <span class="n">sensitivities_file</span><span class="o">=</span><span class="s2">&quot;sensitivities_1.data&quot;</span><span class="p">,</span>
+        <span class="n">pruned_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sens_1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="load-sensitivity-file-generated-in-multi-process">
+<h4>7.3.2 Load sensitivity file generated in multi-process<a class="headerlink" href="#load-sensitivity-file-generated-in-multi-process" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">s_0</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">load_sensitivities</span><span class="p">(</span><span class="s2">&quot;sensitivities_0.data&quot;</span><span class="p">)</span>
+<span class="n">s_1</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">load_sensitivities</span><span class="p">(</span><span class="s2">&quot;sensitivities_1.data&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s_0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s_1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="merge-sensitivies">
+<h4>7.3.3 Merge sensitivies<a class="headerlink" href="#merge-sensitivies" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">merge_sensitive</span><span class="p">([</span><span class="n">s_0</span><span class="p">,</span> <span class="n">s_1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="pruning-model">
+<h2>8. Pruning model<a class="headerlink" href="#pruning-model" title="Permalink to this headline">¶</a></h2>
+<p>Pruning model according to the sensitivities generated in section 7.3.3.</p>
+<div class="section" id="get-pruning-ratios">
+<h3>8.1 Get pruning ratios<a class="headerlink" href="#get-pruning-ratios" title="Permalink to this headline">¶</a></h3>
+<p>Get a group of ratios by calling <a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/prune_api/#get_ratios_by_loss">get_ratios_by_loss</a> fuction：</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">ratios</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">get_ratios_by_loss</span><span class="p">(</span><span class="n">s_0</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ratios</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pruning-training-network">
+<h3>8.2 Pruning training network<a class="headerlink" href="#pruning-training-network" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pruner</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">Pruner</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs before pruning: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">train_program</span><span class="p">)))</span>
+<span class="n">pruned_program</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pruner</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span>
+        <span class="n">train_program</span><span class="p">,</span>
+        <span class="n">fluid</span><span class="o">.</span><span class="n">global_scope</span><span class="p">(),</span>
+        <span class="n">params</span><span class="o">=</span><span class="n">ratios</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+        <span class="n">ratios</span><span class="o">=</span><span class="n">ratios</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+        <span class="n">place</span><span class="o">=</span><span class="n">place</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs after pruning: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">pruned_program</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pruning-test-network">
+<h3>8.3 Pruning test network<a class="headerlink" href="#pruning-test-network" title="Permalink to this headline">¶</a></h3>
+<p>Note：The <code class="docutils literal"><span class="pre">only_graph</span></code> should be set to True while pruning test network. <a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/prune_api/#pruner">Pruner API</a></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pruner</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">Pruner</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs before pruning: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">val_program</span><span class="p">)))</span>
+<span class="n">pruned_val_program</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pruner</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span>
+        <span class="n">val_program</span><span class="p">,</span>
+        <span class="n">fluid</span><span class="o">.</span><span class="n">global_scope</span><span class="p">(),</span>
+        <span class="n">params</span><span class="o">=</span><span class="n">ratios</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+        <span class="n">ratios</span><span class="o">=</span><span class="n">ratios</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+        <span class="n">place</span><span class="o">=</span><span class="n">place</span><span class="p">,</span>
+        <span class="n">only_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs after pruning: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">pruned_val_program</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>Get accuracy of pruned model on test dataset:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">pruned_val_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="training-pruned-model">
+<h3>8.4 Training pruned model<a class="headerlink" href="#training-pruned-model" title="Permalink to this headline">¶</a></h3>
+<p>Training pruned model:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_reader</span><span class="p">():</span>
+    <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">pruned_program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Get accuracy of model after training:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">pruned_val_program</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api_en/index_en.html" class="btn btn-neutral float-right" title="API Documents" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index_en.html" class="btn btn-neutral" title="Aadvanced Tutorials" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, paddleslim.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

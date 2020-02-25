@@ -161,8 +161,8 @@
             
   <div class="section" id="nerual-architecture-search-for-image-classification">
 <h1>Nerual Architecture Search for Image Classification<a class="headerlink" href="#nerual-architecture-search-for-image-classification" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial shows how to use <a class="reference external" href="../api/nas_api">API</a> about SANAS in PaddleSlim. We start experiment based on MobileNetV2 as example. The tutorial contains follow section.</p>
-<ol class="simple">
+<p>This tutorial shows how to use <a class="reference external" href="../api/nas_api.md">API</a> about SANAS in PaddleSlim. We start experiment based on MobileNetV2 as example. The tutorial contains follow section.</p>
+<ol class="arabic simple">
 <li>necessary imports</li>
 <li>initial SANAS instance</li>
 <li>define function about building program</li>
@@ -213,7 +213,7 @@
         <span class="n">acc_top1</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">acc_top5</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
         <span class="n">test_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">default_main_program</span><span class="p">()</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            
+
         <span class="n">optimizer</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
         <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">avg_cost</span><span class="p">)</span>
 
@@ -239,7 +239,7 @@
 <div class="section" id="define-function-about-training">
 <h2>5. define function about training<a class="headerlink" href="#define-function-about-training" title="Permalink to this headline">¶</a></h2>
 <p>Start training.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">start_train</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">,</span> <span class="n">data_feeder</span><span class="p">):</span> 
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">start_train</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">,</span> <span class="n">data_feeder</span><span class="p">):</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">avg_cost</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top5</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_reader</span><span class="p">():</span>
         <span class="n">batch_reward</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">)</span>
@@ -303,7 +303,7 @@
 </div>
 <div class="section" id="reture-score">
 <h3>7.6 reture score<a class="headerlink" href="#reture-score" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sanas</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">finally_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<div class="highlight-guess"><div class="highlight"><pre><span></span><span class="err">sanas.reward(float(finally_reward[1]))</span>
 </pre></div>
 </div>
 </div>
@@ -319,7 +319,7 @@
     <span class="n">current_flops</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">train_program</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">current_flops</span> <span class="o">&gt;</span> <span class="mi">321208544</span><span class="p">:</span>
         <span class="k">continue</span>
-    
+
     <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
         <span class="n">start_train</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">)</span>
 

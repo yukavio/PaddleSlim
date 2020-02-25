@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PaddleSlim简介 &mdash; PaddleSlim 1.0 文档</title>
+  <title>介绍 &mdash; PaddleSlim 1.0 文档</title>
   
 
   
@@ -82,8 +82,18 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index_en.html">English Documents</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">PaddleSlim简介</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">功能</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">介绍</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">部分压缩策略效果</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">分类模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">图像检测模型</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pascal-voc-mobilenet-v1-yolov3">数据：Pascal VOC；模型：MobileNet-V1-YOLOv3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#coco-mobilenet-v1-yolov3">数据：COCO；模型：MobileNet-V1-YOLOv3</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">搜索</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">安装</a></li>
@@ -122,7 +132,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>PaddleSlim简介</li>
+    <li>介绍</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -136,22 +146,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="paddleslim">
-<h1>PaddleSlim简介<a class="headerlink" href="#paddleslim" title="永久链接至标题">¶</a></h1>
-<p>PaddleSlim是PaddlePaddle框架的一个子模块，主要用于压缩图像领域模型。在PaddleSlim中，不仅实现了目前主流的网络剪枝、量化、蒸馏三种压缩策略，还实现了超参数搜索和小模型网络结构搜索功能。在后续版本中，会添加更多的压缩策略，以及完善对NLP领域模型的支持。</p>
-<div class="section" id="id1">
-<h2>功能<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+  <div class="section" id="id1">
+<h1>介绍<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>PaddleSlim是一个模型压缩工具库，包含模型剪裁、定点量化、知识蒸馏、超参搜索和模型结构搜索等一系列模型压缩策略。</p>
+<p>对于业务用户，PaddleSlim提供完整的模型压缩解决方案，可用于图像分类、检测、分割等各种类型的视觉场景。
+同时也在持续探索NLP领域模型的压缩方案。另外，PaddleSlim提供且在不断完善各种压缩策略在经典开源任务的benchmark,
+以便业务用户参考。</p>
+<p>对于模型压缩算法研究者或开发者，PaddleSlim提供各种压缩策略的底层辅助接口，方便用户复现、调研和使用最新论文方法。
+PaddleSlim会从底层能力、技术咨询合作和业务场景等角度支持开发者进行模型压缩策略相关的创新工作。</p>
+<div class="section" id="id2">
+<h2>功能<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li>模型剪裁<ul>
-<li>支持通道均匀模型剪裁（uniform pruning)</li>
-<li>基于敏感度的模型剪裁</li>
-<li>基于进化算法的自动模型剪裁三种方式</li>
+<li>卷积通道均匀剪裁</li>
+<li>基于敏感度的卷积通道剪裁</li>
+<li>基于进化算法的自动剪裁</li>
 </ul>
 </li>
-<li>量化训练<ul>
+<li>定点量化<ul>
 <li>在线量化训练（training aware）</li>
 <li>离线量化（post training）</li>
-<li>支持对权重全局量化和Channel-Wise量化</li>
 </ul>
 </li>
 <li>知识蒸馏<ul>
@@ -160,13 +174,129 @@
 </ul>
 </li>
 <li>神经网络结构自动搜索（NAS）<ul>
-<li>支持One-Shot网络结构自动搜索（Ont-Shot-NAS）</li>
-<li>支持基于进化算法的轻量神经网络结构自动搜索（Light-NAS）</li>
+<li>支持基于进化算法的轻量神经网络结构自动搜索</li>
+<li>支持One-Shot网络结构自动搜索</li>
 <li>支持 FLOPS / 硬件延时约束</li>
 <li>支持多平台模型延时评估</li>
+<li>支持用户自定义搜索算法和搜索空间</li>
 </ul>
 </li>
 </ul>
+</div>
+<div class="section" id="id3">
+<h2>部分压缩策略效果<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id4">
+<h3>分类模型<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>数据: ImageNet2012; 模型: MobileNetV1;</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">压缩策略</th>
+<th align="center">精度收益(baseline: 70.91%)</th>
+<th align="center">模型大小(baseline: 17.0M)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">知识蒸馏(ResNet50)</td>
+<td align="center"><strong>+1.06%</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">知识蒸馏(ResNet50) + int8量化训练</td>
+<td align="center"><strong>+1.10%</strong></td>
+<td align="center"><strong>-71.76%</strong></td>
+</tr>
+<tr>
+<td align="center">剪裁(FLOPs-50%) + int8量化训练</td>
+<td align="center"><strong>-1.71%</strong></td>
+<td align="center"><strong>-86.47%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="id5">
+<h3>图像检测模型<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<div class="section" id="pascal-voc-mobilenet-v1-yolov3">
+<h4>数据：Pascal VOC；模型：MobileNet-V1-YOLOv3<a class="headerlink" href="#pascal-voc-mobilenet-v1-yolov3" title="永久链接至标题">¶</a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">压缩方法</th>
+<th align="center">mAP(baseline: 76.2%)</th>
+<th align="center">模型大小(baseline: 94MB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">知识蒸馏(ResNet34-YOLOv3)</td>
+<td align="center"><strong>+2.8%</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">剪裁 FLOPs -52.88%</td>
+<td align="center"><strong>+1.4%</strong></td>
+<td align="center"><strong>-67.76%</strong></td>
+</tr>
+<tr>
+<td align="center">知识蒸馏(ResNet34-YOLOv3)+剪裁(FLOPs-69.57%)</td>
+<td align="center"><strong>+2.6%</strong></td>
+<td align="center"><strong>-67.00%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="coco-mobilenet-v1-yolov3">
+<h4>数据：COCO；模型：MobileNet-V1-YOLOv3<a class="headerlink" href="#coco-mobilenet-v1-yolov3" title="永久链接至标题">¶</a></h4>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">压缩方法</th>
+<th align="center">mAP(baseline: 29.3%)</th>
+<th align="center">模型大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">知识蒸馏(ResNet34-YOLOv3)</td>
+<td align="center"><strong>+2.1%</strong></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">知识蒸馏(ResNet34-YOLOv3)+剪裁(FLOPs-67.56%)</td>
+<td align="center"><strong>-0.3%</strong></td>
+<td align="center"><strong>-66.90%</strong></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="section" id="id6">
+<h3>搜索<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>数据：ImageNet2012; 模型：MobileNetV2</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">硬件环境</th>
+<th align="center">推理耗时</th>
+<th align="center">Top1准确率(baseline:71.90%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">RK3288</td>
+<td align="center"><strong>-23%</strong></td>
+<td align="center">+0.07%</td>
+</tr>
+<tr>
+<td align="center">Android cellphone</td>
+<td align="center"><strong>-20%</strong></td>
+<td align="center">+0.16%</td>
+</tr>
+<tr>
+<td align="center">iPhone 6s</td>
+<td align="center"><strong>-17%</strong></td>
+<td align="center">+0.32%</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 </div>
 

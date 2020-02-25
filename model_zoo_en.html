@@ -34,7 +34,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="PaddleSlim 1.0 documentation" href="index.html"/>
-        <link rel="prev" title="search space" href="api_en/search_space_en.html"/> 
+        <link rel="prev" title="Table about hardware lantency" href="api_en/table_latency_en.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -87,21 +87,23 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials/index_en.html">Aadvanced Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_en/index_en.html">API Documents</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model Zoo</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">1. 图象分类</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">1.1 量化</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">1.2 剪裁</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">1.3 蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#image-classification">1. Image Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantization">1.1 Quantization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pruning">1.2 Pruning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#distillation">1.3 Distillation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nas">1.4 NAS</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">2. 目标检测</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id6">2.1 量化</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">2.2 剪裁</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">2.3 蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#object-detection">2. Object Detection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">2.1 Quantization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2.2 Pruning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2.3 Distillation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2.4 NAS</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id9">3. 图像分割</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id10">3.1 量化</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">3.2 剪裁</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#image-segmentation">3. Image Segmentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.1 Quantization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">3.2 Pruning</a></li>
 </ul>
 </li>
 </ul>
@@ -152,19 +154,20 @@
             
   <div class="section" id="model-zoo">
 <h1>Model Zoo<a class="headerlink" href="#model-zoo" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2>1. 图象分类<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>数据集：ImageNet1000类</p>
-<div class="section" id="id2">
-<h3>1.1 量化<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="image-classification">
+<h2>1. Image Classification<a class="headerlink" href="#image-classification" title="Permalink to this headline">¶</a></h2>
+<p>Dataset：ImageNet1000</p>
+<div class="section" id="quantization">
+<h3>1.1 Quantization<a class="headerlink" href="#quantization" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
 <tr>
-<th align="center">模型</th>
-<th align="center">压缩方法</th>
+<th align="center">Model</th>
+<th align="center">Method</th>
 <th align="center">Top-1/Top-5 Acc</th>
-<th align="center">模型体积（MB）</th>
-<th align="center">下载</th>
+<th align="center">Model Size（MB）</th>
+<th align="center">TensorRT latency(V100, ms)</th>
+<th align="center">Download</th>
 </tr>
 </thead>
 <tbody>
@@ -172,78 +175,407 @@
 <td align="center">MobileNetV1</td>
 <td align="center">-</td>
 <td align="center">70.99%/89.68%</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">17</td>
+<td align="center">-</td>
+<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV1_pretrained.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
 <td align="center">quant_post</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">70.18%/89.25% (-0.81%/-0.43%)</td>
+<td align="center">4.4</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_quant_post.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
 <td align="center">quant_aware</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">70.60%/89.57% (-0.39%/-0.11%)</td>
+<td align="center">4.4</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_quant_aware.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">-</td>
 <td align="center">72.15%/90.65%</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">15</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV2_pretrained.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">quant_post</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">71.15%/90.11% (-1%/-0.54%)</td>
+<td align="center">4.0</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV2_quant_post.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">quant_aware</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">72.05%/90.63% (-0.1%/-0.02%)</td>
+<td align="center">4.0</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV2_quant_aware.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50</td>
 <td align="center">-</td>
 <td align="center">76.50%/93.00%</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">99</td>
+<td align="center">2.71</td>
+<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_pretrained.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50</td>
 <td align="center">quant_post</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">76.33%/93.02% (-0.17%/+0.02%)</td>
+<td align="center">25.1</td>
+<td align="center">1.19</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet50_quant_post.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50</td>
 <td align="center">quant_aware</td>
-<td align="center">xx%/xx%</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">76.48%/93.11% (-0.02%/+0.11%)</td>
+<td align="center">25.1</td>
+<td align="center">1.17</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet50_quant_awre.tar">model</a></td>
 </tr>
 </tbody>
-</table></div>
-<div class="section" id="id3">
-<h3>1.2 剪裁<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</table><p>PaddleLite latency(ms)</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
-<th align="center">模型</th>
-<th align="center">压缩方法</th>
+<th>Device</th>
+<th>Model</th>
+<th>Method</th>
+<th>armv7 Thread 1</th>
+<th>armv7 Thread 2</th>
+<th>armv7 Thread 4</th>
+<th>armv8 Thread 1</th>
+<th>armv8 Thread 2</th>
+<th>armv8 Thread 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qualcomm 835</td>
+<td>MobileNetV1</td>
+<td>FP32 baseline</td>
+<td>96.1942</td>
+<td>53.2058</td>
+<td>32.4468</td>
+<td>88.4955</td>
+<td>47.95</td>
+<td>27.5189</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>MobileNetV1</td>
+<td>quant_aware</td>
+<td>60.8186</td>
+<td>32.1931</td>
+<td>16.4275</td>
+<td>56.4311</td>
+<td>29.5446</td>
+<td>15.1053</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>MobileNetV1</td>
+<td>quant_post</td>
+<td>60.5615</td>
+<td>32.4016</td>
+<td>16.6596</td>
+<td>56.5266</td>
+<td>29.7178</td>
+<td>15.1459</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>MobileNetV2</td>
+<td>FP32 baseline</td>
+<td>65.715</td>
+<td>38.1346</td>
+<td>25.155</td>
+<td>61.3593</td>
+<td>36.2038</td>
+<td>22.849</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>MobileNetV2</td>
+<td>quant_aware</td>
+<td>48.3655</td>
+<td>30.2021</td>
+<td>21.9303</td>
+<td>46.1487</td>
+<td>27.3146</td>
+<td>18.3053</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>MobileNetV2</td>
+<td>quant_post</td>
+<td>48.3495</td>
+<td>30.3069</td>
+<td>22.1506</td>
+<td>45.8715</td>
+<td>27.4105</td>
+<td>18.2223</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>ResNet50</td>
+<td>FP32 baseline</td>
+<td>526.811</td>
+<td>319.6486</td>
+<td>205.8345</td>
+<td>506.1138</td>
+<td>335.1584</td>
+<td>214.8936</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>ResNet50</td>
+<td>quant_aware</td>
+<td>475.4538</td>
+<td>256.8672</td>
+<td>139.699</td>
+<td>461.7344</td>
+<td>247.9506</td>
+<td>145.9847</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>ResNet50</td>
+<td>quant_post</td>
+<td>476.0507</td>
+<td>256.5963</td>
+<td>139.7266</td>
+<td>461.9176</td>
+<td>248.3795</td>
+<td>149.353</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>MobileNetV1</td>
+<td>FP32 baseline</td>
+<td>33.5086</td>
+<td>19.5773</td>
+<td>11.7534</td>
+<td>31.3474</td>
+<td>18.5382</td>
+<td>10.0811</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>MobileNetV1</td>
+<td>quant_aware</td>
+<td>36.7067</td>
+<td>21.628</td>
+<td>11.0372</td>
+<td>14.0238</td>
+<td>8.199</td>
+<td>4.2588</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>MobileNetV1</td>
+<td>quant_post</td>
+<td>37.0498</td>
+<td>21.7081</td>
+<td>11.0779</td>
+<td>14.0947</td>
+<td>8.1926</td>
+<td>4.2934</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>MobileNetV2</td>
+<td>FP32 baseline</td>
+<td>25.0396</td>
+<td>15.2862</td>
+<td>9.6609</td>
+<td>22.909</td>
+<td>14.1797</td>
+<td>8.8325</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>MobileNetV2</td>
+<td>quant_aware</td>
+<td>28.1583</td>
+<td>18.3317</td>
+<td>11.8103</td>
+<td>16.9158</td>
+<td>11.1606</td>
+<td>7.4148</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>MobileNetV2</td>
+<td>quant_post</td>
+<td>28.1631</td>
+<td>18.3917</td>
+<td>11.8333</td>
+<td>16.9399</td>
+<td>11.1772</td>
+<td>7.4176</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>ResNet50</td>
+<td>FP32 baseline</td>
+<td>185.3705</td>
+<td>113.0825</td>
+<td>87.0741</td>
+<td>177.7367</td>
+<td>110.0433</td>
+<td>74.4114</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>ResNet50</td>
+<td>quant_aware</td>
+<td>327.6883</td>
+<td>202.4536</td>
+<td>106.243</td>
+<td>243.5621</td>
+<td>150.0542</td>
+<td>78.4205</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>ResNet50</td>
+<td>quant_post</td>
+<td>328.2683</td>
+<td>201.9937</td>
+<td>106.744</td>
+<td>242.6397</td>
+<td>150.0338</td>
+<td>79.8659</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>MobileNetV1</td>
+<td>FP32 baseline</td>
+<td>101.2455</td>
+<td>56.4053</td>
+<td>35.6484</td>
+<td>94.8985</td>
+<td>51.7251</td>
+<td>31.9511</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>MobileNetV1</td>
+<td>quant_aware</td>
+<td>62.5012</td>
+<td>32.1863</td>
+<td>16.6018</td>
+<td>57.7477</td>
+<td>29.2116</td>
+<td>15.0703</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>MobileNetV1</td>
+<td>quant_post</td>
+<td>62.4412</td>
+<td>32.2585</td>
+<td>16.6215</td>
+<td>57.825</td>
+<td>29.2573</td>
+<td>15.1206</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>MobileNetV2</td>
+<td>FP32 baseline</td>
+<td>70.4176</td>
+<td>42.0795</td>
+<td>25.1939</td>
+<td>68.9597</td>
+<td>39.2145</td>
+<td>22.6617</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>MobileNetV2</td>
+<td>quant_aware</td>
+<td>52.9961</td>
+<td>31.5323</td>
+<td>22.1447</td>
+<td>49.4858</td>
+<td>28.0856</td>
+<td>18.7287</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>MobileNetV2</td>
+<td>quant_post</td>
+<td>53.0961</td>
+<td>31.7987</td>
+<td>21.8334</td>
+<td>49.383</td>
+<td>28.2358</td>
+<td>18.3642</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>ResNet50</td>
+<td>FP32 baseline</td>
+<td>586.8943</td>
+<td>344.0858</td>
+<td>228.2293</td>
+<td>573.3344</td>
+<td>351.4332</td>
+<td>225.8006</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>ResNet50</td>
+<td>quant_aware</td>
+<td>488.361</td>
+<td>260.1697</td>
+<td>142.416</td>
+<td>479.5668</td>
+<td>249.8485</td>
+<td>138.1742</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>ResNet50</td>
+<td>quant_post</td>
+<td>489.6188</td>
+<td>258.3279</td>
+<td>142.6063</td>
+<td>480.0064</td>
+<td>249.5339</td>
+<td>138.5284</td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="pruning">
+<h3>1.2 Pruning<a class="headerlink" href="#pruning" title="Permalink to this headline">¶</a></h3>
+<p>PaddleLite:</p>
+<p>env: Qualcomm SnapDragon 845 + armv8</p>
+<p>criterion: time cost in Thread1/Thread2/Thread4</p>
+<p>PaddleLite version: v2.3</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">Model</th>
+<th align="center">Method</th>
 <th align="center">Top-1/Top-5 Acc</th>
-<th align="center">模型体积（MB）</th>
+<th align="center">ModelSize(MB)</th>
 <th align="center">GFLOPs</th>
-<th align="center">下载</th>
+<th align="center">PaddleLite cost(ms)</th>
+<th align="center">TensorRT speed(FPS)</th>
+<th align="center">download</th>
 </tr>
 </thead>
 <tbody>
@@ -253,7 +585,9 @@
 <td align="center">70.99%/89.68%</td>
 <td align="center">17</td>
 <td align="center">1.11</td>
-<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV1_pretrained.tar">下载链接</a></td>
+<td align="center">66.052\35.8014\19.5762</td>
+<td align="center">-</td>
+<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV1_pretrained.tar">download</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
@@ -261,7 +595,9 @@
 <td align="center">69.4%/88.66% (-1.59%/-1.02%)</td>
 <td align="center">9</td>
 <td align="center">0.56</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_uniform-50.tar">下载链接</a></td>
+<td align="center">33.5636\18.6834\10.5076</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_uniform-50.tar">download</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
@@ -269,7 +605,9 @@
 <td align="center">70.4%/89.3% (-0.59%/-0.38%)</td>
 <td align="center">12</td>
 <td align="center">0.74</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_sensitive-30.tar">下载链接</a></td>
+<td align="center">46.5958\25.3098\13.6982</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_sensitive-30.tar">download</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
@@ -277,7 +615,9 @@
 <td align="center">69.8% / 88.9% (-1.19%/-0.78%)</td>
 <td align="center">9</td>
 <td align="center">0.56</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_sensitive-50.tar">下载链接</a></td>
+<td align="center">37.9892\20.7882\11.3144</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_sensitive-50.tar">download</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
@@ -285,7 +625,9 @@
 <td align="center">72.15%/90.65%</td>
 <td align="center">15</td>
 <td align="center">0.59</td>
-<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV2_pretrained.tar">下载链接</a></td>
+<td align="center">41.7874\23.375\13.3998</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV2_pretrained.tar">download</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
@@ -293,7 +635,9 @@
 <td align="center">65.79%/86.11% (-6.35%/-4.47%)</td>
 <td align="center">11</td>
 <td align="center">0.296</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV2_uniform-50.tar">下载链接</a></td>
+<td align="center">23.8842\13.8698\8.5572</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV2_uniform-50.tar">download</a></td>
 </tr>
 <tr>
 <td align="center">ResNet34</td>
@@ -301,7 +645,9 @@
 <td align="center">72.15%/90.65%</td>
 <td align="center">84</td>
 <td align="center">7.36</td>
-<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/ResNet34_pretrained.tar">下载链接</a></td>
+<td align="center">217.808\139.943\96.7504</td>
+<td align="center">342.32</td>
+<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/ResNet34_pretrained.tar">download</a></td>
 </tr>
 <tr>
 <td align="center">ResNet34</td>
@@ -309,7 +655,9 @@
 <td align="center">70.99%/89.95% (-1.36%/-0.87%)</td>
 <td align="center">41</td>
 <td align="center">3.67</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet34_uniform-50.tar">下载链接</a></td>
+<td align="center">114.787\75.0332\51.8438</td>
+<td align="center">452.41</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet34_uniform-50.tar">download</a></td>
 </tr>
 <tr>
 <td align="center">ResNet34</td>
@@ -317,20 +665,22 @@
 <td align="center">70.24%/89.63% (-2.04%/-1.06%)</td>
 <td align="center">33</td>
 <td align="center">3.31</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet34_auto-55.tar">下载链接</a></td>
+<td align="center">105.924\69.3222\48.0246</td>
+<td align="center">457.25</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet34_auto-55.tar">download</a></td>
 </tr>
 </tbody>
 </table></div>
-<div class="section" id="id4">
-<h3>1.3 蒸馏<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="distillation">
+<h3>1.3 Distillation<a class="headerlink" href="#distillation" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
 <tr>
-<th align="center">模型</th>
-<th align="center">压缩方法</th>
+<th align="center">Model</th>
+<th align="center">Method</th>
 <th align="center">Top-1/Top-5 Acc</th>
-<th align="center">模型体积（MB）</th>
-<th align="center">下载</th>
+<th align="center">Model Size（MB）</th>
+<th align="center">Download</th>
 </tr>
 </thead>
 <tbody>
@@ -339,81 +689,117 @@
 <td align="center">student</td>
 <td align="center">70.99%/89.68%</td>
 <td align="center">17</td>
-<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV1_pretrained.tar">下载链接</a></td>
+<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV1_pretrained.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50_vd</td>
 <td align="center">teacher</td>
 <td align="center">79.12%/94.44%</td>
 <td align="center">99</td>
-<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_vd_pretrained.tar">下载链接</a></td>
+<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_vd_pretrained.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV1</td>
 <td align="center">ResNet50_vd<sup><a href="#trans1">1</a></sup> distill</td>
 <td align="center">72.77%/90.68% (+1.78%/+1.00%)</td>
 <td align="center">17</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_distilled.tar">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV1_distilled.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">student</td>
 <td align="center">72.15%/90.65%</td>
 <td align="center">15</td>
-<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV2_pretrained.tar">下载链接</a></td>
+<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV2_pretrained.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNetV2</td>
 <td align="center">ResNet50_vd distill</td>
 <td align="center">74.28%/91.53% (+2.13%/+0.88%)</td>
 <td align="center">15</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV2_distilled.tar">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/MobileNetV2_distilled.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50</td>
 <td align="center">student</td>
 <td align="center">76.50%/93.00%</td>
 <td align="center">99</td>
-<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_pretrained.tar">下载链接</a></td>
+<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_pretrained.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">ResNet101</td>
 <td align="center">teacher</td>
 <td align="center">77.56%/93.64%</td>
 <td align="center">173</td>
-<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/ResNet101_pretrained.tar">下载链接</a></td>
+<td align="center"><a href="http://paddle-imagenet-models-name.bj.bcebos.com/ResNet101_pretrained.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">ResNet50</td>
 <td align="center">ResNet101 distill</td>
 <td align="center">77.29%/93.65% (+0.79%/+0.65%)</td>
 <td align="center">99</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet50_distilled.tar">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/ResNet50_distilled.tar">model</a></td>
 </tr>
 </tbody>
-</table><p>!!! note &#8220;Note&#8220;</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>&lt;a name=&quot;trans1&quot;&gt;[1]&lt;/a&gt;：带_vd后缀代表该预训练模型使用了Mixup，Mixup相关介绍参考[mixup: Beyond Empirical Risk Minimization](https://arxiv.org/abs/1710.09412)
-</pre></div>
+</table><p>Note: The <code class="docutils literal"><span class="pre">_vd</span></code> suffix indicates that the pre-trained model uses Mixup. Please refer to the detailed introduction: <a class="reference external" href="https://arxiv.org/abs/1710.09412">mixup: Beyond Empirical Risk Minimization</a></p>
 </div>
-</div>
-</div>
-<div class="section" id="id5">
-<h2>2. 目标检测<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id6">
-<h3>2.1 量化<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>数据集： COCO 2017</p>
+<div class="section" id="nas">
+<h3>1.4 NAS<a class="headerlink" href="#nas" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
 <tr>
-<th align="center">模型</th>
-<th align="center">压缩方法</th>
-<th align="center">数据集</th>
+<th align="center">Model</th>
+<th align="center">Method</th>
+<th align="center">Top-1/Top-5 Acc</th>
+<th align="center">Volume（MB）</th>
+<th align="center">GFLOPs</th>
+<th align="center">Download</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">MobileNetV2</td>
+<td align="center">-</td>
+<td align="center">72.15%/90.65%</td>
+<td align="center">15</td>
+<td align="center">0.59</td>
+<td align="center"><a href="https://paddle-imagenet-models-name.bj.bcebos.com/MobileNetV2_pretrained.tar">model</a></td>
+</tr>
+<tr>
+<td align="center">MobileNetV2_NAS</td>
+<td align="center">SANAS</td>
+<td align="center">71.518%/90.208% (-0.632%/-0.442%)</td>
+<td align="center">14</td>
+<td align="center">0.295</td>
+<td align="center"><a href="https://paddlemodels.cdn.bcebos.com/PaddleSlim/MobileNetV2_sanas.tar">model</a></td>
+</tr>
+</tbody>
+</table><p>Dataset: Cifar10
+| Model | Method |  Acc  |  Params（MB） | Download |
+<a href="#id7"><span class="problematic" id="id8">|:&#8212;:|</span></a>:&#8211;:<a href="#id9"><span class="problematic" id="id10">|:&#8211;:|</span></a>:&#8211;:<a href="#id11"><span class="problematic" id="id12">|:&#8211;:|</span></a>
+|           Darts           |   -   |     97.135%         |        3.767         |  -  |
+| Darts_SA(Based on Darts)  | SANAS |  97.276%(+0.141%)   |    3.344(-11.2%)     |  -  |</p>
+<p>Note: The token of MobileNetV2_NAS is [4,&nbsp;4,&nbsp;5,&nbsp;1,&nbsp;1,&nbsp;2,&nbsp;1,&nbsp;1,&nbsp;0,&nbsp;2,&nbsp;6,&nbsp;2,&nbsp;0,&nbsp;3,&nbsp;4,&nbsp;5,&nbsp;0,&nbsp;4,&nbsp;5,&nbsp;5,&nbsp;1,&nbsp;4,&nbsp;8,&nbsp;0,&nbsp;0]. The token of Darts_SA is [5, 5, 0, 5, 5, 10, 7, 7, 5, 7, 7, 11, 10, 12, 10, 0, 5, 3, 10, 8].</p>
+</div>
+</div>
+<div class="section" id="object-detection">
+<h2>2. Object Detection<a class="headerlink" href="#object-detection" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>2.1 Quantization<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Dataset： COCO 2017</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">Model</th>
+<th align="center">Method</th>
+<th align="center">Dataset</th>
 <th align="center">Image/GPU</th>
-<th align="center">输入608 Box AP</th>
-<th align="center">输入416 Box AP</th>
-<th align="center">输入320 Box AP</th>
-<th align="center">模型体积（MB）</th>
-<th align="center">下载</th>
+<th align="center">Input 608 Box AP</th>
+<th align="center">Input 416 Box AP</th>
+<th align="center">Input 320 Box AP</th>
+<th align="center">Model Size（MB）</th>
+<th align="center">TensorRT latency(V100, ms)</th>
+<th align="center">Download</th>
 </tr>
 </thead>
 <tbody>
@@ -425,30 +811,69 @@
 <td align="center">29.3</td>
 <td align="center">29.3</td>
 <td align="center">27.1</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">95</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_mobilenet_v1.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
 <td align="center">quant_post</td>
 <td align="center">COCO</td>
 <td align="center">8</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">27.9 (-1.4)</td>
+<td align="center">28.0 (-1.3)</td>
+<td align="center">26.0 (-1.0)</td>
+<td align="center">25</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenetv1_coco_quant_post.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
 <td align="center">quant_aware</td>
 <td align="center">COCO</td>
 <td align="center">8</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">28.1 (-1.2)</td>
+<td align="center">28.2 (-1.1)</td>
+<td align="center">25.8 (-1.2)</td>
+<td align="center">26.3</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenet_coco_quant_aware.tar">model</a></td>
+</tr>
+<tr>
+<td align="center">R34-YOLOv3</td>
+<td align="center">-</td>
+<td align="center">COCO</td>
+<td align="center">8</td>
+<td align="center">36.2</td>
+<td align="center">34.3</td>
+<td align="center">31.4</td>
+<td align="center">162</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_r34.tar">model</a></td>
+</tr>
+<tr>
+<td align="center">R34-YOLOv3</td>
+<td align="center">quant_post</td>
+<td align="center">COCO</td>
+<td align="center">8</td>
+<td align="center">35.7 (-0.5)</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">42.7</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r34_coco_quant_post.tar">model</a></td>
+</tr>
+<tr>
+<td align="center">R34-YOLOv3</td>
+<td align="center">quant_aware</td>
+<td align="center">COCO</td>
+<td align="center">8</td>
+<td align="center">35.2 (-1.0)</td>
+<td align="center">33.3 (-1.0)</td>
+<td align="center">30.3 (-1.1)</td>
+<td align="center">44</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r34_coco_quant_aware.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">R50-dcn-YOLOv3 obj365_pretrain</td>
@@ -456,45 +881,36 @@
 <td align="center">COCO</td>
 <td align="center">8</td>
 <td align="center">41.4</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
-</tr>
-<tr>
-<td align="center">R50-dcn-YOLOv3 obj365_pretrain</td>
-<td align="center">quant_post</td>
-<td align="center">COCO</td>
-<td align="center">8</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">177</td>
+<td align="center">18.56</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_r50vd_dcn_obj365_pretrained_coco.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">R50-dcn-YOLOv3 obj365_pretrain</td>
 <td align="center">quant_aware</td>
 <td align="center">COCO</td>
 <td align="center">8</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">40.6 (-0.8)</td>
+<td align="center">37.5</td>
+<td align="center">34.1</td>
+<td align="center">66</td>
+<td align="center">14.64</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r50vd_dcn_obj365_pretrained_coco_quant_aware.tar">model</a></td>
 </tr>
 </tbody>
-</table><p>数据集：WIDER-FACE</p>
+</table><p>Dataset：WIDER-FACE</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
-<th align="center">模型</th>
-<th align="center">压缩方法</th>
+<th align="center">Model</th>
+<th align="center">Method</th>
 <th align="center">Image/GPU</th>
-<th align="center">输入尺寸</th>
+<th align="center">Input Size</th>
 <th align="center">Easy/Medium/Hard</th>
-<th align="center">模型体积（MB）</th>
-<th align="center">下载</th>
+<th align="center">Model Size（MB）</th>
+<th align="center">Download</th>
 </tr>
 </thead>
 <tbody>
@@ -503,100 +919,106 @@
 <td align="center">-</td>
 <td align="center">8</td>
 <td align="center">640</td>
-<td align="center">0.915/0.892/0.797</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">91.5/89.2/79.7</td>
+<td align="center">815</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/blazeface_original.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">BlazeFace</td>
 <td align="center">quant_post</td>
 <td align="center">8</td>
 <td align="center">640</td>
-<td align="center">xx/xx/xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">87.8/85.1/74.9 (-3.7/-4.1/-4.8)</td>
+<td align="center">228</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/blazeface_origin_quant_post.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">BlazeFace</td>
 <td align="center">quant_aware</td>
 <td align="center">8</td>
 <td align="center">640</td>
-<td align="center">xx/xx/xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">90.5/87.9/77.6 (-1.0/-1.3/-2.1)</td>
+<td align="center">228</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/blazeface_origin_quant_aware.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">BlazeFace-Lite</td>
 <td align="center">-</td>
 <td align="center">8</td>
 <td align="center">640</td>
-<td align="center">0.909/0.885/0.781</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">90.9/88.5/78.1</td>
+<td align="center">711</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/blazeface_lite.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">BlazeFace-Lite</td>
 <td align="center">quant_post</td>
 <td align="center">8</td>
 <td align="center">640</td>
-<td align="center">xx/xx/xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">89.4/86.7/75.7 (-1.5/-1.8/-2.4)</td>
+<td align="center">211</td>
+<td align="center"><a href="(https://paddlemodels.bj.bcebos.com/PaddleSlim/blazeface_lite_quant_post.tar)">model</a></td>
 </tr>
 <tr>
 <td align="center">BlazeFace-Lite</td>
 <td align="center">quant_aware</td>
 <td align="center">8</td>
 <td align="center">640</td>
-<td align="center">xx/xx/xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">89.7/87.3/77.0 (-1.2/-1.2/-1.1)</td>
+<td align="center">211</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/blazeface_lite_quant_aware.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">BlazeFace-NAS</td>
 <td align="center">-</td>
 <td align="center">8</td>
 <td align="center">640</td>
-<td align="center">0.837/0.807/0.658</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">83.7/80.7/65.8</td>
+<td align="center">244</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/blazeface_nas.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">BlazeFace-NAS</td>
 <td align="center">quant_post</td>
 <td align="center">8</td>
 <td align="center">640</td>
-<td align="center">xx/xx/xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">81.6/78.3/63.6 (-2.1/-2.4/-2.2)</td>
+<td align="center">71</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/blazeface_nas_quant_post.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">BlazeFace-NAS</td>
 <td align="center">quant_aware</td>
 <td align="center">8</td>
 <td align="center">640</td>
-<td align="center">xx/xx/xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">83.1/79.7/64.2 (-0.6/-1.0/-1.6)</td>
+<td align="center">71</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/blazeface_nas_quant_aware.tar">model</a></td>
 </tr>
 </tbody>
 </table></div>
-<div class="section" id="id7">
-<h3>2.2 剪裁<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<p>数据集：Pasacl VOC &amp; COCO 2017</p>
+<div class="section" id="id2">
+<h3>2.2 Pruning<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Dataset：Pasacl VOC &amp; COCO 2017</p>
+<p>PaddleLite:</p>
+<p>env: Qualcomm SnapDragon 845 + armv8</p>
+<p>criterion: time cost in Thread1/Thread2/Thread4</p>
+<p>PaddleLite version: v2.3</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
-<th align="center">模型</th>
-<th align="center">压缩方法</th>
-<th align="center">数据集</th>
+<th align="center">Model</th>
+<th align="center">Method</th>
+<th align="center">Dataset</th>
 <th align="center">Image/GPU</th>
-<th align="center">输入608 Box AP</th>
-<th align="center">输入416 Box AP</th>
-<th align="center">输入320 Box AP</th>
-<th align="center">模型体积(MB)</th>
+<th align="center">Input 608 Box AP</th>
+<th align="center">Input 416 Box AP</th>
+<th align="center">Input 320 Box AP</th>
+<th align="center">Model Size(MB)</th>
 <th align="center">GFLOPs (608*608)</th>
-<th align="center">下载</th>
+<th align="center">PaddleLite cost(ms)(608*608)</th>
+<th align="center">TensorRT speed(FPS)(608*608)</th>
+<th align="center">Download</th>
 </tr>
 </thead>
 <tbody>
@@ -610,7 +1032,9 @@
 <td align="center">75.3</td>
 <td align="center">94</td>
 <td align="center">40.49</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_mobilenet_v1_voc.tar">下载链接</a></td>
+<td align="center">1238\796.943\520.101</td>
+<td align="center">60.40</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_mobilenet_v1_voc.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
@@ -622,7 +1046,9 @@
 <td align="center">75.5 (+0.2)</td>
 <td align="center">31</td>
 <td align="center">19.08</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenet_v1_voc_prune.tar">下载链接</a></td>
+<td align="center">602.497\353.759\222.427</td>
+<td align="center">99.36</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenet_v1_voc_prune.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
@@ -634,7 +1060,9 @@
 <td align="center">27.0</td>
 <td align="center">95</td>
 <td align="center">41.35</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_mobilenet_v1.tar">下载链接</a></td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_mobilenet_v1.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
@@ -646,7 +1074,9 @@
 <td align="center">22.6 (-4.4)</td>
 <td align="center">32</td>
 <td align="center">19.94</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenet_v1_prune.tar">下载链接</a></td>
+<td align="center">-</td>
+<td align="center">73.93</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenet_v1_prune.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">R50-dcn-YOLOv3</td>
@@ -658,7 +1088,9 @@
 <td align="center">-</td>
 <td align="center">177</td>
 <td align="center">89.60</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_r50vd_dcn.tar">下载链接</a></td>
+<td align="center">-</td>
+<td align="center">27.68</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_r50vd_dcn.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">R50-dcn-YOLOv3</td>
@@ -670,7 +1102,9 @@
 <td align="center">-</td>
 <td align="center">150</td>
 <td align="center">81.20</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r50vd_dcn_prune.tar">下载链接</a></td>
+<td align="center">-</td>
+<td align="center">30.08</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r50vd_dcn_prune.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">R50-dcn-YOLOv3</td>
@@ -682,7 +1116,9 @@
 <td align="center">-</td>
 <td align="center">113</td>
 <td align="center">67.48</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r50vd_dcn_prune578.tar">下载链接</a></td>
+<td align="center">-</td>
+<td align="center">34.32</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r50vd_dcn_prune578.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">R50-dcn-YOLOv3 obj365_pretrain</td>
@@ -694,7 +1130,9 @@
 <td align="center">-</td>
 <td align="center">177</td>
 <td align="center">89.60</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_r50vd_dcn_obj365_pretrained_coco.tar">下载链接</a></td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_r50vd_dcn_obj365_pretrained_coco.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">R50-dcn-YOLOv3 obj365_pretrain</td>
@@ -706,7 +1144,9 @@
 <td align="center">-</td>
 <td align="center">150</td>
 <td align="center">81.20</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r50vd_dcn_obj365_pretrained_coco_prune.tar">下载链接</a></td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r50vd_dcn_obj365_pretrained_coco_prune.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">R50-dcn-YOLOv3 obj365_pretrain</td>
@@ -718,25 +1158,27 @@
 <td align="center">-</td>
 <td align="center">113</td>
 <td align="center">67.48</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r50vd_dcn_obj365_pretrained_coco_prune578.tar">下载链接</a></td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_r50vd_dcn_obj365_pretrained_coco_prune578.tar">model</a></td>
 </tr>
 </tbody>
 </table></div>
-<div class="section" id="id8">
-<h3>2.3 蒸馏<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p>数据集：Pasacl VOC &amp; COCO 2017</p>
+<div class="section" id="id3">
+<h3>2.3 Distillation<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Dataset：Pasacl VOC &amp; COCO 2017</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
-<th align="center">模型</th>
-<th align="center">压缩方法</th>
-<th align="center">数据集</th>
+<th align="center">Model</th>
+<th align="center">Method</th>
+<th align="center">Dataset</th>
 <th align="center">Image/GPU</th>
-<th align="center">输入608 Box AP</th>
-<th align="center">输入416 Box AP</th>
-<th align="center">输入320 Box AP</th>
-<th align="center">模型体积（MB）</th>
-<th align="center">下载</th>
+<th align="center">Input 608 Box AP</th>
+<th align="center">Input 416 Box AP</th>
+<th align="center">Input 320 Box AP</th>
+<th align="center">Model Size（MB）</th>
+<th align="center">Download</th>
 </tr>
 </thead>
 <tbody>
@@ -749,7 +1191,7 @@
 <td align="center">76.7</td>
 <td align="center">75.3</td>
 <td align="center">94</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_mobilenet_v1_voc.tar">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_mobilenet_v1_voc.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">ResNet34-YOLOv3</td>
@@ -760,7 +1202,7 @@
 <td align="center">81.9</td>
 <td align="center">80.1</td>
 <td align="center">162</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_r34_voc.tar">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_r34_voc.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
@@ -771,7 +1213,7 @@
 <td align="center">78.2 (+1.5)</td>
 <td align="center">75.5 (+0.2)</td>
 <td align="center">94</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenetv1_voc_distilled.tar">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenetv1_voc_distilled.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
@@ -782,7 +1224,7 @@
 <td align="center">29.3</td>
 <td align="center">27.0</td>
 <td align="center">95</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_mobilenet_v1.tar">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_mobilenet_v1.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">ResNet34-YOLOv3</td>
@@ -793,7 +1235,7 @@
 <td align="center">34.3</td>
 <td align="center">31.4</td>
 <td align="center">163</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_r34.tar">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/yolov3_r34.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">MobileNet-V1-YOLOv3</td>
@@ -804,24 +1246,74 @@
 <td align="center">30.0 (+0.7)</td>
 <td align="center">27.1 (+0.1)</td>
 <td align="center">95</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenetv1_coco_distilled.tar">下载链接</a></td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/yolov3_mobilenetv1_coco_distilled.tar">model</a></td>
 </tr>
 </tbody>
 </table></div>
-</div>
-<div class="section" id="id9">
-<h2>3. 图像分割<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
-<p>数据集：Cityscapes</p>
-<div class="section" id="id10">
-<h3>3.1 量化<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>2.4 NAS<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Dataset: WIDER-FACE</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
-<th align="center">模型</th>
-<th align="center">压缩方法</th>
+<th align="center">Model</th>
+<th align="center">Method</th>
+<th align="center">Image/GPU</th>
+<th align="center">Input size</th>
+<th align="center">Easy/Medium/Hard</th>
+<th align="center">volume（KB）</th>
+<th align="center">latency（ms）</th>
+<th align="center">Download</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">BlazeFace</td>
+<td align="center">-</td>
+<td align="center">8</td>
+<td align="center">640</td>
+<td align="center">91.5/89.2/79.7</td>
+<td align="center">815</td>
+<td align="center">71.862</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/blazeface_original.tar">model</a></td>
+</tr>
+<tr>
+<td align="center">BlazeFace-NAS</td>
+<td align="center">-</td>
+<td align="center">8</td>
+<td align="center">640</td>
+<td align="center">83.7/80.7/65.8</td>
+<td align="center">244</td>
+<td align="center">21.117</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/blazeface_nas.tar">model</a></td>
+</tr>
+<tr>
+<td align="center">BlazeFace-NASV2</td>
+<td align="center">SANAS</td>
+<td align="center">8</td>
+<td align="center">640</td>
+<td align="center">87.0/83.7/68.5</td>
+<td align="center">389</td>
+<td align="center">22.558</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/object_detection/blazeface_nas2.tar">model</a></td>
+</tr>
+</tbody>
+</table><p>Note: latency is based on latency_855.txt, the file is test on 855 by PaddleLite。The config of BlazeFace-NASV2 is in <a class="reference external" href="https://github.com/PaddlePaddle/PaddleDetection/blob/master/configs/face_detection/blazeface_nas_v2.yml">there</a>.</p>
+</div>
+</div>
+<div class="section" id="image-segmentation">
+<h2>3. Image Segmentation<a class="headerlink" href="#image-segmentation" title="Permalink to this headline">¶</a></h2>
+<p>Dataset：Cityscapes</p>
+<div class="section" id="id5">
+<h3>3.1 Quantization<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">Model</th>
+<th align="center">Method</th>
 <th align="center">mIoU</th>
-<th align="center">模型体积（MB）</th>
-<th align="center">下载</th>
+<th align="center">Model Size（MB）</th>
+<th align="center">Download</th>
 </tr>
 </thead>
 <tbody>
@@ -829,57 +1321,278 @@
 <td align="center">DeepLabv3+/MobileNetv1</td>
 <td align="center">-</td>
 <td align="center">63.26</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">6.6</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/deeplabv3_mobilenetv1.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">DeepLabv3+/MobileNetv1</td>
 <td align="center">quant_post</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">58.63 (-4.63)</td>
+<td align="center">1.8</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/deeplabv3_mobilenetv1_2049x1025_quant_post.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">DeepLabv3+/MobileNetv1</td>
 <td align="center">quant_aware</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">62.03 (-1.23)</td>
+<td align="center">1.8</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/deeplabv3_mobilenetv1_2049x1025_quant_aware.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">DeepLabv3+/MobileNetv2</td>
 <td align="center">-</td>
 <td align="center">69.81</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">7.4</td>
+<td align="center"><a href="https://paddleseg.bj.bcebos.com/models/mobilenet_cityscapes.tgz">model</a></td>
 </tr>
 <tr>
 <td align="center">DeepLabv3+/MobileNetv2</td>
 <td align="center">quant_post</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">67.59 (-2.22)</td>
+<td align="center">2.1</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/deeplabv3_mobilenetv2_2049x1025_quant_post.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">DeepLabv3+/MobileNetv2</td>
 <td align="center">quant_aware</td>
-<td align="center">xx</td>
-<td align="center">xx</td>
-<td align="center"><a href="">下载链接</a></td>
+<td align="center">68.33 (-1.48)</td>
+<td align="center">2.1</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/deeplabv3_mobilenetv2_2049x1025_quant_aware.tar">model</a></td>
 </tr>
 </tbody>
-</table></div>
-<div class="section" id="id11">
-<h3>3.2 剪裁<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+</table><p>Image segmentation model PaddleLite latency (ms), input size 769x769</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
-<th align="center">模型</th>
-<th align="center">压缩方法</th>
+<th>Device</th>
+<th>Model</th>
+<th>Method</th>
+<th>armv7 Thread 1</th>
+<th>armv7 Thread 2</th>
+<th>armv7 Thread 4</th>
+<th>armv8 Thread 1</th>
+<th>armv8 Thread 2</th>
+<th>armv8 Thread 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qualcomm 835</td>
+<td>Deeplabv3- MobileNetV1</td>
+<td>FP32 baseline</td>
+<td>1227.9894</td>
+<td>734.1922</td>
+<td>527.9592</td>
+<td>1109.96</td>
+<td>699.3818</td>
+<td>479.0818</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>Deeplabv3- MobileNetV1</td>
+<td>quant_aware</td>
+<td>848.6544</td>
+<td>512.785</td>
+<td>382.9915</td>
+<td>752.3573</td>
+<td>455.0901</td>
+<td>307.8808</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>Deeplabv3- MobileNetV1</td>
+<td>quant_post</td>
+<td>840.2323</td>
+<td>510.103</td>
+<td>371.9315</td>
+<td>748.9401</td>
+<td>452.1745</td>
+<td>309.2084</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>Deeplabv3-MobileNetV2</td>
+<td>FP32 baseline</td>
+<td>1282.8126</td>
+<td>793.2064</td>
+<td>653.6538</td>
+<td>1193.9908</td>
+<td>737.1827</td>
+<td>593.4522</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>Deeplabv3-MobileNetV2</td>
+<td>quant_aware</td>
+<td>976.0495</td>
+<td>659.0541</td>
+<td>513.4279</td>
+<td>892.1468</td>
+<td>582.9847</td>
+<td>484.7512</td>
+</tr>
+<tr>
+<td>Qualcomm 835</td>
+<td>Deeplabv3-MobileNetV2</td>
+<td>quant_post</td>
+<td>981.44</td>
+<td>658.4969</td>
+<td>538.6166</td>
+<td>885.3273</td>
+<td>586.1284</td>
+<td>484.0018</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>Deeplabv3- MobileNetV1</td>
+<td>FP32 baseline</td>
+<td>568.8748</td>
+<td>339.8578</td>
+<td>278.6316</td>
+<td>420.6031</td>
+<td>281.3197</td>
+<td>217.5222</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>Deeplabv3- MobileNetV1</td>
+<td>quant_aware</td>
+<td>608.7578</td>
+<td>347.2087</td>
+<td>260.653</td>
+<td>241.2394</td>
+<td>177.3456</td>
+<td>143.9178</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>Deeplabv3- MobileNetV1</td>
+<td>quant_post</td>
+<td>609.0142</td>
+<td>347.3784</td>
+<td>259.9825</td>
+<td>239.4103</td>
+<td>180.1894</td>
+<td>139.9178</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>Deeplabv3-MobileNetV2</td>
+<td>FP32 baseline</td>
+<td>639.4425</td>
+<td>390.1851</td>
+<td>322.7014</td>
+<td>477.7667</td>
+<td>339.7411</td>
+<td>262.2847</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>Deeplabv3-MobileNetV2</td>
+<td>quant_aware</td>
+<td>703.7275</td>
+<td>497.689</td>
+<td>417.1296</td>
+<td>394.3586</td>
+<td>300.2503</td>
+<td>239.9204</td>
+</tr>
+<tr>
+<td>Qualcomm 855</td>
+<td>Deeplabv3-MobileNetV2</td>
+<td>quant_post</td>
+<td>705.7589</td>
+<td>474.4076</td>
+<td>427.2951</td>
+<td>394.8352</td>
+<td>297.4035</td>
+<td>264.6724</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>Deeplabv3- MobileNetV1</td>
+<td>FP32 baseline</td>
+<td>1682.1792</td>
+<td>1437.9774</td>
+<td>1181.0246</td>
+<td>1261.6739</td>
+<td>1068.6537</td>
+<td>690.8225</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>Deeplabv3- MobileNetV1</td>
+<td>quant_aware</td>
+<td>1062.3394</td>
+<td>1248.1014</td>
+<td>878.3157</td>
+<td>774.6356</td>
+<td>710.6277</td>
+<td>528.5376</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>Deeplabv3- MobileNetV1</td>
+<td>quant_post</td>
+<td>1109.1917</td>
+<td>1339.6218</td>
+<td>866.3587</td>
+<td>771.5164</td>
+<td>716.5255</td>
+<td>500.6497</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>Deeplabv3-MobileNetV2</td>
+<td>FP32 baseline</td>
+<td>1771.1301</td>
+<td>1746.0569</td>
+<td>1222.4805</td>
+<td>1448.9739</td>
+<td>1192.4491</td>
+<td>760.606</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>Deeplabv3-MobileNetV2</td>
+<td>quant_aware</td>
+<td>1320.2905</td>
+<td>921.4522</td>
+<td>676.0732</td>
+<td>1145.8801</td>
+<td>821.5685</td>
+<td>590.1713</td>
+</tr>
+<tr>
+<td>Kirin 970</td>
+<td>Deeplabv3-MobileNetV2</td>
+<td>quant_post</td>
+<td>1320.386</td>
+<td>918.5328</td>
+<td>672.2481</td>
+<td>1020.753</td>
+<td>820.094</td>
+<td>591.4114</td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="id6">
+<h3>3.2 Pruning<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>PaddleLite:</p>
+<p>env: Qualcomm SnapDragon 845 + armv8</p>
+<p>criterion: time cost in Thread1/Thread2/Thread4</p>
+<p>PaddleLite version: v2.3</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">Model</th>
+<th align="center">Method</th>
 <th align="center">mIoU</th>
-<th align="center">模型体积（MB）</th>
+<th align="center">Model Size（MB）</th>
 <th align="center">GFLOPs</th>
-<th align="center">下载</th>
+<th align="center">PaddleLite cost(ms)</th>
+<th align="center">TensorRT speed(FPS)</th>
+<th align="center">Download</th>
 </tr>
 </thead>
 <tbody>
@@ -889,7 +1602,9 @@
 <td align="center">69.64</td>
 <td align="center">11</td>
 <td align="center">14.41</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/fast_scnn_cityscape.tar">下载链接</a></td>
+<td align="center">1226.36\682.96\415.664</td>
+<td align="center">39.53</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/fast_scnn_cityscape.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">fast-scnn</td>
@@ -897,7 +1612,9 @@
 <td align="center">69.58 (-0.06)</td>
 <td align="center">8.5</td>
 <td align="center">11.95</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/fast_scnn_cityscape_uniform-17.tar">下载链接</a></td>
+<td align="center">1140.37\656.612\415.888</td>
+<td align="center">42.01</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/fast_scnn_cityscape_uniform-17.tar">model</a></td>
 </tr>
 <tr>
 <td align="center">fast-scnn</td>
@@ -905,7 +1622,9 @@
 <td align="center">66.68 (-2.96)</td>
 <td align="center">5.7</td>
 <td align="center">7.55</td>
-<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/fast_scnn_cityscape_sensitive-47.tar">下载链接</a></td>
+<td align="center">866.693\494.467\291.748</td>
+<td align="center">51.48</td>
+<td align="center"><a href="https://paddlemodels.bj.bcebos.com/PaddleSlim/fast_scnn_cityscape_sensitive-47.tar">model</a></td>
 </tr>
 </tbody>
 </table></div>
@@ -920,7 +1639,7 @@
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="api_en/search_space_en.html" class="btn btn-neutral" title="search space" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="api_en/table_latency_en.html" class="btn btn-neutral" title="Table about hardware lantency" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

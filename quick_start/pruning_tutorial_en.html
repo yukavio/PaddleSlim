@@ -160,7 +160,7 @@
 <h1>Channel Pruning for Image Classification<a class="headerlink" href="#channel-pruning-for-image-classification" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, you will learn how to use channel pruning API of PaddleSlim
 by a demo of MobileNetV1 model on MNIST dataset. This tutorial following workflow:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li>Import dependency</li>
 <li>Build model</li>
 <li>Prune model</li>
@@ -169,9 +169,9 @@ by a demo of MobileNetV1 model on MNIST dataset. This tutorial following workflo
 <div class="section" id="import-dependency">
 <h2>1. Import dependency<a class="headerlink" href="#import-dependency" title="Permalink to this headline">¶</a></h2>
 <p>PaddleSlim dependents on Paddle1.7. Please ensure that you have installed paddle correctly. Import Paddle and PaddleSlim as below:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
-<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
-<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="k">as</span> <span class="nn">slim</span>
+<div class="highlight-guess"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="kn">as</span> <span class="nn">slim</span>
 </pre></div>
 </div>
 </div>
@@ -180,8 +180,8 @@ by a demo of MobileNetV1 model on MNIST dataset. This tutorial following workflo
 <p>This section will build a classsification model based <code class="docutils literal"><span class="pre">MobileNetV1</span></code> for MNIST task. The shape of the input is <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span></code> and the output number is 10.</p>
 <p>To make the code simple, we define a function in package <code class="docutils literal"><span class="pre">paddleslim.models</span></code> to build classification model.
 Excute following code to build a model,</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">val_program</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span>
-    <span class="n">slim</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">image_classification</span><span class="p">(</span><span class="s2">&quot;MobileNet&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="mi">10</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-guess"><div class="highlight"><pre><span></span><span class="err">exe, train_program, val_program, inputs, outputs =</span>
+<span class="err">    slim.models.image_classification(&quot;MobileNet&quot;, [1, 28, 28], 10, use_gpu=False)</span>
 </pre></div>
 </div>
 <blockquote>
@@ -191,29 +191,29 @@ Excute following code to build a model,</p>
 <h2>3. Prune model<a class="headerlink" href="#prune-model" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="compute-flops-bofore-pruning">
 <h3>3.1 Compute FLOPs bofore pruning<a class="headerlink" href="#compute-flops-bofore-pruning" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">FLOPs</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">train_program</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">FLOPs</span><span class="p">))</span>
+<div class="highlight-guess"><div class="highlight"><pre><span></span><span class="err">FLOPs = slim.analysis.flops(train_program)</span>
+<span class="err">print(&quot;FLOPs: {}&quot;.format(FLOPs))</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="pruning">
 <h3>3.2 Pruning<a class="headerlink" href="#pruning" title="Permalink to this headline">¶</a></h3>
 <p>The section will prune the parameters named <code class="docutils literal"><span class="pre">conv2_1_sep_weights</span></code> and <code class="docutils literal"><span class="pre">conv2_2_sep_weights</span></code> by 20% and 30%.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pruner</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">prune</span><span class="o">.</span><span class="n">Pruner</span><span class="p">()</span>
-<span class="n">pruned_program</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pruner</span><span class="o">.</span><span class="n">prune</span><span class="p">(</span>
-        <span class="n">train_program</span><span class="p">,</span>
-        <span class="n">fluid</span><span class="o">.</span><span class="n">global_scope</span><span class="p">(),</span>
-        <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;conv2_1_sep_weights&quot;</span><span class="p">,</span> <span class="s2">&quot;conv2_2_sep_weights&quot;</span><span class="p">],</span>
-        <span class="n">ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.33</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="n">place</span><span class="o">=</span><span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>
+<div class="highlight-guess"><div class="highlight"><pre><span></span><span class="err">pruner = slim.prune.Pruner()</span>
+<span class="err">pruned_program, _, _ = pruner.prune(</span>
+<span class="err">        train_program,</span>
+<span class="err">        fluid.global_scope(),</span>
+<span class="err">        params=[&quot;conv2_1_sep_weights&quot;, &quot;conv2_2_sep_weights&quot;],</span>
+<span class="err">        ratios=[0.33] * 2,</span>
+<span class="err">        place=fluid.CPUPlace())</span>
 </pre></div>
 </div>
 <p>It will change the shapes of parameters defined in <code class="docutils literal"><span class="pre">train_program</span></code>. And the parameters<code class="docutils literal"><span class="pre">values</span> <span class="pre">stored</span> <span class="pre">in</span></code>fluid.global_scope()` will be pruned.</p>
 </div>
 <div class="section" id="compute-flops-after-pruning">
 <h3>3.3 Compute FLOPs after pruning<a class="headerlink" href="#compute-flops-after-pruning" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">FLOPs</span> <span class="o">=</span> <span class="n">paddleslim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">train_program</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FLOPs: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">FLOPs</span><span class="p">))</span>
+<div class="highlight-guess"><div class="highlight"><pre><span></span><span class="err">FLOPs = paddleslim.analysis.flops(train_program)</span>
+<span class="err">print(&quot;FLOPs: {}&quot;.format(FLOPs))</span>
 </pre></div>
 </div>
 </div>
@@ -224,9 +224,9 @@ Excute following code to build a model,</p>
 <h3>4.1 Define dataset<a class="headerlink" href="#define-dataset" title="Permalink to this headline">¶</a></h3>
 <p>To make you easily run this demo, it will training on MNIST dataset. The package <code class="docutils literal"><span class="pre">paddle.dataset.mnist</span></code> of Paddle defines the downloading and reading of MNIST dataset.
 Define training data reader and test data reader as below：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="k">as</span> <span class="nn">reader</span>
+<div class="highlight-guess"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle.dataset.mnist</span> <span class="kn">as</span> <span class="nn">reader</span>
 <span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
-        <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">reader</span><span class="o">.</span><span class="n">train</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="n">train_feeder</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">DataFeeder</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>
 </pre></div>
 </div>
@@ -234,9 +234,9 @@ Define training data reader and test data reader as below：</p>
 <div class="section" id="training">
 <h3>4.2 Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
 <p>Excute following code to run an <code class="docutils literal"><span class="pre">epoch</span></code> training:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">train_reader</span><span class="p">():</span>
-    <span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">pruned_program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">train_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">acc1</span><span class="p">,</span> <span class="n">acc5</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+<div class="highlight-guess"><div class="highlight"><pre><span></span><span class="err">for data in train_reader():</span>
+<span class="err">    acc1, acc5, loss = exe.run(pruned_program, feed=train_feeder.feed(data), fetch_list=outputs)</span>
+<span class="err">    print(acc1, acc5, loss)</span>
 </pre></div>
 </div>
 </div>

@@ -102,6 +102,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="search_space_en.html">search space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table_latency_en.html">Table about hardware lantency</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../model_zoo_en.html">Model Zoo</a></li>
@@ -270,7 +271,8 @@ writer on each device.</li>
 <li><strong>times</strong> (<em>int</em>) &#8211; The maximum repeated serving times. Default 1. Whenever
 the public method &#8216;get_knowledge_generator()&#8217; in Student
 object called once, the serving times will be added one,
-until reaching the maximum and ending the service.</li>
+until reaching the maximum and ending the service. Only
+valid in online mode, and will be ignored in offline mode.</li>
 </ul>
 </td>
 </tr>
@@ -697,7 +699,8 @@ writer on each device.</li>
 <li><strong>times</strong> (<em>int</em>) &#8211; The maximum repeated serving times. Default 1. Whenever
 the public method &#8216;get_knowledge_generator()&#8217; in Student
 object called once, the serving times will be added one,
-until reaching the maximum and ending the service.</li>
+until reaching the maximum and ending the service. Only
+valid in online mode, and will be ignored in offline mode.</li>
 </ul>
 </td>
 </tr>

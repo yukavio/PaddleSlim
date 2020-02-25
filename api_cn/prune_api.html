@@ -36,7 +36,7 @@
     <link rel="top" title="PaddleSlim 1.0 文档" href="../index.html"/>
         <link rel="up" title="API文档" href="index.html"/>
         <link rel="next" title="量化" href="quantization_api.html"/>
-        <link rel="prev" title="多进程蒸馏" href="pantheon_api.html"/> 
+        <link rel="prev" title="大规模可扩展知识蒸馏框架 Pantheon" href="pantheon_api.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -83,7 +83,7 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start/index.html">快速开始</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">进阶教程</a></li>
@@ -91,7 +91,7 @@
 <li class="toctree-l2"><a class="reference internal" href="analysis_api.html">模型分析</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nas_api.html">SA-NAS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="one_shot_api.html">OneShotNAS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">多进程蒸馏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pantheon_api.html">大规模可扩展知识蒸馏框架 Pantheon</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">卷积层通道剪裁</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#pruner">Pruner</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sensitivity">sensitivity</a></li>
@@ -499,7 +499,7 @@
    <span class="p">}</span>
 <span class="p">}</span>
 <span class="n">sensitivities_file</span> <span class="o">=</span> <span class="s2">&quot;sensitive_api_demo.data&quot;</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sensitivities_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sensitivities_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">sen</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 <span class="n">sensitivities</span> <span class="o">=</span> <span class="n">load_sensitivities</span><span class="p">(</span><span class="n">sensitivities_file</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sensitivities</span><span class="p">)</span>
@@ -553,7 +553,7 @@
         <a href="quantization_api.html" class="btn btn-neutral float-right" title="量化" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="pantheon_api.html" class="btn btn-neutral" title="多进程蒸馏" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="pantheon_api.html" class="btn btn-neutral" title="大规模可扩展知识蒸馏框架 Pantheon" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -83,7 +83,7 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">快速开始</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="pruning_tutorial.html">图像分类模型通道剪裁-快速开始</a></li>
@@ -154,7 +154,7 @@
 <h1>图像分类模型知识蒸馏-快速开始<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <p>该教程以图像分类模型MobileNetV1为例，说明如何快速使用<a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api/single_distiller_api/">PaddleSlim的知识蒸馏接口</a>。
 该示例包含以下步骤：</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li>导入依赖</li>
 <li>定义student_program和teacher_program</li>
 <li>选择特征图</li>
@@ -165,9 +165,9 @@
 <div class="section" id="id2">
 <h2>1. 导入依赖<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>PaddleSlim依赖Paddle1.7版本，请确认已正确安装Paddle，然后按以下方式导入Paddle和PaddleSlim:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
-<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
-<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="k">as</span> <span class="nn">slim</span>
+<div class="highlight-guess"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
+<span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="kn">as</span> <span class="nn">fluid</span>
+<span class="kn">import</span> <span class="nn">paddleslim</span> <span class="kn">as</span> <span class="nn">slim</span>
 </pre></div>
 </div>
 </div>
@@ -222,11 +222,11 @@
 <span class="c1">#print(teacher_vars)</span>
 </pre></div>
 </div>
-<p>经过筛选我们可以看到，teacher_program中的&#8216;bn5c_branch2b.output.1.tmp_3&#8216;和student_program的&#8216;depthwise_conv2d_11.tmp_0&#8216;尺寸一致，可以组成蒸馏损失函数。</p>
+<p>经过筛选我们可以看到，teacher_program中的&#8217;bn5c_branch2b.output.1.tmp_3&#8217;和student_program的&#8217;depthwise_conv2d_11.tmp_0&#8217;尺寸一致，可以组成蒸馏损失函数。</p>
 </div>
 <div class="section" id="program-merge-loss">
 <h2>4. 合并program (merge)并添加蒸馏loss<a class="headerlink" href="#program-merge-loss" title="永久链接至标题">¶</a></h2>
-<p>merge操作将student_program和teacher_program中的所有Variables和Op都将被添加到同一个Program中，同时为了避免两个program中有同名变量会引起命名冲突，merge也会为teacher_program中的Variables添加一个同一的命名前缀name_prefix，其默认值是&#8216;teacher_&#8216;</p>
+<p>merge操作将student_program和teacher_program中的所有Variables和Op都将被添加到同一个Program中，同时为了避免两个program中有同名变量会引起命名冲突，merge也会为teacher_program中的Variables添加一个同一的命名前缀name<em>prefix，其默认值是&#8217;teacher</em>&#8216;</p>
 <p>为了确保teacher网络和student网络输入的数据是一样的，merge操作也会对两个program的输入数据层进行合并操作，所以需要指定一个数据层名称的映射关系data_name_map，key是teacher的输入数据名称，value是student的</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">data_name_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;image&#39;</span><span class="p">}</span>
 <span class="n">main</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">teacher_program</span><span class="p">,</span> <span class="n">student_program</span><span class="p">,</span> <span class="n">data_name_map</span><span class="p">,</span> <span class="n">fluid</span><span class="o">.</span><span class="n">CPUPlace</span><span class="p">())</span>

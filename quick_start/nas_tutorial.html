@@ -83,7 +83,7 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index_en.html">English Documents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro.html">PaddleSlim简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">安装</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">快速开始</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="pruning_tutorial.html">图像分类模型通道剪裁-快速开始</a></li>
@@ -91,22 +91,22 @@
 <li class="toctree-l2"><a class="reference internal" href="quant_aware_tutorial.html">图像分类模型量化训练-快速开始</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quant_post_tutorial.html">图像分类模型离线量化-快速开始</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">图像分类网络结构搜索-快速开始</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">1. 导入依赖</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1. 导入依赖</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sanas">2. 初始化SANAS搜索实例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">3. 构建网络</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">4. 定义输入数据函数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">5. 定义训练函数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">6. 定义评估函数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">7. 启动搜索实验</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id8">7.1 获取模型结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3. 构建网络</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">4. 定义输入数据函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">5. 定义训练函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">6. 定义评估函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">7. 启动搜索实验</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">7.1 获取模型结构</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#program">7.2 构造program</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">7.3 定义输入数据</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id10">7.4 训练模型</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id11">7.5 评估模型</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id12">7.6 回传当前模型的得分</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">7.3 定义输入数据</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">7.4 训练模型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">7.5 评估模型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">7.6 回传当前模型的得分</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id13">8. 完整示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">8. 完整示例</a></li>
 </ul>
 </li>
 </ul>
@@ -163,9 +163,9 @@
             
   <div class="section" id="id1">
 <h1>图像分类网络结构搜索-快速开始<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>该教程以图像分类模型MobileNetV2为例，说明如何在cifar10数据集上快速使用<a class="reference external" href="../api/nas_api">网络结构搜索接口</a>。
+<p>该教程以图像分类模型MobileNetV2为例，说明如何在cifar10数据集上快速使用<a class="reference external" href="../api/nas_api.md">网络结构搜索接口</a>。
 该示例包含以下步骤：</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li>导入依赖</li>
 <li>初始化SANAS搜索实例</li>
 <li>构建网络</li>
@@ -182,8 +182,8 @@
 <li>完整示例</li>
 </ol>
 <p>以下章节依次介绍每个步骤的内容。</p>
-<div class="section" id="id2">
-<h2>1. 导入依赖<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h2>1. 导入依赖<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>请确认已正确安装Paddle，导入需要的依赖包。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paddle</span>
 <span class="kn">import</span> <span class="nn">paddle.fluid</span> <span class="k">as</span> <span class="nn">fluid</span>
@@ -198,8 +198,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>3. 构建网络<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id4">
+<h2>3. 构建网络<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <p>根据传入的网络结构构造训练program和测试program。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_program</span><span class="p">(</span><span class="n">archs</span><span class="p">):</span>
     <span class="n">train_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
@@ -216,7 +216,7 @@
         <span class="n">acc_top1</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">acc_top5</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">softmax_out</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
         <span class="n">test_program</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">default_main_program</span><span class="p">()</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">for_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            
+
         <span class="n">optimizer</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
         <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">avg_cost</span><span class="p">)</span>
 
@@ -227,8 +227,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id4">
-<h2>4. 定义输入数据函数<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h2>4. 定义输入数据函数<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
 <p>使用的数据集为cifar10，paddle框架中<code class="docutils literal"><span class="pre">paddle.dataset.cifar</span></code>包括了cifar数据集的下载和读取，代码如下：</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">input_data</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
     <span class="n">train_reader</span> <span class="o">=</span> <span class="n">paddle</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">paddle</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">cifar</span><span class="o">.</span><span class="n">train10</span><span class="p">(</span><span class="n">cycle</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">buf_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
@@ -239,10 +239,10 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>5. 定义训练函数<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id6">
+<h2>5. 定义训练函数<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
 <p>根据训练program和训练数据进行训练。</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">start_train</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">,</span> <span class="n">data_feeder</span><span class="p">):</span> 
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">start_train</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">,</span> <span class="n">data_feeder</span><span class="p">):</span>
     <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">avg_cost</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top1</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">acc_top5</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_reader</span><span class="p">():</span>
         <span class="n">batch_reward</span> <span class="o">=</span> <span class="n">exe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">feed</span><span class="o">=</span><span class="n">data_feeder</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">fetch_list</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">)</span>
@@ -250,8 +250,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>6. 定义评估函数<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id7">
+<h2>6. 定义评估函数<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
 <p>根据评估program和评估数据进行评估。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">start_eval</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">data_reader</span><span class="p">,</span> <span class="n">data_feeder</span><span class="p">):</span>
     <span class="n">reward</span> <span class="o">=</span> <span class="p">[]</span>
@@ -267,11 +267,11 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>7. 启动搜索实验<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
-<p>以下步骤拆解说明了如何获得当前模型结构以及获得当前模型结构之后应该有的步骤，如果想要看如何启动搜索实验的完整示例可以看步骤9。</p>
 <div class="section" id="id8">
-<h3>7.1 获取模型结构<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<h2>7. 启动搜索实验<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>以下步骤拆解说明了如何获得当前模型结构以及获得当前模型结构之后应该有的步骤，如果想要看如何启动搜索实验的完整示例可以看步骤9。</p>
+<div class="section" id="id9">
+<h3>7.1 获取模型结构<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
 <p>调用<code class="docutils literal"><span class="pre">next_archs()</span></code>函数获取到下一个模型结构。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
@@ -284,35 +284,35 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id9">
-<h3>7.3 定义输入数据<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id10">
+<h3>7.3 定义输入数据<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id10">
-<h3>7.4 训练模型<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id11">
+<h3>7.4 训练模型<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
 <p>根据上面得到的训练program和评估数据启动训练。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">start_train</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id11">
-<h3>7.5 评估模型<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id12">
+<h3>7.5 评估模型<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
 <p>根据上面得到的评估program和评估数据启动评估。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">finally_reward</span> <span class="o">=</span> <span class="n">start_eval</span><span class="p">(</span><span class="n">eval_program</span><span class="p">,</span> <span class="n">eval_reader</span><span class="p">,</span> <span class="n">eval_feeder</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id12">
-<h3>7.6 回传当前模型的得分<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sanas</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">finally_reward</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<div class="section" id="id13">
+<h3>7.6 回传当前模型的得分<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<div class="highlight-guess"><div class="highlight"><pre><span></span><span class="err">sanas.reward(float(finally_reward[1]))</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id13">
-<h2>8. 完整示例<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id14">
+<h2>8. 完整示例<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
 <p>以下是一个完整的搜索实验示例，示例中使用FLOPs作为约束条件，搜索实验一共搜索3个step，表示搜索到3个满足条件的模型结构进行训练，每搜索到一个网络结构训练7个epoch。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
     <span class="n">archs</span> <span class="o">=</span> <span class="n">sanas</span><span class="o">.</span><span class="n">next_archs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
@@ -322,7 +322,7 @@
     <span class="n">current_flops</span> <span class="o">=</span> <span class="n">slim</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">flops</span><span class="p">(</span><span class="n">train_program</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">current_flops</span> <span class="o">&gt;</span> <span class="mi">321208544</span><span class="p">:</span>
         <span class="k">continue</span>
-    
+
     <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
         <span class="n">start_train</span><span class="p">(</span><span class="n">train_program</span><span class="p">,</span> <span class="n">train_reader</span><span class="p">,</span> <span class="n">train_feeder</span><span class="p">)</span>
 

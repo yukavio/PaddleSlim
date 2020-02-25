@@ -153,8 +153,8 @@
             
   <div class="section" id="post-training-quantization-of-image-classification-model-quick-start">
 <h1>Post-training Quantization of image classification model - quick start<a class="headerlink" href="#post-training-quantization-of-image-classification-model-quick-start" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial shows how to do post training quantization using <a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/docs/docs/api/quantization_api">API</a> in PaddleSlim. We use MobileNetV1 to train image classification model as example. The tutorial contains follow sections:</p>
-<ol class="simple">
+<p>This tutorial shows how to do post training quantization using <a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/docs/docs/api/quantization_api.md">API</a> in PaddleSlim. We use MobileNetV1 to train image classification model as example. The tutorial contains follow sections:</p>
+<ol class="arabic simple">
 <li>Necessary imports</li>
 <li>Model architecture</li>
 <li>Train normal model</li>
@@ -172,7 +172,7 @@
 </div>
 <div class="section" id="model-architecture">
 <h2>2. Model architecture<a class="headerlink" href="#model-architecture" title="Permalink to this headline">¶</a></h2>
-<p>The section constructs a classification model, which use <code class="docutils literal"><span class="pre">MobileNetV1</span></code> and MNIST dataset. The model&#8216;s input size is <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span></code> and output size is 10. In order to show tutorial conveniently, we pre-defined a method to get image classification model in <code class="docutils literal"><span class="pre">paddleslim.models</span></code>.</p>
+<p>The section constructs a classification model, which use <code class="docutils literal"><span class="pre">MobileNetV1</span></code> and MNIST dataset. The model&#8217;s input size is <code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span></code> and output size is 10. In order to show tutorial conveniently, we pre-defined a method to get image classification model in <code class="docutils literal"><span class="pre">paddleslim.models</span></code>.</p>
 <blockquote>
 <div>note: The APIs in <code class="docutils literal"><span class="pre">paddleslim.models</span></code> are not formal inferface in PaddleSlim. They are defined to simplify the tutorial such as the definition of model structure and the construction of Program.</div></blockquote>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">val_program</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> \

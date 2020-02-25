@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to use PaddleSlim. &mdash; PaddleSlim 1.0 documentation</title>
+  <title>Index &mdash; PaddleSlim 1.0 documentation</title>
   
 
   
@@ -117,7 +117,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="#">Docs</a> &raquo;</li>
       
-    <li>Welcome to use PaddleSlim.</li>
+    <li>Index</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -131,8 +131,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-use-paddleslim">
-<h1>Welcome to use PaddleSlim.<a class="headerlink" href="#welcome-to-use-paddleslim" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="index">
+<h1>Index<a class="headerlink" href="#index" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="index.html">中文文档</a></li>
@@ -143,6 +143,187 @@
 <li class="toctree-l1"><a class="reference internal" href="api_en/index_en.html">API Documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_zoo_en.html">Model Zoo</a></li>
 </ul>
+</div>
+</div>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>PaddleSlim is a toolkit for model compression. It contains a collection of compression strategies, such as pruning, fixed point quantization, knowledge distillation, hyperparameter searching and neural architecture search.</p>
+<p>PaddleSlim provides solutions of compression on computer vision models, such as image classification, object detection and semantic segmentation. Meanwhile, PaddleSlim Keeps exploring advanced compression strategies for language model. Furthermore, benckmark of compression strategies on some open tasks is available for your reference.</p>
+<p>PaddleSlim also provides auxiliary and primitive API for developer and researcher to survey, implement and apply the method in latest papers. PaddleSlim will support developer in ability of framework and technology consulting.</p>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pruning">
+<h3>Pruning<a class="headerlink" href="#pruning" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Uniform pruning of convolution</li>
+<li>Sensitivity-based prunning</li>
+<li>Automated pruning based evolution search strategy</li>
+<li>Support pruning of various deep architectures such as VGG, ResNet, and MobileNet.</li>
+<li>Support self-defined range of pruning, i.e., layers to be pruned.</li>
+</ul>
+</div>
+<div class="section" id="fixed-point-quantization">
+<h3>Fixed Point Quantization<a class="headerlink" href="#fixed-point-quantization" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Training aware</strong><ul>
+<li>Dynamic strategy: During inference, we quantize models with hyperparameters dynamically estimated from small batches of samples.</li>
+<li>Static strategy: During inference, we quantize models with the same hyperparameters estimated from training data.</li>
+<li>Support layer-wise and channel-wise quantization.</li>
+</ul>
+</li>
+<li><strong>Post training</strong></li>
+</ul>
+</div>
+<div class="section" id="knowledge-distillation">
+<h3>Knowledge Distillation<a class="headerlink" href="#knowledge-distillation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>Naive knowledge distillation:</strong> transfers dark knowledge by merging the teacher and student model into the same Program</li>
+<li><strong>Paddle large-scale scalable knowledge distillation framework Pantheon:</strong> a universal solution for knowledge distillation, more flexible than the naive knowledge distillation, and easier to scale to the large-scale applications.<ul>
+<li>Decouple the teacher and student models &#8212; they run in different processes in the same or different nodes, and transfer knowledge via TCP/IP ports or local files;</li>
+<li>Friendly to assemble multiple teacher models and each of them can work in either online or offline mode independently;</li>
+<li>Merge knowledge from different teachers and make batch data for the student model automatically;</li>
+<li>Support the large-scale knowledge prediction of teacher models on multiple devices.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="neural-architecture-search">
+<h3>Neural Architecture Search<a class="headerlink" href="#neural-architecture-search" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Neural architecture search based on evolution strategy.</li>
+<li>Support distributed search.</li>
+<li>One-Shot neural architecture search.</li>
+<li>Support FLOPs and latency constrained search.</li>
+<li>Support the latency estimation on different hardware and platforms.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="performance">
+<h2>Performance<a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="image-classification">
+<h3>Image Classification<a class="headerlink" href="#image-classification" title="Permalink to this headline">¶</a></h3>
+<p>Dataset: ImageNet2012; Model: MobileNetV1;</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Accuracy(baseline: 70.91%)</th>
+<th class="head">Model Size(baseline: 17.0M)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Knowledge Distillation(ResNet50)</td>
+<td><strong>+1.06%</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Knowledge Distillation(ResNet50) + int8 quantization</td>
+<td><strong>+1.10%</strong></td>
+<td><strong>-71.76%</strong></td>
+</tr>
+<tr class="row-even"><td>Pruning(FLOPs-50%) + int8 quantization</td>
+<td><strong>-1.71%</strong></td>
+<td><strong>-86.47%</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="object-detection">
+<h3>Object Detection<a class="headerlink" href="#object-detection" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="dataset-pascal-voc-model-mobilenet-v1-yolov3">
+<h4>Dataset: Pascal VOC; Model: MobileNet-V1-YOLOv3<a class="headerlink" href="#dataset-pascal-voc-model-mobilenet-v1-yolov3" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">mAP(baseline: 76.2%)</th>
+<th class="head">Model Size(baseline: 94MB)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Knowledge Distillation(ResNet34-YOLOv3)</td>
+<td><strong>+2.8%</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Pruning(FLOPs -52.88%)</td>
+<td><strong>+1.4%</strong></td>
+<td><strong>-67.76%</strong></td>
+</tr>
+<tr class="row-even"><td>Knowledge DistillationResNet34-YOLOv3)+Pruning(FLOPs-69.57%)</td>
+<td><strong>+2.6%</strong></td>
+<td><strong>-67.00%</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dataset-coco-model-mobilenet-v1-yolov3">
+<h4>Dataset: COCO; Model: MobileNet-V1-YOLOv3<a class="headerlink" href="#dataset-coco-model-mobilenet-v1-yolov3" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">mAP(baseline: 29.3%)</th>
+<th class="head">Model Size</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Knowledge Distillation(ResNet34-YOLOv3)</td>
+<td><strong>+2.1%</strong></td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>Knowledge Distillation(ResNet34-YOLOv3)+Pruning(FLOPs-67.56%)</td>
+<td><strong>-0.3%</strong></td>
+<td><strong>-66.90%</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="nas">
+<h3>NAS<a class="headerlink" href="#nas" title="Permalink to this headline">¶</a></h3>
+<p>Dataset: ImageNet2012; Model: MobileNetV2</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Device</th>
+<th class="head">Infer time cost</th>
+<th class="head">Top1 accuracy(baseline:71.90%)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>RK3288</td>
+<td><strong>-23%</strong></td>
+<td>+0.07%</td>
+</tr>
+<tr class="row-odd"><td>Android cellphone</td>
+<td><strong>-20%</strong></td>
+<td>+0.16%</td>
+</tr>
+<tr class="row-even"><td>iPhone 6s</td>
+<td><strong>-17%</strong></td>
+<td>+0.32%</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 
