@@ -155,7 +155,7 @@
 <h1>SA-NAS<a class="headerlink" href="#sa-nas" title="永久链接至标题">¶</a></h1>
 <div class="section" id="id1">
 <h2>搜索空间参数的配置<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<p>通过参数配置搜索空间。更多搜索空间的使用可以参考: [search_space](../search_space.md)</p>
+<p>通过参数配置搜索空间。更多搜索空间的使用可以参考: <a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api_cn/search_space.html">search_space</a></p>
 <p><strong>参数：</strong></p>
 <ul class="simple">
 <li><strong>input_size(int|None)</strong>：- <code class="docutils literal"><span class="pre">input_size</span></code> 表示输入 <code class="docutils literal"><span class="pre">feature</span> <span class="pre">map</span></code> 的大小。 <code class="docutils literal"><span class="pre">input_size</span></code> 和 <code class="docutils literal"><span class="pre">output_size</span></code> 用来计算整个模型结构中下采样次数。</li>
@@ -257,6 +257,11 @@
 <span class="n">sanas</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
 </pre></div>
 </div>
+<dl class="method">
+<dt id="tokens2arch">
+<code class="descname">tokens2arch</code><span class="sig-paren">(</span><em>tokens</em><span class="sig-paren">)</span><a class="headerlink" href="#tokens2arch" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
 <p>通过一组tokens得到实际的模型结构，一般用来把搜索到最优的token转换为模型结构用来做最后的训练。tokens的形式是一个列表，tokens映射到搜索空间转换成相应的网络结构，一组tokens对应唯一的一个网络结构。</p>
 <p><strong>参数：</strong></p>
 <ul class="simple">

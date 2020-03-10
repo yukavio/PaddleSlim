@@ -155,7 +155,7 @@
             
   <div class="section" id="id1">
 <h1>图像分类模型离线量化-快速开始<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>该教程以图像分类模型MobileNetV1为例，说明如何快速使用PaddleSlim的<a class="reference external" href="https://github.com/PaddlePaddle/PaddleSlim/blob/develop/docs/docs/api/quantization_api.md">离线量化接口</a>。 该示例包含以下步骤：</p>
+<p>该教程以图像分类模型MobileNetV1为例，说明如何快速使用PaddleSlim的<a class="reference external" href="https://paddlepaddle.github.io/PaddleSlim/api_cn/quantization_api.html#quant-post">离线量化接口</a>。 该示例包含以下步骤：</p>
 <ol class="arabic simple">
 <li>导入依赖</li>
 <li>构建模型</li>
@@ -174,7 +174,7 @@
 </div>
 <div class="section" id="id4">
 <h2>2. 构建网络<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
-<p>该章节构造一个用于对MNIST数据进行分类的分类模型，选用<code class="docutils literal"><span class="pre">MobileNetV1</span></code>，并将输入大小设置为<code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span></code>，输出类别数为10。               为了方便展示示例，我们在<code class="docutils literal"><span class="pre">paddleslim.models</span></code>下预定义了用于构建分类模型的方法，执行以下代码构建分类模型：</p>
+<p>该章节构造一个用于对MNIST数据进行分类的分类模型，选用<code class="docutils literal"><span class="pre">MobileNetV1</span></code>，并将输入大小设置为<code class="docutils literal"><span class="pre">[1,</span> <span class="pre">28,</span> <span class="pre">28]</span></code>，输出类别数为10。为了方便展示示例，我们在<code class="docutils literal"><span class="pre">paddleslim.models</span></code>下预定义了用于构建分类模型的方法，执行以下代码构建分类模型：</p>
 <blockquote>
 <div>注意：paddleslim.models下的API并非PaddleSlim常规API，是为了简化示例而封装预定义的一系列方法，比如：模型结构的定义、Program的构建等。</div></blockquote>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">exe</span><span class="p">,</span> <span class="n">train_program</span><span class="p">,</span> <span class="n">val_program</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> \

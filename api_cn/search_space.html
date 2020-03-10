@@ -96,8 +96,12 @@
 <li class="toctree-l2"><a class="reference internal" href="quantization_api.html">量化</a></li>
 <li class="toctree-l2"><a class="reference internal" href="single_distiller_api.html">简单蒸馏</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">搜索空间</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#paddleslim-nas">paddleslim.nas 提供的搜索空间</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">搜索空间使用示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#paddleslim-nas">paddleslim.nas 提供的搜索空间</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">根据初始模型结构构造搜索空间:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#block">根据相应模型的block构造搜索空间:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">搜索空间使用示例</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#search-space">自定义搜索空间(search space)</a></li>
 </ul>
 </li>
@@ -142,7 +146,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/api_cn/search_space.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/api_cn/search_space.md.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -157,121 +161,113 @@
 <p>搜索空间是神经网络搜索中的一个概念。搜索空间是一系列模型结构的汇集, SANAS主要是利用模拟退火的思想在搜索空间中搜索到一个比较小的模型结构或者一个精度比较高的模型结构。</p>
 <div class="section" id="paddleslim-nas">
 <h2>paddleslim.nas 提供的搜索空间<a class="headerlink" href="#paddleslim-nas" title="永久链接至标题">¶</a></h2>
-<p>根据初始模型结构构造搜索空间:</p>
-<p>1. MobileNetV2Space&lt;br&gt;
-&amp;emsp; MobileNetV2的网络结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v2.py#L29">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v2.py#L29</a>)，[论文](<a class="reference external" href="https://arxiv.org/abs/1801.04381">https://arxiv.org/abs/1801.04381</a>)</p>
-<p>2. MobileNetV1Space&lt;br&gt;
-&amp;emsp; MobilNetV1的网络结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v1.py#L29">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v1.py#L29</a>)，[论文](<a class="reference external" href="https://arxiv.org/abs/1704.04861">https://arxiv.org/abs/1704.04861</a>)</p>
-<p>3. ResNetSpace&lt;br&gt;
-&amp;emsp; ResNetSpace的网络结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/resnet.py#L30">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/resnet.py#L30</a>)，[论文](<a class="reference external" href="https://arxiv.org/pdf/1512.03385.pdf">https://arxiv.org/pdf/1512.03385.pdf</a>)</p>
-<p>根据相应模型的block构造搜索空间:
-1. MobileNetV1BlockSpace&lt;br&gt;
-&amp;emsp; MobileNetV1Block的结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v1.py#L173">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v1.py#L173</a>)</p>
-<p>2. MobileNetV2BlockSpace&lt;br&gt;
-&amp;emsp; MobileNetV2Block的结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v2.py#L174">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v2.py#L174</a>)</p>
-<p>3. ResNetBlockSpace&lt;br&gt;
-&amp;emsp; ResNetBlock的结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/resnet.py#L148">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/resnet.py#L148</a>)</p>
-<p>4. InceptionABlockSpace&lt;br&gt;
-&amp;emsp; InceptionABlock的结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/inception_v4.py#L140">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/inception_v4.py#L140</a>)</p>
-<p>5. InceptionCBlockSpace&lt;br&gt;
-&amp;emsp; InceptionCBlock结构可以参考：[代码](<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/inception_v4.py#L291">https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/inception_v4.py#L291</a>)</p>
-</div>
 <div class="section" id="id2">
-<h2>搜索空间使用示例<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<h3>根据初始模型结构构造搜索空间:<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<ol class="arabic simple">
+<li>MobileNetV2Space<span class="raw-html-m2r"><br></span>
+&amp;emsp; MobileNetV2的网络结构可以参考：<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v2.py#L29">代码</a>，<a class="reference external" href="https://arxiv.org/abs/1801.04381">论文</a></li>
+<li>MobileNetV1Space<span class="raw-html-m2r"><br></span>
+&amp;emsp; MobilNetV1的网络结构可以参考：<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v1.py#L29">代码</a>，<a class="reference external" href="https://arxiv.org/abs/1704.04861">论文</a></li>
+<li>ResNetSpace<span class="raw-html-m2r"><br></span>
+&amp;emsp; ResNetSpace的网络结构可以参考：<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/resnet.py#L30">代码</a>，<a class="reference external" href="https://arxiv.org/pdf/1512.03385.pdf">论文</a></li>
+</ol>
+</div>
+<div class="section" id="block">
+<h3>根据相应模型的block构造搜索空间:<a class="headerlink" href="#block" title="永久链接至标题">¶</a></h3>
+<ol class="arabic simple">
+<li>MobileNetV1BlockSpace<span class="raw-html-m2r"><br></span>
+&amp;emsp; MobileNetV1Block的结构可以参考：<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v1.py#L173">代码</a></li>
+<li>MobileNetV2BlockSpace<span class="raw-html-m2r"><br></span>
+&amp;emsp; MobileNetV2Block的结构可以参考：<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/mobilenet_v2.py#L174">代码</a></li>
+<li>ResNetBlockSpace<span class="raw-html-m2r"><br></span>
+&amp;emsp; ResNetBlock的结构可以参考：<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/resnet.py#L148">代码</a></li>
+<li>InceptionABlockSpace<span class="raw-html-m2r"><br></span>
+&amp;emsp; InceptionABlock的结构可以参考：<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/inception_v4.py#L140">代码</a></li>
+<li>InceptionCBlockSpace<span class="raw-html-m2r"><br></span>
+&amp;emsp; InceptionCBlock结构可以参考：<a class="reference external" href="https://github.com/PaddlePaddle/models/blob/develop/PaddleCV/image_classification/models/inception_v4.py#L291">代码</a></li>
+</ol>
+</div>
+</div>
+<div class="section" id="id14">
+<h2>搜索空间使用示例<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
 <ol class="arabic simple">
 <li>使用paddleslim中提供用初始的模型结构来构造搜索空间的话，仅需要指定搜索空间名字即可。例如：如果使用原本的MobileNetV2的搜索空间进行搜索的话，传入SANAS中的configs直接指定为[(&#8216;MobileNetV2Space&#8217;)]。</li>
-<li>使用paddleslim中提供的block搜索空间构造搜索空间：&lt;br&gt;</li>
+<li>使用paddleslim中提供的block搜索空间构造搜索空间：<span class="raw-html-m2r"><br></span>
+2.1 使用<code class="docutils literal"><span class="pre">input_size</span></code>, <code class="docutils literal"><span class="pre">output_size</span></code>和<code class="docutils literal"><span class="pre">block_num</span></code>来构造搜索空间。例如：传入SANAS的configs可以指定为[(&#8216;MobileNetV2BlockSpace&#8217;, {&#8216;input_size&#8217;: 224, &#8216;output_size&#8217;: 32, &#8216;block_num&#8217;: 10})]。<span class="raw-html-m2r"><br></span>
+2.2 使用<code class="docutils literal"><span class="pre">block_mask</span></code>构造搜索空间。例如：传入SANAS的configs可以指定为[(&#8216;MobileNetV2BlockSpace&#8217;, {&#8216;block_mask&#8217;: [0, 1, 1, 1, 1, 0, 1, 0]})]。</li>
 </ol>
-<blockquote>
-<div>2.1 使用`input_size`, <a href="#id3"><span class="problematic" id="id4">`</span></a>output_size`和`block_num`来构造搜索空间。例如：传入SANAS的configs可以指定为[(&#8216;MobileNetV2BlockSpace&#8217;, {&#8216;input_size&#8217;: 224, &#8216;output_size&#8217;: 32, &#8216;block_num&#8217;: 10})]。&lt;br&gt;
-2.2 使用`block_mask`构造搜索空间。例如：传入SANAS的configs可以指定为[(&#8216;MobileNetV2BlockSpace&#8217;, {&#8216;block_mask&#8217;: [0, 1, 1, 1, 1, 0, 1, 0]})]。</div></blockquote>
 </div>
 <div class="section" id="search-space">
 <h2>自定义搜索空间(search space)<a class="headerlink" href="#search-space" title="永久链接至标题">¶</a></h2>
-<p>自定义搜索空间类需要继承搜索空间基类并重写以下几部分：&lt;br&gt;
-&amp;emsp; 1. 初始化的tokens(<a href="#id5"><span class="problematic" id="id6">`</span></a>init_tokens`函数)，可以设置为自己想要的tokens列表, tokens列表中的每个数字指的是当前数字在相应的搜索列表中的索引。例如本示例中若tokens=[0, 3, 5]，则代表当前模型结构搜索到的通道数为[8, 40, 128]。&lt;br&gt;
-&amp;emsp; 2. tokens中每个数字的搜索列表长度(<a href="#id7"><span class="problematic" id="id8">`</span></a>range_table`函数)，tokens中每个token的索引范围。&lt;br&gt;
-&amp;emsp; 3. 根据tokens产生模型结构(<a href="#id9"><span class="problematic" id="id10">`</span></a>token2arch`函数)，根据搜索到的tokens列表产生模型结构。 &lt;br&gt;</p>
+<p>自定义搜索空间类需要继承搜索空间基类并重写以下几部分：<span class="raw-html-m2r"><br></span>
+&amp;emsp; 1. 初始化的tokens(<code class="docutils literal"><span class="pre">init_tokens</span></code>函数)，可以设置为自己想要的tokens列表, tokens列表中的每个数字指的是当前数字在相应的搜索列表中的索引。例如本示例中若tokens=[0, 3, 5]，则代表当前模型结构搜索到的通道数为[8, 40, 128]。<span class="raw-html-m2r"><br></span>
+&amp;emsp; 2. tokens中每个数字的搜索列表长度(<code class="docutils literal"><span class="pre">range_table</span></code>函数)，tokens中每个token的索引范围。<span class="raw-html-m2r"><br></span>
+&amp;emsp; 3. 根据tokens产生模型结构(<code class="docutils literal"><span class="pre">token2arch</span></code>函数)，根据搜索到的tokens列表产生模型结构。 <span class="raw-html-m2r"><br></span></p>
 <p>以新增reset block为例说明如何构造自己的search space。自定义的search space不能和已有的search space同名。</p>
-<p><a href="#id11"><span class="problematic" id="id12">``</span></a><a href="#id13"><span class="problematic" id="id14">`</span></a>python
-### 引入搜索空间基类函数和search space的注册类函数
-from .search_space_base import SearchSpaceBase
-from .search_space_registry import SEARCHSPACE
-import numpy as np</p>
-<p>### 需要调用注册函数把自定义搜索空间注册到space space中
-&#64;SEARCHSPACE.register
-### 定义一个继承SearchSpaceBase基类的搜索空间的类函数
-class ResNetBlockSpace2(SearchSpaceBase):</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>def __init__(self, input_size, output_size, block_num, block_mask):</dt>
-<dd>### 定义一些实际想要搜索的内容，例如：通道数、每个卷积的重复次数、卷积核大小等等
-### self.filter_num 代表通道数的搜索列表
-self.filter_num = np.array([8, 16, 32, 40, 64, 128, 256, 512])</dd>
-</dl>
-<p>### 定义初始化token，初始化token的长度根据传入的block_num或者block_mask的长度来得到的
-def init_tokens(self):</p>
-<blockquote>
-<div>return [0] * 3 * len(self.block_mask)</div></blockquote>
-<p>### 定义token的index的取值范围
-def range_table(self):</p>
-<blockquote>
-<div>return [len(self.filter_num)] * 3 * len(self.block_mask)</div></blockquote>
-<p>### 把token转换成模型结构
-def token2arch(self, tokens=None):</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>if tokens == None:</dt>
-<dd>tokens = self.init_tokens()</dd>
-</dl>
-<p>self.bottleneck_params_list = []
-for i in range(len(self.block_mask)):</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>self.bottleneck_params_list.append(self.filter_num[tokens[i * 3 + 0]],</dt>
-<dd>self.filter_num[tokens[i * 3 + 1]],
-self.filter_num[tokens[i * 3 + 2]],
-2 if self.block_mask[i] == 1 else 1)</dd>
-</dl>
-</div></blockquote>
-<dl class="docutils">
-<dt>def net_arch(input):</dt>
-<dd><dl class="first docutils">
-<dt>for i, layer_setting in enumerate(self.bottleneck_params_list):</dt>
-<dd>channel_num, stride = layer_setting[:-1], layer_setting[-1]
-input = self._resnet_block(input, channel_num, stride, name=&#8217;resnet_layer{}&#8217;.format(i+1))</dd>
-</dl>
-<p class="last">return input</p>
-</dd>
-</dl>
-<p>return net_arch</p>
-</div></blockquote>
-<p>### 构造具体block的操作
-def _resnet_block(self, input, channel_num, stride, name=None):</p>
-<blockquote>
-<div>shortcut_conv = self._shortcut(input, channel_num[2], stride, name=name)
-input = self._conv_bn_layer(input=input, num_filters=channel_num[0], filter_size=1, act=&#8217;relu&#8217;, name=name + &#8216;_conv0&#8217;)
-input = self._conv_bn_layer(input=input, num_filters=channel_num[1], filter_size=3, stride=stride, act=&#8217;relu&#8217;, name=name + &#8216;_conv1&#8217;)
-input = self._conv_bn_layer(input=input, num_filters=channel_num[2], filter_size=1, name=name + &#8216;_conv2&#8217;)
-return fluid.layers.elementwise_add(x=shortcut_conv, y=input, axis=0, name=name+&#8217;_elementwise_add&#8217;)</div></blockquote>
-<dl class="docutils">
-<dt>def _shortcut(self, input, channel_num, stride, name=None):</dt>
-<dd><p class="first">channel_in = input.shape[1]
-if channel_in != channel_num or stride != 1:</p>
-<blockquote>
-<div>return self.conv_bn_layer(input, num_filters=channel_num, filter_size=1, stride=stride, name=name+&#8217;_shortcut&#8217;)</div></blockquote>
-<dl class="last docutils">
-<dt>else:</dt>
-<dd>return input</dd>
-</dl>
-</dd>
-<dt>def _conv_bn_layer(self, input, num_filters, filter_size, stride=1, padding=&#8217;SAME&#8217;, act=None, name=None):</dt>
-<dd>conv = fluid.layers.conv2d(input, num_filters, filter_size, stride, name=name+&#8217;_conv&#8217;)
-bn = fluid.layers.batch_norm(conv, act=act, name=name+&#8217;_bn&#8217;)
-return bn</dd>
-</dl>
-</div></blockquote>
-<p><a href="#id15"><span class="problematic" id="id16">``</span></a><a href="#id17"><span class="problematic" id="id18">`</span></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1">### 引入搜索空间基类函数和search space的注册类函数</span>
+<span class="kn">from</span> <span class="nn">.search_space_base</span> <span class="kn">import</span> <span class="n">SearchSpaceBase</span>
+<span class="kn">from</span> <span class="nn">.search_space_registry</span> <span class="kn">import</span> <span class="n">SEARCHSPACE</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1">### 需要调用注册函数把自定义搜索空间注册到space space中</span>
+<span class="nd">@SEARCHSPACE</span><span class="o">.</span><span class="n">register</span>
+<span class="c1">### 定义一个继承SearchSpaceBase基类的搜索空间的类函数</span>
+<span class="k">class</span> <span class="nc">ResNetBlockSpace2</span><span class="p">(</span><span class="n">SearchSpaceBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">block_num</span><span class="p">,</span> <span class="n">block_mask</span><span class="p">):</span>
+        <span class="c1">### 定义一些实际想要搜索的内容，例如：通道数、每个卷积的重复次数、卷积核大小等等</span>
+        <span class="c1">### self.filter_num 代表通道数的搜索列表</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">])</span>
+
+    <span class="c1">### 定义初始化token，初始化token的长度根据传入的block_num或者block_mask的长度来得到的</span>
+    <span class="k">def</span> <span class="nf">init_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_mask</span><span class="p">)</span>
+
+    <span class="c1">### 定义token的index的取值范围</span>
+    <span class="k">def</span> <span class="nf">range_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_num</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_mask</span><span class="p">)</span>
+
+    <span class="c1">### 把token转换成模型结构</span>
+    <span class="k">def</span> <span class="nf">token2arch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tokens</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_tokens</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bottleneck_params_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">block_mask</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bottleneck_params_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_num</span><span class="p">[</span><span class="n">tokens</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">0</span><span class="p">]],</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">filter_num</span><span class="p">[</span><span class="n">tokens</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">filter_num</span><span class="p">[</span><span class="n">tokens</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]],</span>
+                                               <span class="mi">2</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_mask</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">net_arch</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">layer_setting</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bottleneck_params_list</span><span class="p">):</span>
+                <span class="n">channel_num</span><span class="p">,</span> <span class="n">stride</span> <span class="o">=</span> <span class="n">layer_setting</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">layer_setting</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="nb">input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resnet_block</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">channel_num</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;resnet_layer</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+            <span class="k">return</span> <span class="nb">input</span>
+
+        <span class="k">return</span> <span class="n">net_arch</span>
+
+    <span class="c1">### 构造具体block的操作</span>
+    <span class="k">def</span> <span class="nf">_resnet_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">channel_num</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">shortcut_conv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shortcut</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">channel_num</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">stride</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="n">num_filters</span><span class="o">=</span><span class="n">channel_num</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">filter_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_conv0&#39;</span><span class="p">)</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="n">num_filters</span><span class="o">=</span><span class="n">channel_num</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">filter_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_conv1&#39;</span><span class="p">)</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="n">num_filters</span><span class="o">=</span><span class="n">channel_num</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">filter_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_conv2&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">elementwise_add</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">shortcut_conv</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_elementwise_add&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_shortcut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">channel_num</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">channel_in</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">channel_in</span> <span class="o">!=</span> <span class="n">channel_num</span> <span class="ow">or</span> <span class="n">stride</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv_bn_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">num_filters</span><span class="o">=</span><span class="n">channel_num</span><span class="p">,</span> <span class="n">filter_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_shortcut&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">input</span>
+
+    <span class="k">def</span> <span class="nf">_conv_bn_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">num_filters</span><span class="p">,</span> <span class="n">filter_size</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;SAME&#39;</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">conv</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">num_filters</span><span class="p">,</span> <span class="n">filter_size</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_conv&#39;</span><span class="p">)</span>
+        <span class="n">bn</span> <span class="o">=</span> <span class="n">fluid</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">batch_norm</span><span class="p">(</span><span class="n">conv</span><span class="p">,</span> <span class="n">act</span><span class="o">=</span><span class="n">act</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_bn&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bn</span>
+</pre></div>
+</div>
 </div>
 </div>
 
