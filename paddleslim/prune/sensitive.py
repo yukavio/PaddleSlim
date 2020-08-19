@@ -26,8 +26,8 @@ from ..prune import Pruner
 _logger = get_logger(__name__, level=logging.INFO)
 
 __all__ = [
-    "sensitivity", "flops_sensitivity", "load_sensitivities",
-    "merge_sensitive", "get_ratios_by_loss"
+    "sensitivity", "flops_sensitivity", "load_sensitivities", "merge_sensitive",
+    "get_ratios_by_loss"
 ]
 
 
@@ -164,7 +164,7 @@ def flops_sensitivity(program,
                                                                 pruned_ratio))
         loss = 1
         if pruned_ratio < 1:
-            pruned_program = pruner.prune(
+            pruned_program, _, _ = pruner.prune(
                 program=graph.program,
                 scope=scope,
                 params=[name],

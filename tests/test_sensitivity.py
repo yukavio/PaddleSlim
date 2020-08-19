@@ -17,7 +17,7 @@ import unittest
 import numpy
 import paddle
 import paddle.fluid as fluid
-from paddleslim.prune import sensitivity, merge_sensitive, load_sensitivities
+from paddleslim.prune import sensitivity, merge_sensitive, load_sensitivities, get_ratios_by_loss
 from layers import conv_bn_layer
 
 
@@ -84,6 +84,20 @@ class TestSensitivity(unittest.TestCase):
             "./sensitivities_file_1",
             pruned_ratios=[0.1, 0.2, 0.3, 0.4])
         self.assertTrue(sens == origin_sens)
+
+        ratios = get_ratios_by_loss(sens, 0.1)
+
+        pruner = Pruner()
+        main_program, _, _ = pruner.prune(
+            main_program,
+            scope,
+            params=ratios.keys(),
+            ratios=ratios.values(),
+            place=place,
+            lazy=False,
+            only_graph=False,
+            param_backup=None,
+            param_shape_backup=None)
 
 
 if __name__ == '__main__':

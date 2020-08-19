@@ -78,13 +78,11 @@ class SensitivePruner(object):
 
                 with open(latest_ck_path + "/main_program", "rb") as f:
                     program_desc_str = f.read()
-                main_program = fluid.Program.parse_from_string(
-                    program_desc_str)
+                main_program = fluid.Program.parse_from_string(program_desc_str)
 
                 with open(latest_ck_path + "/eval_program", "rb") as f:
                     program_desc_str = f.read()
-                eval_program = fluid.Program.parse_from_string(
-                    program_desc_str)
+                eval_program = fluid.Program.parse_from_string(program_desc_str)
 
                 with fluid.scope_guard(self._scope):
                     fluid.io.load_persistables(exe, latest_ck_path,
@@ -183,9 +181,11 @@ class SensitivePruner(object):
     def _greedy_ratio_by_sensitive(self, sensitivities, topk=1):
         losses = {}
         percents = {}
+        _logger.info('--------------------')
+        _logger.info(sensitivities)
         for param in sensitivities:
-            losses[param] = sensitivities[param]['loss'][0]
-            percents[param] = sensitivities[param]['pruned_percent'][0]
+            losses[param] = list(sensitivities[param].keys())[0]
+            percents[param] = list(sensitivities[param].values())[0]
         topk_parms = sorted(losses, key=losses.__getitem__)[:topk]
         topk_percents = [percents[param] for param in topk_parms]
         return topk_parms, topk_percents

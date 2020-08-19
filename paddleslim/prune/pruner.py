@@ -38,8 +38,7 @@ class Pruner():
 
     """
 
-    def __init__(self,
-                 criterion="l1_norm",
+    def __init__(self, criterion="l1_norm",
                  idx_selector="default_idx_selector"):
         if isinstance(criterion, str):
             self.criterion = CRITERION.get(criterion)
@@ -93,8 +92,8 @@ class Pruner():
             _logger.info("pruning: {}".format(param))
             if graph.var(param) is None:
                 _logger.warn(
-                    "Variable[{}] to be pruned is not in current graph.".
-                    format(param))
+                    "Variable[{}] to be pruned is not in current graph.".format(
+                        param))
                 continue
             group = collect_convs([param], graph,
                                   visited)[0]  # [(name, axis, pruned_idx)]
@@ -153,7 +152,7 @@ class Pruner():
                     try:
                         pruned_param = self._prune_tensor(
                             np.array(param_t),
-                            pruned_idx,
+                            pruned_idx.astype('int'),
                             pruned_axis=pruned_axis,
                             lazy=lazy)
                     except IndexError as e:
