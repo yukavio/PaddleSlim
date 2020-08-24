@@ -15,6 +15,7 @@
 import logging
 
 import paddle.fluid as fluid
+import paddle.version as fluid_version
 from ..common import get_logger
 
 _logger = get_logger(__name__, level=logging.INFO)
@@ -26,6 +27,6 @@ try:
 except Exception as e:
     _logger.warning(
         "If you want to use training-aware and post-training quantization, "
-        "please use Paddle >= 2.0.0 or develop version")
+        "please use Paddle >= 1.8.4 or develop version")
 
 from .quant_embedding import quant_embedding
