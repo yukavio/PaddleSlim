@@ -20,7 +20,7 @@ from ..common import get_logger
 _logger = get_logger(__name__, level=logging.INFO)
 
 try:
-    fluid.require_version('2.0.0')
+    fluid.require_version('1.8.4')
     from .quanter import quant_aware, convert, quant_post_static, quant_post_dynamic
     from .quanter import quant_post, quant_post_only_weight
 except Exception as e:
