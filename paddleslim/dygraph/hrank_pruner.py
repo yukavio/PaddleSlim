@@ -56,12 +56,19 @@ class HRANKFilterPruner(FilterPruner):
             handle = m.register_forward_post_hook(cal_rank)
             self.hooks.append(handle)
 
+    def remove_handle(self):
+        for handle in self.hooks:
+            handle.remove()
+        for m in self.model.sublayers():
+            if isinstance(m, paddle.nn.Conv2D):
+                m._buffers.pop('total_rank')
+
 
 def cal_rank(m, x, y):
     ranks = []
     y = y.numpy()
     for i in range(m._out_channels):
-        ranks.append(np.linalg.matrix_rank(y[0][i]))
+        ranks.append(np.linalg.matrix_rank(y[0][i], tol=1e-3))
     m.total_rank = paddle.add(paddle.to_tensor(
         ranks, dtype='int64'),
                               m.total_rank)

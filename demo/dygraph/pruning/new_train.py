@@ -9,9 +9,8 @@ import functools
 import math
 import time
 import numpy as np
-from imagenet import ImageNetDataset
-sys.path[0] = os.path.join(
-    os.path.dirname("__file__"), os.path.pardir, os.path.pardir)
+sys.path.append(
+    os.path.join(os.path.dirname("__file__"), os.path.pardir, os.path.pardir))
 import paddleslim
 from paddleslim.common import get_logger
 from paddleslim.analysis import dygraph_flops as flops
@@ -19,6 +18,7 @@ import paddle.vision.models as models
 from utility import add_arguments, print_arguments
 import paddle.vision.transforms as T
 from paddle.static import InputSpec as Input
+from imagenet import ImageNetDataset
 from paddle.io import BatchSampler, DataLoader, DistributedBatchSampler
 from paddle.distributed import ParallelEnv
 
@@ -152,12 +152,43 @@ def compress(args):
     net = models.__dict__[args.model](pretrained=pretrain,
                                       num_classes=class_dim)
 
-    pruner = paddleslim.dygraph.HRANKFilterPruner(net, [1] + image_shape)
+    _logger.info("FLOPs before pruning: {}GFLOPs".format(
+        flops(net, [1] + image_shape) / 1000))
+    net.eval()
 
-    samples = [val_dataset[i] for i in range(500)]
+    pruner = paddleslim.dygraph.HRANKFilterPruner(net, [1] + image_shape)
+    samples = list(val_dataset)[:500]
     samples = [x[0] for x in samples]
     pruner.cal_act_rank(samples)
     pruner.print_statistic()
+
+    params = get_pruned_params(args, net)
+    ratios = {}
+    for param in params:
+        ratios[param] = args.pruned_ratio
+    plan = pruner.prune_vars(ratios, [0])
+
+    pruner.remove_handle()
+
+    _logger.info("FLOPs after pruning: {}GFLOPs; pruned ratio: {}".format(
+        flops(net, [1] + image_shape) / 1000, plan.pruned_flops))
+
+    net.train()
+    model = paddle.Model(net, inputs, labels)
+    steps_per_epoch = int(np.ceil(len(train_dataset) * 1. / args.batch_size))
+    opt = create_optimizer(args, net.parameters(), steps_per_epoch)
+    model.prepare(
+        opt, paddle.nn.CrossEntropyLoss(), paddle.metric.Accuracy(topk=(1, 5)))
+    if args.checkpoint is not None:
+        model.load(args.checkpoint)
+    model.fit(train_data=train_dataset,
+              eval_data=val_dataset,
+              epochs=args.num_epochs,
+              batch_size=args.batch_size // ParallelEnv().nranks,
+              verbose=1,
+              save_dir=args.model_path,
+              num_workers=8)
+    model.evaluate(val_dataset, batch_size=128)
 
 
 def main():
