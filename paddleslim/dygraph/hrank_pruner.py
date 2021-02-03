@@ -24,10 +24,7 @@ class HRANKFilterPruner(FilterPruner):
                 value = _item['value']
                 layer = _item['layer']
                 pruned_dims = _item['pruned_dims']
-        reduce_dims = [
-            i for i in range(len(value.shape)) if i not in pruned_dims
-        ]
-        ranks_of_filter = np.array(layer.total_rank)
+        ranks_of_filter = layer.total_rank.numpy()
         sorted_idx = ranks_of_filter.argsort()
         pruned_num = int(round(len(sorted_idx) * pruned_ratio))
         pruned_idx = sorted_idx[:pruned_num]
@@ -45,7 +42,6 @@ class HRANKFilterPruner(FilterPruner):
         self.model.apply(self.add_hooks)
         for i in range(len(samples)):
             data = samples[i].reshape([1] + list(samples[i].shape))
-            print('data shape:' + str(data.shape))
             out = self.model(paddle.to_tensor(data).astype('float32'))
 
     def add_hooks(self, m):

@@ -179,6 +179,7 @@ def compress(args):
     opt = create_optimizer(args, net.parameters(), steps_per_epoch)
     model.prepare(
         opt, paddle.nn.CrossEntropyLoss(), paddle.metric.Accuracy(topk=(1, 5)))
+    model.evaluate(val_dataset, batch_size=128)
     if args.checkpoint is not None:
         model.load(args.checkpoint)
     model.fit(train_data=train_dataset,
